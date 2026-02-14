@@ -1,0 +1,1279 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>K&J CondotelRent</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- AOS Animation -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
+      rel="stylesheet"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=ibm-plex-sans:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+    :root {
+      --blue: #0066cc;
+      --blue-dark: #004a99;
+      --blue-light: #e6f2ff;
+      --muted-white: rgba(255, 255, 255, 0.98);
+      --text-dark: #1a3a52;
+      --card-shadow: 0 10px 30px rgba(0, 102, 204, 0.08);
+      }
+
+      * {
+      font-family: "Sarabun", sans-serif;
+      }
+
+      body {
+      background: var(--muted-white);
+      min-height: 100vh;
+      padding-top: 160px;
+      color: var(--text-dark);
+      }
+
+      .navbar-container {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1030;
+      transition: all 0.3s ease;
+      background: var(--muted-white);
+      border-bottom: 1px solid rgba(0, 102, 204, 0.1);
+      }
+
+      .navbar-container.scrolled {
+      background: var(--muted-white) !important;
+      box-shadow: 0 4px 20px rgba(0, 102, 204, 0.12);
+      }
+
+      .navbar-row1 {
+      padding: 15px 0;
+      border-bottom: 1px solid rgba(0, 102, 204, 0.1);
+      background: transparent;
+      max-height: 80px;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      }
+
+      .navbar-row1.scrolled {
+      max-height: 0;
+      border-bottom-color: rgba(0, 102, 204, 0.15);
+      }
+
+      .navbar-brand {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--blue-dark) !important;
+      }
+
+      .navbar-row2 {
+      padding: 12px 0;
+      background: var(--muted-white);
+      }
+
+      .nav-location {
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-right: auto;
+      }
+
+      .navbar-nav .nav-link {
+      color: var(--text-dark) !important;
+      margin: 0 15px;
+      font-weight: 500;
+      transition: all 0.25s ease;
+      }
+
+      .navbar-nav .nav-link:hover {
+      color: var(--blue) !important;
+      transform: translateY(-2px);
+      }
+
+      .btn-contact {
+      background: linear-gradient(90deg, var(--blue) 0%, var(--blue-dark) 100%);
+      color: #fff !important;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-weight: 700;
+      border: 1px solid rgba(0, 102, 204, 0.2);
+      box-shadow: 0 6px 18px rgba(0, 102, 204, 0.15);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      }
+
+      .btn-contact:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 10px 30px rgba(0, 102, 204, 0.25);
+      }
+
+      .btn-custom {
+      background: linear-gradient(135deg, rgba(0, 102, 204, 0.1) 0%, rgba(0, 142, 204, 0.08) 100%);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(0, 102, 204, 0.2);
+      color: var(--text-dark);
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-weight: 700;
+      transition: all 0.28s ease;
+      }
+
+      .btn-custom i {
+      color: var(--blue);
+      margin-right: 8px;
+      }
+
+      .btn-custom:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 30px rgba(0, 102, 204, 0.2);
+      color: #fff;
+      background: linear-gradient(90deg, var(--blue) 0%, var(--blue-dark) 100%);
+      border-color: rgba(0, 102, 204, 0.3);
+      }
+
+      .hero-section {
+      position: relative;
+      height: 900px;
+      width: 100%;
+      color: white;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #fff;
+      }
+
+      .hero-video {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: contrast(0.95) saturate(1.1);
+      }
+
+      .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(10, 60, 120, 0.4) 0%, rgba(0, 102, 204, 0.2) 60%),
+            radial-gradient(60% 40% at 10% 10%, rgba(0, 142, 204, 0.08), transparent 20%);
+      z-index: 0;
+      }
+
+      .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      }
+
+      .hero-section h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-shadow: 0 6px 30px rgba(0, 0, 0, 0.45);
+      color: #fff;
+      }
+
+      .hero-section p {
+      font-size: 1.3rem;
+      margin-bottom: 40px;
+      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+      color: #fff;
+      }
+
+      .card {
+      border: none;
+      border-radius: 15px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: var(--card-shadow);
+      height: 100%;
+      background: #fff;
+      border: 1px solid rgba(0, 102, 204, 0.08);
+      }
+
+      .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 18px 48px rgba(0, 102, 204, 0.15);
+      }
+
+      .card-img-top {
+      height: 250px;
+      object-fit: cover;
+      }
+
+      .card-body {
+      padding: 25px;
+      }
+
+      .card-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--blue-dark);
+      margin-bottom: 12px;
+      }
+
+      .gallery-card {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      }
+
+      .gallery-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 45px rgba(0, 102, 204, 0.15);
+      }
+
+      .gallery-card .card-img-top {
+      height: 250px;
+      object-fit: cover;
+      }
+
+      .attraction-card {
+      position: relative;
+      overflow: hidden;
+      }
+
+      .attraction-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.6s ease;
+      }
+
+      .attraction-card:hover::before {
+      left: 100%;
+      }
+
+      .attraction-card .card-title {
+      font-size: 1.1rem;
+      color: var(--blue-dark);
+      font-weight: 700;
+      }
+
+      .attraction-card .card-text {
+      color: var(--text-dark);
+      font-weight: 500;
+      }
+
+      .features-section {
+      padding: 80px 0;
+      background: linear-gradient(135deg, rgba(0, 102, 204, 0.03) 0%, rgba(230, 242, 255, 0.5) 100%);
+      margin: 40px 0;
+      }
+
+      .feature-card {
+      background: #fff;
+      padding: 35px 20px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0, 102, 204, 0.08);
+      transition: all 0.35s ease;
+      border: 1px solid rgba(0, 102, 204, 0.08);
+      height: 100%;
+      }
+
+      .feature-card:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 15px 45px rgba(0, 102, 204, 0.18);
+      border-color: rgba(0, 102, 204, 0.15);
+      }
+
+      .feature-icon-box {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(0, 102, 204, 0.25);
+      }
+
+      .feature-card h5 {
+      color: var(--blue-dark);
+      font-weight: 700;
+      margin-bottom: 12px;
+      font-size: 1.2rem;
+      }
+
+      .feature-card p {
+      color: var(--text-dark);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      }
+
+      .section-title {
+      text-align: center;
+      color: var(--text-dark);
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 50px;
+      }
+
+      .badge-price {
+      background: linear-gradient(90deg, var(--blue) 0%, var(--blue-dark) 100%);
+      color: #fff;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      box-shadow: 0 6px 18px rgba(0, 102, 204, 0.15);
+      }
+
+      footer {
+      background: linear-gradient(135deg, var(--blue-light) 0%, #ffffff 100%);
+      color: var(--text-dark);
+      padding: 30px 0;
+      margin-top: 60px;
+      border-top: 1px solid rgba(0, 102, 204, 0.1);
+      }
+
+      .nav-item.dropdown {
+      position: relative;
+      }
+
+      .nav-item .dropdown-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      }
+
+      .nav-item .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      transform: translate(-50%, -10px);
+      min-width: 160px;
+      padding: 6px 0;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 8px 30px rgba(0, 102, 204, 0.12);
+      opacity: 0;
+      visibility: hidden;
+      transform-origin: top center;
+      transition: all 180ms ease;
+      pointer-events: none;
+      z-index: 2050;
+      border: 1px solid rgba(0, 102, 204, 0.1);
+      }
+
+      .nav-item.dropdown:hover .dropdown-menu,
+      .nav-item.dropdown.open .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, 0);
+      pointer-events: auto;
+      }
+
+      .dropdown-item {
+      padding: 8px 18px;
+      color: var(--text-dark);
+      display: block;
+      font-weight: 600;
+      white-space: nowrap;
+      }
+
+      .dropdown-item:hover {
+      background: rgba(0, 102, 204, 0.08);
+      color: var(--blue-dark);
+      }
+
+      /* --- Quick Booking Banner (Desktop) --- */
+      .quick-booking-banner {
+      padding: 18px 0;
+      text-align: center;
+      border-top: 2px solid rgba(255,255,255,0.12);
+      box-shadow: 0 4px 24px rgba(0,102,204,0.12);
+      }
+
+      .quick-booking-btn {
+      padding: 10px 32px;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      background: linear-gradient(90deg, #1258a3 100%, #1258a3 100%);
+      color: #fff !important;
+      font-weight: 700;
+      box-shadow: 0 4px 16px rgba(0,102,204,0.18);
+      border: none;
+      transition: transform 0.18s, box-shadow 0.18s;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      }
+
+      .quick-booking-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 32px rgba(0,102,204,0.25);
+      background: linear-gradient(90deg, #006994 0%, #0088cc 100%);
+      }
+
+      .quick-booking-btn i {
+      font-size: 1.3rem;
+      color: #fff;
+      }
+
+      .quick-booking-btn span {
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: 1px;
+      }
+
+      /* ========== Responsive: Mobile (max-width: 300px) ========== */
+      @media (max-width: 300px) {
+      body {
+        padding-top: 70px;
+      }
+
+      .navbar-row1 {
+        padding: 4px 0;
+        max-height: 40px;
+      }
+
+      .navbar-row2 {
+        padding: 6px 0;
+      }
+
+      .navbar-brand {
+        font-size: 0.65rem;
+        padding: 4px 8px !important;
+        line-height: 1.1;
+      }
+
+      .navbar-brand img {
+        height: 25px !important;
+        margin-right: 6px !important;
+      }
+
+      .nav-location {
+        font-size: 0.65rem;
+        margin-right: 6px;
+      }
+
+      .navbar-nav .nav-link {
+        margin: 2px 6px;
+        font-size: 0.65rem;
+        padding: 3px 6px;
+      }
+
+      .btn-contact {
+        padding: 4px 10px;
+        font-size: 0.5rem;
+        border-radius: 12px;
+      }
+
+      .hero-section {
+        height: 350px;
+      }
+
+      .hero-section h1 {
+        font-size: 1.3rem;
+      }
+
+      .hero-section p {
+        font-size: 0.8rem;
+      }
+
+      .card-img-top,
+      .gallery-card .card-img-top {
+        height: 140px !important;
+      }
+
+      .section-title {
+        font-size: 1.3rem;
+      }
+
+      .feature-icon-box {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+      }
+
+      .feature-card h5 {
+        font-size: 0.9rem;
+      }
+
+      .feature-card p {
+        font-size: 0.75rem;
+      }
+
+      .quick-booking-banner {
+        padding: 8px 0;
+        border-top: 1px solid rgba(255,255,255,0.08);
+        box-shadow: 0 2px 12px rgba(0,102,204,0.08);
+      }
+
+      .quick-booking-btn {
+        padding: 6px 14px;
+        font-size: 0.7rem;
+        border-radius: 18px;
+        gap: 6px;
+      }
+
+      .quick-booking-btn i {
+        font-size: 1rem;
+      }
+
+      .quick-booking-btn span {
+        font-size: 0.7rem;
+        letter-spacing: 0.5px;
+      }
+      }
+
+      /* ========== Responsive: Tablet (max-width: 767.98px) ========== */
+      @media (max-width: 767.98px) {
+      body {
+        padding-top: 85px;
+        font-size: 13px;
+      }
+
+      .navbar-row1 {
+        padding: 6px 0;
+        max-height: 48px;
+      }
+
+      .navbar-row2 {
+        padding: 8px 0;
+      }
+
+      .navbar-brand {
+        font-size: 0.8rem;
+        padding: 8px 12px !important;
+        line-height: 1.2;
+      }
+
+      .nav-location {
+        font-size: 0.7rem;
+        margin-right: 8px;
+      }
+
+      .hero-section {
+        height: 400px;
+      }
+
+      .hero-section h1 {
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 12px;
+      }
+
+      .hero-section p {
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+      }
+
+      .btn-custom {
+        padding: 10px 20px;
+        font-size: 0.8rem;
+        border-radius: 20px;
+      }
+
+      .btn-contact {
+        padding: 6px 14px;
+        font-size: 0.5rem;
+        border-radius: 15px;
+      }
+
+      .navbar-nav .nav-link {
+        margin: 2px 2px;
+        font-size: 0.5rem;
+        padding: 2px 4px;
+      }
+
+      .card-img-top {
+        height: 160px !important;
+      }
+
+      .gallery-card .card-img-top {
+        height: 160px;
+      }
+
+      .card-body {
+        padding: 15px;
+      }
+
+      .card-title {
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+      }
+
+      .card-text {
+        font-size: 0.75rem !important;
+        margin-bottom: 10px !important;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+      }
+
+      .feature-card {
+        padding: 20px 15px;
+      }
+
+      .feature-card h5 {
+        font-size: 1rem;
+        margin-bottom: 8px;
+      }
+
+      .feature-card p {
+        font-size: 0.8rem;
+      }
+
+      .feature-icon-box {
+        width: 60px;
+        height: 60px;
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+      }
+
+      .container {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+
+      .row.g-4 {
+        --bs-gutter-x: 1rem;
+        --bs-gutter-y: 1rem;
+      }
+
+      .badge-price {
+        font-size: 0.85rem;
+        padding: 6px 12px;
+      }
+
+      footer {
+        padding: 25px 15px;
+        font-size: 0.75rem;
+      }
+
+      .nav-item .dropdown-menu {
+        position: static;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        box-shadow: none;
+        border-radius: 8px;
+        margin-top: 8px;
+        display: none;
+      }
+
+      .nav-item.dropdown.open .dropdown-menu {
+        display: block;
+      }
+
+      .nav-item .dropdown-toggle .fa-chevron-down {
+        transition: transform 0.18s ease;
+      }
+
+      .nav-item.dropdown.open .dropdown-toggle .fa-chevron-down {
+        transform: rotate(180deg);
+      }
+
+      .quick-booking-banner {
+        padding: 12px 0;
+        border-top: 1px solid rgba(255,255,255,0.08);
+        box-shadow: 0 2px 12px rgba(0,102,204,0.10);
+      }
+
+      .quick-booking-btn {
+        padding: 8px 20px;
+        font-size: 0.85rem;
+        border-radius: 22px;
+        gap: 8px;
+      }
+
+      .quick-booking-btn i {
+        font-size: 0.7rem;
+      }
+
+      .quick-booking-btn span {
+        font-size: 0.5rem;
+        letter-spacing: 0.6px;
+      }
+      }
+
+      @media (min-width: 769px) and (max-width: 1024px) {
+      .hero-section {
+        height: 720px;
+      }
+
+      .card-img-top,
+      .gallery-card .card-img-top {
+        height: 220px;
+      }
+
+      .section-title {
+        font-size: 2.2rem;
+      }
+
+      .quick-booking-banner {
+        padding: 14px 0;
+        border-top: 2px solid rgba(255,255,255,0.10);
+        box-shadow: 0 3px 18px rgba(0,102,204,0.10);
+      }
+
+      .quick-booking-btn {
+        padding: 9px 28px;
+        font-size: 1rem;
+        border-radius: 26px;
+        gap: 9px;
+      }
+
+      .quick-booking-btn i {
+        font-size: 1.2rem;
+      }
+
+      .quick-booking-btn span {
+        font-size: 1rem;
+        letter-spacing: 0.9px;
+      }
+      }
+
+      @media (min-width: 1025px) {
+      .hero-section {
+        height: 900px;
+      }
+      }
+    </style>
+
+  </head>
+  <body>
+    <!-- Header Navigator Bar -->
+    <div class="navbar-container" id="navbarContainer">
+      <!-- Row 1: Logo -->
+      <div class="navbar-row1" id="navbarRow1">
+      <div class="container">
+      <a class="navbar-brand" href="index.html" style="color: #006994 !important; background: linear-gradient(135deg, #0088cc 0%, #006994 100%); padding: 20px 30px; border-radius: 8px; display: inline-block; margin-right: auto;">
+      <img src="./images/logo.png" alt="K&J CondotelRent Logo" style="height: 40px; margin-right: 10px; vertical-align: middle;">
+      <span style="color: white;">K&J CondotelRent</span>
+      </a>
+      </div>
+      </div>
+
+      <!-- Row 2: Navigation + Location + Contact -->
+      <div class="navbar-row2">
+        <div class="container">
+          <div
+        class="d-flex align-items-center justify-content-between flex-wrap"
+          >
+
+        <!-- Center Navigation Menu with hover dropdowns -->
+        <ul class="navbar-nav ms-auto me-auto d-flex flex-row">
+          <li class="nav-item">
+            <a class="nav-link" href="./Page1.html">ห้องพัก</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./Page4.html">ความสะดวกสบาย</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./Page2.html">แผนที่</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./Page3.html">ประกาศ</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./Page7.html">รีวิว</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./Page6.html">วิธีการจอง</a>
+          </li>
+        </ul>
+
+            <!-- Contact Button -->
+            <a href="./Page8.html" class="btn btn-contact">
+              <i class="fas fa-phone"></i> ติดต่อเรา
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- Quick Booking Banner -->
+    <div class="quick-booking-banner">
+      <div class="container">
+        <a href="./Page8.html" class="btn btn-contact quick-booking-btn">
+          <i class="fas fa-calendar-check"></i>
+          <span>จองเลยตอนนี้</span>
+        </a>
+      </div>
+    </div>
+
+    
+    
+    <!-- Hero Section with Video -->
+    <div class="hero-section">
+      <div class="hero-section">
+        <div
+          id="heroCarousel"
+          class="carousel slide h-100 w-100"
+          data-bs-ride="carousel"
+          style="position: absolute; top: 0; left: 0"
+        >
+          <div class="carousel-inner h-100 w-100">
+            <div class="carousel-item active h-600 w-100">
+              <video class="hero-video w-100" autoplay muted loop playsinline>
+                <source src="./videos/hero-video.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div class="carousel-item h-100 w-100">
+              <video class="hero-video w-100" autoplay muted loop playsinline>
+                <source src="./videos/hero-video2.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div class="carousel-item h-100 w-100">
+              <video class="hero-video w-100" autoplay muted loop playsinline>
+                <source src="./videos/hero-video3.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div class="carousel-item h-100 w-100">
+              <video class="hero-video w-100" autoplay muted loop playsinline>
+                <source src="./videos/hero-video4.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div class="carousel-item h-100 w-100">
+              <video class="hero-video w-100" autoplay muted loop playsinline>
+                <source src="./videos/hero-video5.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div class="carousel-item h-100 w-100">
+              <video class="hero-video w-100" autoplay muted loop playsinline>
+                <source src="./videos/hero-video6.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div class="carousel-item h-100 w-100">
+              <video class="hero-video w-100" autoplay muted loop playsinline>
+                <source src="./videos/hero-video7.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#heroCarousel"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">ก่อนหน้า</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#heroCarousel"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">ถัดไป</span>
+          </button>
+        </div>
+
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content text-center">
+          <h1
+            style="
+              color: white;
+              font-weight: 700;
+              font-size: 3rem;
+              margin-bottom: 10px;
+              text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+            "
+          >
+            ยินดีต้อนรับสู่
+          </h1>
+          <p
+            style="
+              color: white;
+              font-size: 1.5rem;
+              font-weight: 600;
+              margin-bottom: 24px;
+              text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.6);
+            "
+          >
+            ปึกเตียนซีวิว คอนโดเทล
+          </p>
+          <a href="#locations" class="btn btn-custom btn-lg">
+            <i class="fas fa-search" style="color: white"></i>
+            <span style="color: white"> เริ่มค้นหาที่พักของเรา</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gallery Section -->
+  <div class="container mt-5">
+          <div class="row g-4">
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="card gallery-card">
+              <img src="./images/IndexGallery/1.webp" class="card-img-top" alt="ห้องพัก 1" />
+            </div>
+          </div>
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
+            <div class="card gallery-card">
+              <img src="./images/IndexGallery/2.webp" class="card-img-top" alt="ห้องพัก 2" />
+            </div>
+          </div>
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="card gallery-card">
+              <img src="./images/IndexGallery/3.webp" class="card-img-top" alt="ห้องพัก 3" />
+            </div>
+          </div>
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="250">
+            <div class="card gallery-card">
+              <img src="./images/IndexGallery/4.webp" class="card-img-top" alt="ห้องพัก 4" />
+            </div>
+          </div>
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+            <div class="card gallery-card">
+              <img src="./images/IndexGallery/5.webp" class="card-img-top" alt="ห้องพัก 5" />
+            </div>
+          </div>
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="350">
+            <div class="card gallery-card">
+              <img src="./images/IndexGallery/6.webp" class="card-img-top" alt="ห้องพัก 6" />
+            </div>
+          </div>
+        </div>
+
+
+    <!-- Nearby Attractions Section -->
+    <div class="container mt-5">
+      <h3 class="section-title" data-aos="fade-up">สถานที่ใกล้เคียง</h3>
+      <div class="row g-4">
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+      <div class="card h-100 attraction-card">
+      <img src="./images/Index/Chaamforestpark1.jpg" class="card-img-top" alt="วนอุทยานชะอำ" />
+      <div class="card-body">
+      <h6 class="card-title">วนอุทยานชะอำ</h6>
+      <p class="card-text mb-3"><i class="fas fa-map-marker-alt"></i> 22 กม.</p>
+      <p class="mb-3"><span style="color: #ffc107;">★★★★★</span> (4.5/5) <small>(324 รีวิว)</small></p>
+      <a href="https://www.google.com/maps/search/วนอุทยานชะอำ" target="_blank" class="btn btn-sm btn-custom">
+        <i class="fas fa-map"></i> ดูแผนที่
+      </a>
+      </div>
+      </div>
+      </div>
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+      <div class="card h-100 attraction-card">
+      <img src="./images/Index/PektianBeach.jpeg" class="card-img-top" alt="ชายหาดปึกเตียน" />
+      <div class="card-body">
+      <h6 class="card-title">ชายหาดปึกเตียน</h6>
+      <p class="card-text mb-3"><i class="fas fa-map-marker-alt"></i> 0.1 กม.</p>
+      <p class="mb-3"><span style="color: #ffc107;">★★★★☆</span> (4.8/5) <small>(1,245 รีวิว)</small></p>
+      <a href="https://www.google.com/maps/search/ชายหาดปึกเตียน" target="_blank" class="btn btn-sm btn-custom">
+        <i class="fas fa-map"></i> ดูแผนที่
+      </a>
+      </div>
+      </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="150">
+      <div class="card h-100 attraction-card">
+      <img src="./images/Index/PetchBeach.jpg" class="card-img-top" alt="หาดเพชร" />
+      <div class="card-body">
+      <h6 class="card-title">หาดเพชร</h6>
+      <p class="card-text mb-3"><i class="fas fa-map-marker-alt"></i> 1 กม.</p>
+      <p class="mb-3"><span style="color: #ffc107;">★★★★★</span> (4.6/5) <small>(892 รีวิว)</small></p>
+      <a href="https://www.google.com/maps/search/หาดเพชร+ชะอำ" target="_blank" class="btn btn-sm btn-custom">
+        <i class="fas fa-map"></i> ดูแผนที่
+      </a>
+      </div>
+      </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+      <div class="card h-100 attraction-card">
+      <img src="./images/Index/HoutanBeach.jpg" class="card-img-top" alt="หาดหัวตาล" />
+      <div class="card-body">
+      <h6 class="card-title">หาดหัวตาล</h6>
+      <p class="card-text mb-3"><i class="fas fa-map-marker-alt"></i> 4.3 กม.</p>
+      <p class="mb-3"><span style="color: #ffc107;">★★★★☆</span> (4.4/5) <small>(567 รีวิว)</small></p>
+      <a href="https://www.google.com/maps/search/หาดหัวตาล" target="_blank" class="btn btn-sm btn-custom">
+        <i class="fas fa-map"></i> ดูแผนที่
+      </a>
+      </div>
+      </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="150">
+      <div class="card h-100 attraction-card">
+      <img src="./images/Index/Kiri.jpg" class="card-img-top" alt="อุทยานประวัติศาสตร์พระนครคีรี" />
+      <div class="card-body">
+      <h6 class="card-title">อุทยานประวัติศาสตร์พระนครคีรี</h6>
+      <p class="card-text mb-3"><i class="fas fa-map-marker-alt"></i> 27 กม.</p>
+      <p class="mb-3"><span style="color: #ffc107;">★★★★★</span> (4.7/5) <small>(1,456 รีวิว)</small></p>
+      <a href="https://www.google.com/maps/search/อุทยานประวัติศาสตร์พระนครคีรี" target="_blank" class="btn btn-sm btn-custom">
+        <i class="fas fa-map"></i> ดูแผนที่
+      </a>
+      </div>
+      </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+      <div class="card h-100 attraction-card">
+      <img src="./images/Index/Taiwan.jpg" class="card-img-top" alt="พระราชนิเวศน์มฤคทายวัน" />
+      <div class="card-body">
+      <h6 class="card-title">พระราชนิเวศน์มฤคทายวัน</h6>
+      <p class="card-text mb-3"><i class="fas fa-map-marker-alt"></i> 32 กม.</p>
+      <p class="mb-3"><span style="color: #ffc107;">★★★★☆</span> (4.5/5) <small>(2,134 รีวิว)</small></p>
+      <a href="https://www.google.com/maps/search/พระราชนิเวศน์มฤคทายวัน" target="_blank" class="btn btn-sm btn-custom">
+        <i class="fas fa-map"></i> ดูแผนที่
+      </a>
+      </div>
+      </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="250">
+      <div class="card h-100 attraction-card">
+      <img src="./images/Index/HuaHinAirport.jpg" class="card-img-top" alt="สนามบินหัวหิน" />
+      <div class="card-body">
+      <h6 class="card-title">สนามบินหัวหิน</h6>
+      <p class="card-text mb-3"><i class="fas fa-map-marker-alt"></i> 37 กม.</p>
+      <p class="mb-3"><span style="color: #ffc107;">★★★★☆</span> (4.3/5) <small>(678 รีวิว)</small></p>
+      <a href="https://www.google.com/maps/search/สนามบินหัวหิน" target="_blank" class="btn btn-sm btn-custom">
+        <i class="fas fa-map"></i> ดูแผนที่
+      </a>
+      </div>
+      </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="350">
+      <div class="card h-100 attraction-card">
+      <img src="./images/Index/WangKlaiKangwon.jpg" class="card-img-top" alt="วังไกลกังวล" />
+      <div class="card-body">
+      <h6 class="card-title">วังไกลกังวล</h6>
+      <p class="card-text mb-3"><i class="fas fa-map-marker-alt"></i> 44 กม.</p>
+      <p class="mb-3"><span style="color: #ffc107;">★★★★★</span> (4.9/5) <small>(3,891 รีวิว)</small></p>
+      <a href="https://www.google.com/maps/search/วังไกลกังวล" target="_blank" class="btn btn-sm btn-custom">
+        <i class="fas fa-map"></i> ดูแผนที่
+      </a>
+      </div>
+      </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
+      <div class="card h-100 attraction-card">
+      <img src="./images/Index/Hua-Hin-Night-Market-min.jpg" class="card-img-top" alt="ตลาดโต้รุ่งหัวหิน" />
+      <div class="card-body">
+      <h6 class="card-title">ตลาดโต้รุ่งหัวหิน</h6>
+      <p class="card-text mb-3"><i class="fas fa-map-marker-alt"></i> 46 กม.</p>
+      <p class="mb-3"><span style="color: #ffc107;">★★★★☆</span> (4.2/5) <small>(1,723 รีวิว)</small></p>
+      <a href="https://www.google.com/maps/search/ตลาดโต้รุ่งหัวหิน" target="_blank" class="btn btn-sm btn-custom">
+        <i class="fas fa-map"></i> ดูแผนที่
+      </a>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+<section class="features-section">
+  <div class="container">
+  <h2 class="section-title" data-aos="fade-up">ทำไมต้องเลือกเรา</h2>
+  <div class="row g-4">
+    <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+    <div class="feature-card">
+      <div class="feature-icon-box">
+      <i class="fas fa-clock"></i>
+      </div>
+      <h5>จองได้ 24/7</h5>
+      <p>จองเลย ไม่ต้องรอ ตลอด 24 ชั่วโมง</p>
+    </div>
+    </div>
+    <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+    <div class="feature-card">
+      <div class="feature-icon-box">
+      <i class="fas fa-lock"></i>
+      </div>
+      <h5>ปลอดภัย</h5>
+      <p>ระบบรักษาความปลอดภัย CCTV ตลอด 24 ชม.</p>
+    </div>
+    </div>
+    <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+    <div class="feature-card">
+      <div class="feature-icon-box">
+      <i class="fas fa-wifi"></i>
+      </div>
+      <h5>Wi-Fi ฟรี</h5>
+      <p>ความเร็ว 100 Mbps Wi-Fi ใช้ได้ทั้งห้อง</p>
+    </div>
+    </div>
+    <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
+    <div class="feature-card">
+      <div class="feature-icon-box">
+      <i class="fas fa-umbrella-beach"></i>
+      </div>
+      <h5>ติดชายหาด</h5>
+      <p>ที่พักอยู่ใกล้ชายหาด เพียงไม่กี่ก้าว</p>
+    </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+        <!-- Carousel -->
+        <div class="container mt-4" data-aos="fade-up">
+          <div
+            id="locationCarousel"
+            class="carousel slide"
+            data-bs-ride="carousel"
+            aria-label="Location images"
+          >
+            <div class="carousel-inner rounded">
+              <div class="carousel-item active">
+                <img
+                  src="./images/slide1.jpg"
+                  class="d-block w-100 carousel-img rounded"
+                  alt="ภาพสไลด์ 1 - ทำเล กรุงเทพฯ"
+                />
+              </div>
+              <div class="carousel-item">
+                <img
+                  src="./images/slide2.jpg"
+                  class="d-block w-100 carousel-img rounded"
+                  alt="ภาพสไลด์ 2 - ทำเล พัทยา"
+                />
+              </div>
+              <div class="carousel-item">
+                <img
+                  src="./images/slide3.jpg"
+                  class="d-block w-100 carousel-img rounded"
+                  alt="ภาพสไลด์ 3 - ทำเล ชะอำ"
+                />
+              </div>
+              <div class="carousel-item">
+                <img
+                  src="./images/slide4.jpg"
+                  class="d-block w-100 carousel-img rounded"
+                  alt="ภาพสไลด์ 4 - บรรยากาศคอนโด"
+                />
+              </div>
+              <div class="carousel-item">
+                <img
+                  src="./images/slide5.jpg"
+                  class="d-block w-100 carousel-img rounded"
+                  alt="ภาพสไลด์ 5 - วิวทะเล"
+                />
+              </div>
+              <div class="carousel-item">
+                <img
+                  src="./images/slide6.jpg"
+                  class="d-block w-100 carousel-img rounded"
+                  alt="ภาพสไลด์ 6 - ภายในห้องพัก"
+                />
+              </div>
+              <div class="carousel-item">
+                <img
+                  src="./images/slide7.jpg"
+                  class="d-block w-100 carousel-img rounded"
+                  alt="ภาพสไลด์ 7 - ภายในห้องพัก"
+                />
+              </div>
+              <div class="carousel-item">
+                <img
+                  src="./images/slide8.jpg"
+                  class="d-block w-100 carousel-img rounded"
+                  alt="ภาพสไลด์ 8 - ภายในห้องพัก"
+                />
+              </div>
+            </div>
+
+            <button
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#locationCarousel"
+              data-bs-slide="prev"
+            >
+              <span
+                class="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">ก่อนหน้า</span>
+            </button>
+            <button
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#locationCarousel"
+              data-bs-slide="next"
+            >
+              <span
+                class="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">ถัดไป</span>
+            </button>
+          </div>
+        </div>
+      
+      
+
+        <div class="text-center mt-4" data-aos="fade-up" data-aos-delay="100">
+          <h3>สนใจห้องพักของเรา?</h3>
+          <p>ติดต่อเราเพื่อสอบถามข้อมูลเพิ่มเติมและจองห้องพักได้เลย!</p>
+          <div class="mt-3">
+            <a href="./Page8.html" class="btn btn-custom">
+              <i class="fas fa-arrow-right"></i> ติดต่อเราเพื่อจองห้องพัก
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center">
+      <div class="container">
+        <p class="mb-2">
+           <p>&copy; 2020 K&J CondotelRent</p> 149 Moo 3, Puek Tian Sub district, Tha-Yang District, Phetchaburi 76130<br>Tel. 086 342 9855<br>E-mail: <a href="mailto:jew.scb18@gmail.com">jew.scb18@gmail.com</a> - All
+          Rights Reserved
+        </p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- AOS JS -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+  </body>
+</html>
+
+
