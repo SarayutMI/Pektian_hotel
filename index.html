@@ -25,7 +25,7 @@
 
     <!-- Google Fonts -->
     <link
-      href="https://fonts.googleapis.com/css2?family=ibm-plex-sans:wght@300;400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -38,9 +38,9 @@
       --card-shadow: 0 10px 30px rgba(0, 102, 204, 0.08);
       }
 
-      * {
-      font-family: "Sarabun", sans-serif;
-      }
+    * {
+      font-family: "Prompt", sans-serif;
+    }
 
       body {
       background: var(--muted-white);
@@ -106,6 +106,7 @@
       color: var(--blue) !important;
       transform: translateY(-2px);
       }
+     
 
       .btn-contact {
       background: linear-gradient(90deg, var(--blue) 0%, var(--blue-dark) 100%);
@@ -223,7 +224,7 @@
       }
 
       .card-body {
-      padding: 25px;
+      padding: 20px;
       }
 
       .card-title {
@@ -358,50 +359,50 @@
 
       .nav-item.dropdown {
       position: relative;
+      list-style: none;
       }
 
       .nav-item .dropdown-toggle {
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      cursor: pointer;
       }
 
-      .nav-item .dropdown-menu {
+      .dropdown-content {
+      display: none;
       position: absolute;
       top: calc(100% + 8px);
-      left: 50%;
-      transform: translate(-50%, -10px);
-      min-width: 160px;
-      padding: 6px 0;
+      left: 100%;
+      right: 0;
+      transform: translateX(-50%);
+      min-width: 200px;
+      padding: 8px 0;
       background: #fff;
       border-radius: 10px;
       box-shadow: 0 8px 30px rgba(0, 102, 204, 0.12);
-      opacity: 0;
-      visibility: hidden;
-      transform-origin: top center;
-      transition: all 180ms ease;
-      pointer-events: none;
       z-index: 2050;
       border: 1px solid rgba(0, 102, 204, 0.1);
       }
 
-      .nav-item.dropdown:hover .dropdown-menu,
-      .nav-item.dropdown.open .dropdown-menu {
-      opacity: 1;
-      visibility: visible;
-      transform: translate(-50%, 0);
-      pointer-events: auto;
-      }
-
-      .dropdown-item {
-      padding: 8px 18px;
-      color: var(--text-dark);
+      .dropdown-content.show {
       display: block;
-      font-weight: 600;
-      white-space: nowrap;
       }
 
-      .dropdown-item:hover {
+      .dropdown-content {
+      width: 220px;
+      }
+      .dropdown-content a {
+      display: block;
+      padding: 10px 18px;
+      text-align: center; /* ← จัดข้อความให้อยู่ตรงกลาง */
+      color: var(--text-dark);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      }
+
+      .dropdown-content a:hover {
       background: rgba(0, 102, 204, 0.08);
       color: var(--blue-dark);
       }
@@ -446,8 +447,9 @@
       letter-spacing: 1px;
       }
 
-      /* ========== Responsive: Mobile (max-width: 300px) ========== */
-      @media (max-width: 300px) {
+
+      /* ========== Responsive: Mobile (max-width: 700px) ========== */
+      @media (max-width: 700px) {
       body {
         padding-top: 70px;
       }
@@ -488,6 +490,14 @@
         font-size: 0.5rem;
         border-radius: 12px;
       }
+
+    .dropdown-content {
+      min-width: 100px;
+    }
+    .dropdown-content a {
+      padding: 8px 10px; /* ← ลด padding */
+      font-size: 0.65rem; /* ← ลดขนาดตัวอักษร */
+    }
 
       .hero-section {
         height: 350px;
@@ -568,7 +578,14 @@
         padding: 8px 12px !important;
         line-height: 1.2;
       }
+      .dropdown-content {
+        width: 160px;
+      }
 
+      .nav-link {
+        font-size: 14px;
+        padding: 10px 14px;
+      }
       .nav-location {
         font-size: 0.7rem;
         margin-right: 8px;
@@ -786,11 +803,17 @@
         class="d-flex align-items-center justify-content-between flex-wrap"
           >
 
-        <!-- Center Navigation Menu with hover dropdowns -->
-        <ul class="navbar-nav ms-auto me-auto d-flex flex-row">
-          <li class="nav-item">
-            <a class="nav-link" href="./Page1.html">ห้องพัก</a>
-          </li>
+    <!-- Center Navigation Menu with hover dropdowns -->
+    <ul class="navbar-nav ms-auto me-auto d-flex flex-row">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="roomsDropdown" onclick="toggleRoomsMenu(event)">
+          ห้องพัก
+        </a>
+        <div id="roomsDropdownMenu" class="dropdown-content">
+          <a href="./pektian-seaview.html">ปึกเตียนซีวิว คอนโดเทล</a>
+          <a href="./copacabana-jomtien.html">โคปาคาบาน่า จอมเทียน</a>
+        </div>
+      </li>
           <li class="nav-item">
             <a class="nav-link" href="./Page4.html">ความสะดวกสบาย</a>
           </li>
@@ -1270,10 +1293,24 @@
 
     <!-- AOS JS -->
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    
     <script>
       AOS.init();
+      function toggleRoomsMenu(e) {
+        e.preventDefault();
+        document.getElementById("roomsDropdownMenu").classList.toggle("show");
+      }
+
+      // ปิดเมนูเมื่อคลิกนอกพื้นที่
+      window.onclick = function(e) {
+        if (!e.target.matches('#roomsDropdown')) {
+          const menu = document.getElementById("roomsDropdownMenu");
+          if (menu.classList.contains("show")) {
+            menu.classList.remove("show");
+          }
+        }
+      }
     </script>
   </body>
 </html>
-
 
