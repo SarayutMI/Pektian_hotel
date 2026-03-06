@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>แผนที่ — NICHA CONDO</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="./images/logo.png">
+  <link rel="apple-touch-icon" href="./images/logo.png">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <style>
+    :root {
+      --sky:       #5bb8f5;
+      --sky-mid:   #2196d9;
+      --sky-deep:  #0d6eaf;
+      --sky-dark:  #084e82;
+      --sky-pale:  #e8f6fd;
+      --sky-light: #c8e9f8;
+      --white:     #ffffff;
+      --off-white: #f5fbff;
+      --text:      #0d2d45;
+      --text-mid:  #2a5674;
+      --text-lt:   #6a9bb8;
+      --radius:    14px;
+      --sh-sm:     0 4px 18px rgba(13,110,175,.10);
+      --sh-md:     0 10px 40px rgba(13,110,175,.16);
+      --sh-lg:     0 20px 60px rgba(13,110,175,.22);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Prompt', sans-serif;
+      background: var(--white);
+      color: var(--text);
+      overflow-x: hidden;
+      padding-top: 108px;
+    }
+    h1,h2,h3,h4 { font-family: 'Cormorant Garamond', serif; letter-spacing: .02em; }
+
+    /* ── TOP BAR ── */
+    .top-bar {
+      position: fixed; top: 0; width: 100%; z-index: 1050;
+      background: rgba(255,255,255,.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(91,184,245,.25);
+      transition: box-shadow .3s;
+    }
+    .top-bar.scrolled { box-shadow: 0 4px 24px rgba(13,110,175,.12); }
+    .logo-row { background: var(--sky-dark); padding: 10px 0; }
+    .logo-row .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-row .brand img { height: clamp(28px,5vw,40px); flex-shrink: 0; }
+    .logo-row .brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem,4vw,1.6rem); font-weight: 700;
+      color: var(--white); letter-spacing: .06em; white-space: nowrap;
+    }
+    .logo-contact-item {
+      display: inline-flex; align-items: center; gap: 5px;
+      color: rgba(255,255,255,.85); text-decoration: none;
+      font-size: clamp(.62rem,2vw,.78rem); font-weight: 500;
+      transition: color .2s; white-space: nowrap;
+    }
+    .logo-contact-item i { color: var(--sky-light); font-size: .8rem; }
+    .logo-contact-item:hover { color: var(--white); }
+    .logo-contact-sep { color: rgba(255,255,255,.3); font-size: .75rem; }
+    .nav-row { background: var(--white); }
+    .main-nav { display: flex; align-items: center; justify-content: space-between; }
+    .nav-links { display: flex; align-items: center; list-style: none; gap: 0; margin: 0; padding: 0; }
+    .nav-links li a {
+      display: block; padding: 16px 16px;
+      font-size: .82rem; font-weight: 500; color: var(--text);
+      text-decoration: none; letter-spacing: .04em;
+      border-bottom: 3px solid transparent;
+      transition: color .2s, border-color .2s; white-space: nowrap;
+    }
+    .nav-links li a:hover, .nav-links li a.active { color: var(--sky-mid); border-bottom-color: var(--sky-mid); }
+    .nav-links li.has-drop { position: relative; }
+    .drop-menu {
+      display: none; position: absolute; top: 100%; left: 0;
+      background: var(--white); border-radius: 0 0 10px 10px;
+      box-shadow: var(--sh-md); min-width: 220px;
+      border-top: 3px solid var(--sky-mid); z-index: 999;
+    }
+    .nav-links li.has-drop:hover .drop-menu { display: block; }
+    .drop-menu a { display: block; padding: 12px 20px; font-size: .82rem; font-weight: 500; color: var(--text); text-decoration: none; border-bottom: 1px solid var(--sky-pale); transition: background .2s, color .2s; }
+    .drop-menu a:hover { background: var(--sky-pale); color: var(--sky-dark); }
+    .btn-book-nav {
+      background: var(--sky-mid); color: var(--white);
+      padding: 10px 22px; border-radius: 4px;
+      font-size: .82rem; font-weight: 600;
+      text-decoration: none; white-space: nowrap; letter-spacing: .06em;
+      transition: background .2s, transform .15s; border: none;
+    }
+    .btn-book-nav:hover { background: var(--sky-dark); color: var(--white); transform: translateY(-1px); }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 10px 4px; flex-direction: row; align-items: center; gap: 10px; }
+    .hamburger-bars { display: flex; flex-direction: column; gap: 5px; }
+    .hamburger-bars span { display: block; width: 26px; height: 2px; background: var(--text); transition: all .3s; border-radius: 2px; }
+    .hamburger-label { font-family: 'Prompt', sans-serif; font-size: .88rem; font-weight: 700; color: var(--text); letter-spacing: .12em; text-transform: uppercase; }
+    .hamburger.open .hamburger-bars span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open .hamburger-bars span:nth-child(2) { opacity: 0; }
+    .hamburger.open .hamburger-bars span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-nav { display: none; background: var(--white); border-top: 1px solid var(--sky-pale); padding: 10px 0 20px; }
+    .mobile-nav.open { display: block; }
+    .mobile-nav a { display: block; padding: 11px 24px; font-size: .9rem; color: var(--text); text-decoration: none; font-weight: 500; border-bottom: 1px solid var(--sky-pale); }
+    .mobile-nav a:hover { background: var(--sky-pale); color: var(--sky-dark); }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      background: linear-gradient(135deg, var(--sky-dark) 0%, var(--sky-mid) 100%);
+      padding: clamp(40px,7vw,80px) 0;
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .page-hero-content { position: relative; z-index: 1; }
+    .page-hero-eyebrow { font-size: .72rem; letter-spacing: .3em; text-transform: uppercase; color: var(--sky-light); font-weight: 600; display: block; margin-bottom: 10px; }
+    .page-hero-title { font-size: clamp(2rem,5vw,3.5rem); font-weight: 700; color: var(--white); line-height: 1.1; margin-bottom: 12px; }
+    .page-hero-sub { font-size: clamp(.9rem,1.8vw,1.1rem); font-weight: 300; color: rgba(255,255,255,.8); }
+    .breadcrumb-bar { background: var(--sky-pale); border-bottom: 1px solid var(--sky-light); padding: 10px 0; }
+    .breadcrumb { margin: 0; font-size: .8rem; }
+    .breadcrumb-item a { color: var(--sky-mid); text-decoration: none; }
+    .breadcrumb-item a:hover { color: var(--sky-dark); }
+    .breadcrumb-item.active { color: var(--text-lt); }
+    .breadcrumb-item + .breadcrumb-item::before { color: var(--text-lt); }
+
+    /* ── SECTION HELPERS ── */
+    .section { padding: clamp(50px,8vw,90px) 0; }
+    .section-alt { background: var(--off-white); }
+    .section-label { font-size: .72rem; letter-spacing: .3em; text-transform: uppercase; color: var(--sky-mid); font-weight: 600; margin-bottom: 12px; display: block; }
+    .section-title { font-size: clamp(1.8rem,4vw,3rem); font-weight: 600; color: var(--text); line-height: 1.15; margin-bottom: 16px; }
+    .section-title span { color: var(--sky-mid); }
+    .section-lead { font-size: 1rem; color: var(--text-mid); font-weight: 300; line-height: 1.8; max-width: 600px; }
+    .divider-sky { width: 60px; height: 3px; background: linear-gradient(90deg, var(--sky), var(--sky-mid)); border-radius: 99px; margin: 18px 0 28px; }
+
+    /* ── BUTTONS ── */
+    .btn-sky { background: var(--sky-dark); color: var(--white); padding: 12px 28px; border-radius: 4px; border: none; font-size: .85rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: background .2s, transform .15s; display: inline-block; }
+    .btn-sky:hover { background: var(--sky-mid); color: var(--white); transform: translateY(-2px); }
+    .btn-sky-outline { background: transparent; color: var(--sky-dark); padding: 11px 26px; border-radius: 4px; border: 2px solid var(--sky-dark); font-size: .85rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: all .2s; display: inline-block; }
+    .btn-sky-outline:hover { background: var(--sky-dark); color: var(--white); }
+
+    /* ══════════════════════════════════════════
+       MAP SECTION STYLES
+    ══════════════════════════════════════════ */
+    .map-wrapper {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--sh-lg);
+      border: 3px solid var(--sky-light);
+    }
+
+    #nicha-map {
+      height: clamp(380px, 55vw, 560px);
+      width: 100%;
+      z-index: 1;
+    }
+
+    /* Custom Leaflet Popup */
+    .leaflet-popup-content-wrapper {
+      border-radius: 14px !important;
+      padding: 0 !important;
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(13,110,175,.28) !important;
+      border: none !important;
+      min-width: 260px;
+    }
+    .leaflet-popup-content {
+      margin: 0 !important;
+      width: auto !important;
+    }
+    .leaflet-popup-tip-container { margin-top: -1px; }
+    .leaflet-popup-tip { background: var(--sky-dark) !important; }
+    .leaflet-popup-close-button {
+      color: rgba(255,255,255,.8) !important;
+      font-size: 20px !important;
+      right: 10px !important;
+      top: 8px !important;
+      z-index: 10;
+    }
+    .leaflet-popup-close-button:hover { color: #fff !important; }
+
+    /* Popup inner content */
+    .map-popup {
+      font-family: 'Prompt', sans-serif;
+    }
+    .map-popup-header {
+      background: linear-gradient(135deg, var(--sky-dark), var(--sky-mid));
+      padding: 18px 20px 14px;
+      position: relative;
+    }
+    .map-popup-badge {
+      font-size: .62rem; letter-spacing: .25em; text-transform: uppercase;
+      color: var(--sky-light); font-weight: 600; margin-bottom: 4px;
+    }
+    .map-popup-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 700; color: #fff; line-height: 1.15;
+    }
+    .map-popup-body { padding: 14px 20px 16px; background: #fff; }
+    .map-popup-row {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: .78rem; color: var(--text-mid);
+      margin-bottom: 8px; line-height: 1.5;
+    }
+    .map-popup-row i { color: var(--sky-mid); margin-top: 2px; flex-shrink: 0; width: 14px; }
+    .map-popup-divider { border: none; border-top: 1px solid var(--sky-pale); margin: 10px 0; }
+    .map-popup-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .map-popup-btn {
+      flex: 1; min-width: 100px;
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 8px 12px; border-radius: 6px;
+      font-size: .73rem; font-weight: 600; letter-spacing: .06em;
+      text-decoration: none; transition: all .2s; white-space: nowrap;
+      cursor: pointer;
+    }
+    .map-popup-btn-primary {
+      background: var(--sky-dark); color: #fff;
+    }
+    .map-popup-btn-primary:hover { background: var(--sky-mid); color: #fff; }
+    .map-popup-btn-outline {
+      background: transparent; color: var(--sky-dark);
+      border: 1.5px solid var(--sky-dark);
+    }
+    .map-popup-btn-outline:hover { background: var(--sky-dark); color: #fff; }
+
+    /* Custom Marker Pin */
+    .custom-pin {
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pin-pulse {
+      position: absolute;
+      width: 50px; height: 50px;
+      border-radius: 50%;
+      background: rgba(33,150,217,.25);
+      animation: pulse-ring 2s ease-out infinite;
+    }
+    .pin-pulse-2 {
+      animation-delay: .6s;
+      background: rgba(33,150,217,.15);
+    }
+    @keyframes pulse-ring {
+      0%   { transform: scale(.6); opacity: 1; }
+      100% { transform: scale(1.8); opacity: 0; }
+    }
+    .pin-icon {
+      position: relative; z-index: 2;
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, var(--sky-dark), var(--sky-mid));
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      box-shadow: 0 6px 20px rgba(8,78,130,.4);
+      display: flex; align-items: center; justify-content: center;
+      border: 2.5px solid #fff;
+      cursor: pointer;
+      transition: transform .3s, box-shadow .3s;
+    }
+    .pin-icon:hover {
+      box-shadow: 0 10px 30px rgba(8,78,130,.55);
+    }
+    .pin-icon i {
+      transform: rotate(45deg);
+      color: #fff; font-size: 14px;
+    }
+
+    /* Hover tooltip on marker (shown via Leaflet tooltip) */
+    .leaflet-tooltip {
+      font-family: 'Prompt', sans-serif !important;
+      font-size: .78rem !important;
+      font-weight: 600 !important;
+      background: var(--sky-dark) !important;
+      color: #fff !important;
+      border: none !important;
+      border-radius: 8px !important;
+      padding: 7px 14px !important;
+      box-shadow: 0 6px 20px rgba(8,78,130,.3) !important;
+      white-space: nowrap;
+    }
+    .leaflet-tooltip::before {
+      border-top-color: var(--sky-dark) !important;
+    }
+
+    /* Info card beside map */
+    .map-info-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      border: 1px solid var(--sky-pale);
+      box-shadow: var(--sh-sm);
+      padding: 28px 26px;
+      height: 100%;
+    }
+    .map-info-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 700; color: var(--text); margin-bottom: 6px;
+    }
+    .map-detail-row {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--sky-pale);
+    }
+    .map-detail-row:last-child { border-bottom: none; }
+    .map-detail-icon {
+      width: 36px; height: 36px; flex-shrink: 0;
+      background: var(--sky-pale); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .map-detail-icon i { color: var(--sky-mid); font-size: .85rem; }
+    .map-detail-label { font-size: .7rem; color: var(--text-lt); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 2px; }
+    .map-detail-value { font-size: .85rem; color: var(--text); font-weight: 500; line-height: 1.5; }
+
+    /* Map controls bar */
+    .map-controls {
+      display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px;
+    }
+    .map-ctrl-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 9px 18px; border-radius: 6px;
+      font-size: .78rem; font-weight: 600; letter-spacing: .05em;
+      text-decoration: none; transition: all .2s; cursor: pointer; border: none;
+    }
+    .map-ctrl-primary { background: var(--sky-dark); color: #fff; }
+    .map-ctrl-primary:hover { background: var(--sky-mid); color: #fff; transform: translateY(-1px); }
+    .map-ctrl-outline { background: transparent; color: var(--sky-dark); border: 1.5px solid var(--sky-mid); }
+    .map-ctrl-outline:hover { background: var(--sky-pale); }
+
+    /* Distance badges */
+    .dist-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--sky-pale); color: var(--sky-dark);
+      padding: 5px 12px; border-radius: 20px;
+      font-size: .73rem; font-weight: 600;
+      border: 1px solid var(--sky-light);
+      margin: 4px 4px 4px 0;
+    }
+    .dist-badge i { font-size: .7rem; color: var(--sky-mid); }
+
+    /* ── FOOTER ── */
+    footer { background: var(--text); color: rgba(255,255,255,.7); padding: 60px 0 0; font-size: .83rem; }
+    .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 700; color: var(--white); margin-bottom: 14px; }
+    .footer-brand small { font-family: 'Prompt', sans-serif; font-size: .72rem; letter-spacing: .25em; color: var(--sky-light); display: block; text-transform: uppercase; margin-top: 2px; }
+    .footer-links { list-style: none; padding: 0; }
+    .footer-links li { margin-bottom: 10px; }
+    .footer-links a { color: rgba(255,255,255,.65); text-decoration: none; transition: color .2s; font-size: .82rem; }
+    .footer-links a:hover { color: var(--sky-light); }
+    footer h6 { color: var(--white); font-family: 'Prompt', sans-serif; font-size: .7rem; letter-spacing: .22em; text-transform: uppercase; margin-bottom: 18px; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.08); padding: 20px 0; margin-top: 50px; font-size: .75rem; color: rgba(255,255,255,.4); }
+    .social-btn { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.6); text-decoration: none; font-size: .85rem; transition: all .2s; margin-right: 8px; }
+    .social-btn:hover { background: var(--sky-mid); border-color: var(--sky-mid); color: var(--white); }
+
+    @media (max-width: 991px) {
+      body { padding-top: 90px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .main-nav { justify-content: flex-start; }
+    }
+    @media (max-width: 575px) {
+      body { padding-top: 82px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar" id="topBar">
+  <div class="logo-row">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between">
+        <a href="index.html" class="brand">
+          <img src="./images/logo.png" alt="NICHA CONDO" onerror="this.style.display='none'">
+          <span class="brand-name">NICHA CONDO</span>
+        </a>
+        <div class="d-flex align-items-center gap-2">
+          <a href="tel:0863429855" class="logo-contact-item"><i class="fas fa-phone"></i> <span>086 342 9855</span></a>
+          <span class="logo-contact-sep">|</span>
+          <a href="mailto:jew.scb18@gmail.com" class="logo-contact-item"><i class="fas fa-envelope"></i><span class="d-none d-sm-inline">jew.scb18@gmail.com</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Nav Row -->
+  <div class="nav-row">
+    <div class="container">
+      <nav class="main-nav">
+        <ul class="nav-links">
+          <li class="has-drop">
+            <!-- ✏️ Add class="active" to whichever <a> matches the current page -->
+            <a href="#">ห้องพัก <i class="fas fa-chevron-down ms-1" style="font-size:.6rem"></i></a>
+            <div class="drop-menu">
+              <a href="./PektianPage.html">ปึกเตียนซีวิว คอนโดเทล</a>
+              <a href="./CacapabanaPage.html">โคปาคาบาน่า จอมเทียน</a>
+            </div>
+          </li>
+          <li><a href="./Page4.html">ความสะดวกสบาย</a></li>
+          <li class="has-drop">
+            <a href="#">แผนที่ <i class="fas fa-chevron-down ms-1" style="font-size:.6rem"></i></a>
+            <div class="drop-menu">
+              <a href="./LocationPekTian.html">ปึกเตียนซีวิว คอนโดเทล</a>
+              <a href="./LocationCopacabana.html">Copacabana Beach Jomtien</a>
+            </div>
+          </li>
+          <li><a href="./Page3.html">ประกาศ</a></li>
+          <li><a href="./Page7.html">รีวิว</a></li>
+          <li><a href="./Page6.html">วิธีการจอง</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-3">
+          <button class="hamburger" id="hamburger" aria-label="Menu">
+            <div class="hamburger-bars">
+              <span></span><span></span><span></span>
+            </div>
+            <span class="hamburger-label">MENU</span>
+          </button>
+          <a href="./Page8.html" class="btn-book-nav d-none d-lg-inline-flex">
+            <i class="fas fa-calendar-check me-2"></i>จองเลยตอนนี้
+          </a>
+        </div>
+      </nav>
+      <div class="mobile-nav" id="mobileNav">
+        <a href="./PektianPage.html">ห้องพัก - ปึกเตียนซีวิว คอนโดเทล</a>
+        <a href="./CacapabanaPage.html">ห้องพัก - โคปาคาบาน่า จอมเทียน</a>
+        <a href="./Page4.html">ความสะดวกสบาย</a>
+        <a href="./LocationPekTian.html">แผนที่ — ปึกเตียนซีวิว คอนโดเทล</a>
+        <a href="./LocationCopacabana.html">แผนที่ — Copacabana Beach Jomtien</a>
+        <a href="./Page3.html">ประกาศ</a>
+        <a href="./Page7.html">รีวิว</a>
+        <a href="./Page6.html">วิธีการจอง</a>
+        <a href="./Page8.html" style="background:var(--sky-dark);color:#fff;margin:10px 24px 0;border-radius:4px;text-align:center;">จองเลยตอนนี้</a>
+        <div style="padding:14px 24px 6px;border-top:1px solid var(--sky-pale);margin-top:6px;display:flex;flex-direction:column;gap:8px;">
+          <a href="tel:0863429855" style="color:var(--sky-dark);font-size:.82rem;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:8px;"><i class="fas fa-phone" style="color:var(--sky-mid);width:16px"></i> 086 342 9855</a>
+          <a href="mailto:jew.scb18@gmail.com" style="color:var(--sky-dark);font-size:.82rem;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:8px;"><i class="fas fa-envelope" style="color:var(--sky-mid);width:16px"></i> jew.scb18@gmail.com</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END TOP BAR -->
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+
+  <div style="position:absolute;inset:0;background:url('./images/LocationCopacabana/Copacabana.jpg') center/cover;opacity:.25;"></div>
+
+  <div class="container page-hero-content">
+    <span class="page-hero-eyebrow">NICHA CONDO</span>
+    <h1 class="page-hero-title">แผนที่</h1>
+    <p class="page-hero-sub">ค้นหาเส้นทางมายัง โคปาคาบาน่า จอมเทียน</p>
+  </div>
+</div>
+
+<!-- MAP SECTION -->
+<section class="section">
+  <div class="container">
+
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-label">แผนที่</span>
+      <h2 class="section-title">วิธีเดินทางมา<span>หาเรา</span></h2>
+      <div class="divider-sky mx-auto"></div>
+      <p class="section-lead mx-auto">551 5 ตำบล หนองปรือ อำเภอบางละมุง ชลบุรี 20150</p>
+    </div>
+
+    <div class="row g-4 align-items-stretch">
+
+      <!-- MAP -->
+      <div class="col-lg-8" data-aos="fade-right">
+        <div class="map-wrapper">
+          <div id="nicha-map"></div>
+        </div>
+        <div class="map-controls mt-3">
+          <a href="https://maps.app.goo.gl/Hg2yndBDx95xqPms6" target="_blank" class="map-ctrl-btn map-ctrl-primary">
+            <i class="fas fa-directions"></i> นำทางด้วย Google Maps
+          </a>
+          <button onclick="map.flyTo([12.8917594, 100.8753959], 16, {animate:true, duration:1.2})" class="map-ctrl-btn map-ctrl-outline">
+            <i class="fas fa-crosshairs"></i> กลับไปที่ตำแหน่ง
+          </button>
+          <button onclick="toggleSatellite()" class="map-ctrl-btn map-ctrl-outline" id="satBtn">
+            <i class="fas fa-satellite"></i> ดูภาพถ่ายดาวเทียม
+          </button>
+        </div>
+      </div>
+      
+      <!-- INFO PANEL -->
+      <div class="col-lg-4" data-aos="fade-left">
+        <div class="map-info-card">
+          <div class="map-info-title">โคปาคาบาน่า จอมเทียน</div>
+          <p style="font-size:.78rem;color:var(--text-lt);margin-bottom:16px;">NICHA CONDO · Chonburi</p>
+
+          <div class="map-detail-row">
+            <div class="map-detail-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div>
+              <div class="map-detail-label">ที่อยู่</div>
+              <div class="map-detail-value">551 5 ตำบล หนองปรือ<br>อำเภอบางละมุง ชลบุรี 20150</div>
+            </div>
+          </div>
+          <div class="map-detail-row">
+            <div class="map-detail-icon"><i class="fas fa-phone"></i></div>
+            <div>
+              <div class="map-detail-label">โทรศัพท์</div>
+              <div class="map-detail-value"><a href="tel:0863429855" style="color:var(--sky-dark);text-decoration:none;font-weight:600;">086 342 9855</a></div>
+            </div>
+          </div>
+          <div class="map-detail-row">
+            <div class="map-detail-icon"><i class="fas fa-clock"></i></div>
+            <div>
+              <div class="map-detail-label">เวลาเช็คอิน / เช็คเอาท์</div>
+              <div class="map-detail-value">Check-in: 14:00 น.<br>Check-out: 12:00 น.</div>
+            </div>
+          </div>
+          <div class="map-detail-row">
+            <div class="map-detail-icon"><i class="fas fa-route"></i></div>
+            <div>
+              <div class="map-detail-label">ระยะทางจากสถานที่ใกล้เคียง</div>
+              <div class="map-detail-value" style="margin-top:6px;">
+                <span class="dist-badge"><i class="fas fa-umbrella-beach"></i> ชายหาดจอมเทียน ~50 ม.</span>
+                <span class="dist-badge"><i class="fas fa-train"></i> ตลาดโต้รุ่งจอมเทียน ~800 ม.</span>
+                <span class="dist-badge"><i class="fas fa-city"></i> ตลาดน้ำสี่ภาค พัทยา ~5 กม.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <a href="./Page8.html" class="btn-sky w-100 text-center" style="display:block;">
+              <i class="fas fa-calendar-check me-2"></i>จองเลยตอนนี้
+            </a>
+          </div>
+        </div>
+      </div>
+
+    <div class="col-12">
+      <div class="section-alt" style="border-radius: var(--radius); padding: 40px; margin-top: 30px;">
+        <h3 class="section-title mb-4" style="text-align: center; font-size: 1.8rem;">
+          ระยะเวลาเดินทาง<span style="color: var(--sky-mid);">จากจังหวัดใกล้เคียง</span>
+        </h3>
+        <div class="row g-3 justify-content-center">
+          <div class="col-md-4 col-sm-6">
+            <div style="background: linear-gradient(135deg, var(--sky-light), var(--sky-pale)); border-radius: 12px; padding: 24px; text-align: center; box-shadow: var(--sh-sm); border-left: 4px solid var(--sky-dark); transition: transform .3s, box-shadow .3s;" class="travel-card" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='var(--sh-md)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--sh-sm)'">
+              <i class="fas fa-city" style="font-size: 2.2rem; color: var(--sky-dark); margin-bottom: 12px; display: block;"></i>
+              <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--text); margin-bottom: 8px; font-weight: 600;">สมุทรปราการ</h4>
+              <p style="font-size: 1.1rem; font-weight: 700; color: var(--sky-dark); margin: 0;">1.5 ชั่วโมง</p>
+              <p style="font-size: .75rem; color: var(--text-lt); margin-top: 6px;">ระยะทางใกล้ที่สุด</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div style="background: linear-gradient(135deg, var(--sky-light), var(--sky-pale)); border-radius: 12px; padding: 24px; text-align: center; box-shadow: var(--sh-sm); border-left: 4px solid var(--sky-mid); transition: transform .3s, box-shadow .3s;" class="travel-card" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='var(--sh-md)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--sh-sm)'">
+              <i class="fas fa-gopuram" style="font-size: 2.2rem; color: var(--sky-mid); margin-bottom: 12px; display: block;"></i>
+              <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--text); margin-bottom: 8px; font-weight: 600;">ระยอง</h4>
+              <p style="font-size: 1.1rem; font-weight: 700; color: var(--sky-mid); margin: 0;">2 ชั่วโมง</p>
+              <p style="font-size: .75rem; color: var(--text-lt); margin-top: 6px;">อุตสหกรรม โรงงาน</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div style="background: linear-gradient(135deg, var(--sky-light), var(--sky-pale)); border-radius: 12px; padding: 24px; text-align: center; box-shadow: var(--sh-sm); border-left: 4px solid var(--sky); transition: transform .3s, box-shadow .3s;" class="travel-card" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='var(--sh-md)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--sh-sm)'">
+              <i class="fas fa-umbrella-beach" style="font-size: 2.2rem; color: var(--sky); margin-bottom: 12px; display: block;"></i>
+              <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--text); margin-bottom: 8px; font-weight: 600;">กรุงเทพมหานคร</h4>
+              <p style="font-size: 1.1rem; font-weight: 700; color: var(--sky); margin: 0;">1 ชั่วโมง</p>
+              <p style="font-size: .75rem; color: var(--text-lt); margin-top: 6px;">เมืองหลวง</p>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-12 col-md-4">
+        <div class="footer-brand">NICHA CONDO<small>Copacabana Beach Jomtien · Chonburi</small></div>
+        <p style="font-size:.82rem;line-height:1.8;color:rgba(255,255,255,.55);margin-bottom:20px;">551 5 ตำบล หนองปรือ อำเภอบางละมุง<br>จังหวัดชลบุรี 20150</p>
+        <div>
+          <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-line"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-md-2">
+        <h6>เมนูหลัก</h6>
+        <ul class="footer-links">
+          <li><a href="./pektian-seaview.html">ห้องพัก</a></li>
+          <li><a href="./Page4.html">สิ่งอำนวยความสะดวก</a></li>
+          <li><a href="./Page2.html">แผนที่</a></li>
+          <li><a href="./Page7.html">รีวิว</a></li>
+          <li><a href="./Page3.html">ประกาศ</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md-2">
+        <h6>ข้อมูล</h6>
+        <ul class="footer-links">
+          <li><a href="./Page6.html">วิธีการจอง</a></li>
+          <li><a href="./Page8.html">ติดต่อเรา</a></li>
+          <li><a href="#">นโยบายความเป็นส่วนตัว</a></li>
+        </ul>
+      </div>
+      <div class="col-12 col-md-4">
+        <h6>ติดต่อเรา</h6>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <a href="tel:0863429855" style="color:rgba(255,255,255,.65);text-decoration:none;font-size:.82rem;"><i class="fas fa-phone me-2" style="color:var(--sky)"></i> 086 342 9855</a>
+          <a href="mailto:jew.scb18@gmail.com" style="color:rgba(255,255,255,.65);text-decoration:none;font-size:.82rem;"><i class="fas fa-envelope me-2" style="color:var(--sky)"></i> jew.scb18@gmail.com</a>
+          <span style="color:rgba(255,255,255,.65);font-size:.82rem;"><i class="fas fa-map-marker-alt me-2" style="color:var(--sky)"></i> 149 หมู่ 3 ปึกเตียน ท่ายาง เพชรบุรี</span>
+        </div>
+        <div class="mt-4">
+          <a href="./Page8.html" style="display:inline-block;background:var(--sky-mid);color:#fff;padding:10px 24px;border-radius:4px;font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;">จองเลยตอนนี้</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container d-flex flex-wrap justify-content-between gap-2">
+      <span>&copy; 2020 K&J CondotelRent · All Rights Reserved</span>
+      <span style="color:rgba(255,255,255,.25)">Designed with ♥ for Nicha Condo</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  AOS.init({ once: true, duration: 700, offset: 60 });
+
+  window.addEventListener('scroll', () => {
+    document.getElementById('topBar').classList.toggle('scrolled', window.scrollY > 20);
+  });
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('mobileNav').classList.toggle('open');
+    document.getElementById('hamburger').classList.toggle('open');
+  });
+
+  /* ════════════════════════════════
+     LEAFLET MAP
+  ════════════════════════════════ */
+  const LAT = 12.8917594, LNG = 100.8753959;
+
+  // Tile layers
+  const streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://openstreetmap.org">OpenStreetMap</a>',
+    maxZoom: 19
+  });
+  const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: '© Esri World Imagery',
+    maxZoom: 19
+  });
+
+  const map = L.map('nicha-map', {
+    center: [LAT, LNG],
+    zoom: 15,
+    layers: [streets],
+    zoomControl: true
+  });
+
+  let isSatellite = false;
+  function toggleSatellite() {
+    if (isSatellite) {
+      map.removeLayer(satellite);
+      map.addLayer(streets);
+      document.getElementById('satBtn').innerHTML = '<i class="fas fa-satellite"></i> ดูภาพถ่ายดาวเทียม';
+    } else {
+      map.removeLayer(streets);
+      map.addLayer(satellite);
+      document.getElementById('satBtn').innerHTML = '<i class="fas fa-map"></i> ดูแผนที่ปกติ';
+    }
+    isSatellite = !isSatellite;
+  }
+
+  /* Custom animated pin icon */
+  const pinHtml = `
+    <div class="custom-pin">
+      <div class="pin-pulse"></div>
+      <div class="pin-pulse pin-pulse-2"></div>
+      <div class="pin-icon">
+        <i class="fas fa-building"></i>
+      </div>
+    </div>`;
+
+  const pinIcon = L.divIcon({
+    html: pinHtml,
+    className: '',
+    iconSize: [50, 50],
+    iconAnchor: [25, 40],
+    popupAnchor: [0, -42],
+    tooltipAnchor: [20, -20]
+  });
+
+  /* Popup HTML */
+  const popupContent = `
+    <div class="map-popup">
+      <div class="map-popup-header">
+        <div class="map-popup-badge">NICHA CONDO · PHETCHABURI</div>
+        <div class="map-popup-name">ปึกเตียนซีวิว<br>คอนโดเทล</div>
+      </div>
+      <div class="map-popup-body">
+        <div class="map-popup-row">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>551 5 ตำบล หนองปรือ อำเภอบางละมุง ชลบุรี 20150</span>
+        </div>
+        <div class="map-popup-row">
+          <i class="fas fa-phone"></i>
+          <span><a href="tel:0863429855" style="color:var(--sky-dark);font-weight:600;text-decoration:none;">086 342 9855</a></span>
+        </div>
+        <div class="map-popup-row">
+          <i class="fas fa-umbrella-beach"></i>
+          <span>ติดชายหาดจอมเทียน หาดดงตาล วิวทะเล 180°</span>
+        </div>
+        <hr class="map-popup-divider">
+        <div class="map-popup-actions">
+          <a href="https://maps.app.goo.gl/1jD3uhwUedoT2KSR7" target="_blank" class="map-popup-btn map-popup-btn-primary">
+            <i class="fas fa-directions"></i> นำทาง
+          </a>
+          <a href="./Page8.html" class="map-popup-btn map-popup-btn-outline">
+            <i class="fas fa-calendar-check"></i> จองเลย
+          </a>
+        </div>
+      </div>
+    </div>`;
+
+  /* Create marker */
+  const marker = L.marker([LAT, LNG], { icon: pinIcon })
+    .addTo(map)
+    .bindPopup(popupContent, {
+      maxWidth: 300,
+      minWidth: 260,
+      className: 'nicha-popup'
+    })
+    .bindTooltip('🏨 NICHA CONDO — ปึกเตียนซีวิว', {
+      permanent: false,
+      direction: 'right',
+      offset: [14, -18]
+    });
+
+  /* Open popup on hover (desktop) */
+  marker.on('mouseover', function() {
+    this.openPopup();
+  });
+
+  /* Keep popup open when hovering over it */
+  marker.on('popupopen', function() {
+    const popupEl = document.querySelector('.leaflet-popup');
+    if (popupEl) {
+      popupEl.addEventListener('mouseenter', () => marker.openPopup());
+    }
+  });
+
+  /* Open popup on click/touch (mobile) */
+  marker.on('click', function() {
+    this.openPopup();
+  });
+
+  /* Open popup by default on load */
+  setTimeout(() => marker.openPopup(), 800);
+
+</script>
+</body>
+</html>
