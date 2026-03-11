@@ -1,0 +1,1200 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>วิธีการจอง — NICHA CONDO</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="./images/logo.png">
+  <link rel="apple-touch-icon" href="./images/logo.png">
+  <style>
+    :root {
+      --sky:       #5bb8f5;
+      --sky-mid:   #2196d9;
+      --sky-deep:  #0d6eaf;
+      --sky-dark:  #084e82;
+      --sky-pale:  #e8f6fd;
+      --sky-light: #c8e9f8;
+      --white:     #ffffff;
+      --off-white: #f5fbff;
+      --text:      #0d2d45;
+      --text-mid:  #2a5674;
+      --text-lt:   #6a9bb8;
+      --radius:    14px;
+      --sh-sm:     0 4px 18px rgba(13,110,175,.10);
+      --sh-md:     0 10px 40px rgba(13,110,175,.16);
+      --sh-lg:     0 20px 60px rgba(13,110,175,.22);
+      --green:     #1ab87a;
+      --green-dk:  #0d9460;
+      --orange:    #f5a623;
+      --orange-dk: #d4880a;
+      --purple:    #7c3aed;
+      --purple-dk: #5b21b6;
+      --purple-lt: #f3eeff;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Prompt', sans-serif;
+      background: var(--white);
+      color: var(--text);
+      overflow-x: hidden;
+      padding-top: 108px;
+    }
+    h1,h2,h3,h4 { font-family: 'Cormorant Garamond', serif; letter-spacing: .02em; }
+
+    /* ── TOP BAR ── */
+    .top-bar {
+      position: fixed; top: 0; width: 100%; z-index: 1050;
+      background: rgba(255,255,255,.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(91,184,245,.25);
+      transition: box-shadow .3s;
+    }
+    .top-bar.scrolled { box-shadow: 0 4px 24px rgba(13,110,175,.12); }
+    .logo-row { background: var(--sky-dark); padding: 10px 0; }
+    .logo-row .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; min-width: 0; }
+    .logo-row .brand img { height: clamp(28px,5vw,40px); flex-shrink: 0; }
+    .logo-row .brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem,4vw,1.6rem); font-weight: 700;
+      color: var(--white); letter-spacing: .06em; white-space: nowrap;
+    }
+    .logo-contact { flex-shrink: 0; }
+    .logo-contact-item {
+      display: inline-flex; align-items: center; gap: 5px;
+      color: rgba(255,255,255,.85); text-decoration: none;
+      font-size: clamp(.62rem,2vw,.78rem); font-weight: 500;
+      transition: color .2s; white-space: nowrap;
+    }
+    .logo-contact-item i { color: var(--sky-light); font-size: .8rem; }
+    .logo-contact-item:hover { color: var(--white); }
+    .logo-contact-sep { color: rgba(255,255,255,.3); font-size: .75rem; }
+    .nav-row { background: var(--white); }
+    .main-nav { display: flex; align-items: center; justify-content: space-between; }
+    .nav-links { display: flex; align-items: center; list-style: none; gap: 0; margin: 0; padding: 0; }
+    .nav-links li a {
+      display: block; padding: 16px 16px;
+      font-size: .82rem; font-weight: 500; color: var(--text);
+      text-decoration: none; letter-spacing: .04em;
+      border-bottom: 3px solid transparent;
+      transition: color .2s, border-color .2s; white-space: nowrap;
+    }
+    .nav-links li a:hover,
+    .nav-links li a.active { color: var(--sky-mid); border-bottom-color: var(--sky-mid); }
+    .nav-links li.has-drop { position: relative; }
+    .drop-menu {
+      display: none; position: absolute; top: 100%; left: 0;
+      background: var(--white); border-radius: 0 0 10px 10px;
+      box-shadow: var(--sh-md); min-width: 220px;
+      border-top: 3px solid var(--sky-mid); z-index: 999;
+    }
+    .nav-links li.has-drop:hover .drop-menu { display: block; }
+    .drop-menu a {
+      display: block; padding: 12px 20px; font-size: .82rem;
+      font-weight: 500; color: var(--text); text-decoration: none;
+      border-bottom: 1px solid var(--sky-pale);
+      transition: background .2s, color .2s;
+    }
+    .drop-menu a:hover { background: var(--sky-pale); color: var(--sky-dark); }
+    .btn-book-nav {
+      background: var(--sky-mid); color: var(--white);
+      padding: 10px 22px; border-radius: 4px;
+      font-size: .82rem; font-weight: 600;
+      text-decoration: none; white-space: nowrap; letter-spacing: .06em;
+      transition: background .2s, transform .15s; border: none;
+    }
+    .btn-book-nav:hover { background: var(--sky-dark); color: var(--white); transform: translateY(-1px); }
+    .hamburger {
+      display: none; background: none; border: none; cursor: pointer;
+      padding: 10px 4px; flex-direction: row; align-items: center; gap: 10px;
+    }
+    .hamburger-bars { display: flex; flex-direction: column; gap: 5px; }
+    .hamburger-bars span { display: block; width: 26px; height: 2px; background: var(--text); transition: all .3s; border-radius: 2px; }
+    .hamburger-label { font-family: 'Prompt', sans-serif; font-size: .88rem; font-weight: 700; color: var(--text); letter-spacing: .12em; text-transform: uppercase; line-height: 1; }
+    .hamburger.open .hamburger-bars span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open .hamburger-bars span:nth-child(2) { opacity: 0; }
+    .hamburger.open .hamburger-bars span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-nav { display: none; background: var(--white); border-top: 1px solid var(--sky-pale); padding: 10px 0 20px; }
+    .mobile-nav.open { display: block; }
+    .mobile-nav a { display: block; padding: 11px 24px; font-size: .9rem; color: var(--text); text-decoration: none; font-weight: 500; border-bottom: 1px solid var(--sky-pale); }
+    .mobile-nav a:hover { background: var(--sky-pale); color: var(--sky-dark); }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      background: linear-gradient(135deg, var(--sky-dark) 0%, var(--sky-mid) 100%);
+      padding: clamp(40px,7vw,80px) 0;
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .page-hero::after {
+      content: '';
+      position: absolute; right: -60px; bottom: -60px;
+      width: 320px; height: 320px;
+      background: radial-gradient(circle, rgba(255,255,255,.08) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .page-hero-content { position: relative; z-index: 1; }
+    .page-hero-eyebrow {
+      font-size: .72rem; letter-spacing: .3em; text-transform: uppercase;
+      color: var(--sky-light); font-weight: 600; display: block; margin-bottom: 10px;
+    }
+    .page-hero-title {
+      font-size: clamp(2rem,5vw,3.5rem); font-weight: 700;
+      color: var(--white); line-height: 1.1; margin-bottom: 12px;
+    }
+    .page-hero-sub {
+      font-size: clamp(.9rem,1.8vw,1.1rem); font-weight: 300;
+      color: rgba(255,255,255,.8); margin-bottom: 0;
+    }
+    .page-hero-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,.15); backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 999px; padding: 7px 16px;
+      font-size: .78rem; font-weight: 500; color: var(--white);
+    }
+    .hero-badge i { font-size: .75rem; color: var(--sky-light); }
+
+    /* ── SECTION COMMON ── */
+    .section { padding: clamp(50px,8vw,90px) 0; }
+    .section-alt { background: var(--off-white); }
+    .section-label {
+      font-size: .72rem; letter-spacing: .3em; text-transform: uppercase;
+      color: var(--sky-mid); font-weight: 600; margin-bottom: 12px; display: block;
+    }
+    .section-title {
+      font-size: clamp(1.8rem,4vw,3rem); font-weight: 600;
+      color: var(--text); line-height: 1.15; margin-bottom: 16px;
+    }
+    .section-title span { color: var(--sky-mid); }
+    .section-lead {
+      font-size: 1rem; color: var(--text-mid);
+      font-weight: 300; line-height: 1.8; max-width: 600px;
+    }
+    .divider-sky {
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, var(--sky), var(--sky-mid));
+      border-radius: 99px; margin: 18px 0 28px;
+    }
+
+    /* ── BOOKING METHOD TABS ── */
+    .booking-tabs { display: flex; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; }
+    .booking-tab-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 28px; border-radius: 999px; border: 2px solid var(--sky-light);
+      background: var(--white); color: var(--text-mid); font-size: .88rem; font-weight: 600;
+      cursor: pointer; transition: all .25s; text-decoration: none; letter-spacing: .02em;
+    }
+    .booking-tab-btn i { font-size: 1.1rem; }
+    .booking-tab-btn:hover { border-color: var(--sky-mid); color: var(--sky-mid); background: var(--sky-pale); }
+    .booking-tab-btn.active-line { border-color: var(--green); background: var(--green); color: #fff; }
+    .booking-tab-btn.active-app  { border-color: var(--orange); background: var(--orange); color: #fff; }
+    .booking-tab-btn.active-web  { border-color: var(--purple); background: var(--purple); color: #fff; }
+
+    /* ── BOOKING PANELS ── */
+    .booking-panel { display: none; }
+    .booking-panel.active { display: block; animation: fadeUp .4s ease forwards; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── STEP CARDS ── */
+    .steps-wrap { display: flex; flex-direction: column; gap: 0; }
+    .step-item {
+      display: flex; gap: 24px; align-items: flex-start;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--sky-pale);
+      position: relative;
+    }
+    .step-item:last-child { border-bottom: none; }
+    .step-num-col { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 0; }
+    .step-num {
+      width: 52px; height: 52px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 700; color: var(--white);
+      flex-shrink: 0; position: relative; z-index: 1;
+    }
+    .step-num.green-num { background: linear-gradient(135deg, var(--green), var(--green-dk)); box-shadow: 0 6px 20px rgba(26,184,122,.3); }
+    .step-num.app-num  { background: linear-gradient(135deg, var(--orange), var(--orange-dk)); box-shadow: 0 6px 20px rgba(245,166,35,.3); }
+    .step-connector {
+      width: 2px; flex: 1; min-height: 20px;
+      background: linear-gradient(to bottom, rgba(26,184,122,.3), transparent);
+      margin: 4px 0;
+    }
+    .step-connector.app-conn { background: linear-gradient(to bottom, rgba(245,166,35,.3), transparent); }
+    .step-body { flex: 1; padding-top: 10px; }
+    .step-body h5 { font-family: 'Prompt', sans-serif; font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+    .step-body p { font-size: .88rem; color: var(--text-mid); line-height: 1.75; margin: 0; }
+    .step-tag {
+      display: inline-block; font-size: .65rem; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; padding: 3px 10px; border-radius: 999px; margin-bottom: 8px;
+    }
+    .step-tag.important { background: rgba(245,166,35,.15); color: var(--orange-dk); }
+    .step-tag.note      { background: var(--sky-pale); color: var(--sky-deep); }
+
+    /* ── HIGHLIGHT BOX ── */
+    .highlight-box {
+      border-radius: var(--radius);
+      padding: 30px 32px;
+      display: flex; gap: 20px; align-items: flex-start;
+      margin-bottom: 32px;
+    }
+    .highlight-box.green-box {
+      background: linear-gradient(135deg, rgba(26,184,122,.08) 0%, rgba(26,184,122,.04) 100%);
+      border: 1.5px solid rgba(26,184,122,.25);
+    }
+    .highlight-box.orange-box {
+      background: linear-gradient(135deg, rgba(245,166,35,.08) 0%, rgba(245,166,35,.04) 100%);
+      border: 1.5px solid rgba(245,166,35,.25);
+    }
+    .highlight-box-icon {
+      width: 56px; height: 56px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; flex-shrink: 0;
+    }
+    .green-box .highlight-box-icon { background: rgba(26,184,122,.15); color: var(--green-dk); }
+    .orange-box .highlight-box-icon { background: rgba(245,166,35,.15); color: var(--orange-dk); }
+    .highlight-box-body h4 { font-family: 'Prompt', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .highlight-box-body p { font-size: .88rem; color: var(--text-mid); line-height: 1.7; margin: 0; }
+
+    /* ── LINE / APP PLATFORM CARDS ── */
+    .platform-card {
+      border-radius: var(--radius);
+      border: 2px solid var(--sky-light);
+      background: var(--white);
+      padding: 28px 28px;
+      display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px;
+      transition: all .3s; height: 100%;
+      text-decoration: none; color: inherit;
+    }
+    .platform-card:hover { border-color: var(--sky-mid); box-shadow: var(--sh-md); transform: translateY(-4px); }
+    .platform-card-icon {
+      width: 72px; height: 72px; border-radius: 18px;
+      display: flex; align-items: center; justify-content: center; font-size: 2rem;
+    }
+    .platform-card-icon.line  { background: #00b900; color: #fff; }
+    .platform-card-icon.agoda { background: #e8174b; color: #fff; }
+    .platform-card-icon.bdc   { background: #003580; color: #fff; }
+    .platform-card h5 { font-family: 'Prompt', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text); margin: 0; }
+    .platform-card p { font-size: .82rem; color: var(--text-lt); margin: 0; line-height: 1.6; }
+    .platform-btn {
+      display: inline-block; padding: 10px 22px; border-radius: 999px;
+      font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      text-decoration: none; transition: all .2s; margin-top: auto;
+    }
+    .platform-btn.line-btn  { background: #00b900; color: #fff; }
+    .platform-btn.line-btn:hover { background: #009900; color: #fff; }
+    .platform-btn.agoda-btn { background: #e8174b; color: #fff; }
+    .platform-btn.agoda-btn:hover { background: #c0103b; color: #fff; }
+    .platform-btn.bdc-btn   { background: #003580; color: #fff; }
+    .platform-btn.bdc-btn:hover { background: #002560; color: #fff; }
+
+    .highlight-box.purple-box {
+      background: linear-gradient(135deg, rgba(124,58,237,.08) 0%, rgba(124,58,237,.04) 100%);
+      border: 1.5px solid rgba(124,58,237,.25);
+    }
+    .purple-box .highlight-box-icon { background: rgba(124,58,237,.13); color: var(--purple-dk); }
+    .step-num.web-num { background: linear-gradient(135deg, var(--purple), var(--purple-dk)); box-shadow: 0 6px 20px rgba(124,58,237,.28); }
+    .step-connector.web-conn { background: linear-gradient(to bottom, rgba(124,58,237,.3), transparent); }
+    .bank-card {
+      background: linear-gradient(135deg, var(--sky-dark) 0%, var(--sky-deep) 100%);
+      border-radius: var(--radius); padding: 32px 36px;
+      color: #fff; position: relative; overflow: hidden;
+    }
+    .bank-card::before {
+      content: ''; position: absolute; right: -40px; top: -40px;
+      width: 200px; height: 200px; border-radius: 50%;
+      background: rgba(255,255,255,.06);
+    }
+    .bank-card::after {
+      content: ''; position: absolute; right: 40px; bottom: -60px;
+      width: 160px; height: 160px; border-radius: 50%;
+      background: rgba(255,255,255,.04);
+    }
+    .bank-card-content { position: relative; z-index: 1; }
+    .bank-label { font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; color: var(--sky-light); font-weight: 600; margin-bottom: 6px; }
+    .bank-name { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .bank-name-en { font-size: .82rem; color: rgba(255,255,255,.7); margin-bottom: 20px; }
+    .bank-acc-label { font-size: .75rem; color: rgba(255,255,255,.6); margin-bottom: 4px; }
+    .bank-acc-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; font-weight: 700; letter-spacing: .15em; color: #fff;
+    }
+    .bank-holder { font-size: .88rem; color: rgba(255,255,255,.8); margin-top: 8px; }
+    .bank-holder span { color: var(--sky-light); font-weight: 600; }
+    .bank-logo-area {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 18px;
+    }
+    .bank-logo-circle {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: #5a2d82; display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; color: #fff; font-weight: 700; font-family: 'Prompt', sans-serif;
+    }
+    .bank-logo-text { font-size: .82rem; color: rgba(255,255,255,.8); font-weight: 500; }
+    .bank-deposit-note {
+      background: rgba(255,255,255,.12); border-radius: 8px; padding: 12px 16px;
+      font-size: .82rem; color: rgba(255,255,255,.85); margin-top: 20px;
+      border-left: 3px solid var(--sky-light);
+    }
+
+    /* ── POLICY ACCORDION ── */
+    .policy-accordion .accordion-item {
+      border: 1.5px solid var(--sky-light); border-radius: var(--radius) !important;
+      margin-bottom: 10px; overflow: hidden;
+    }
+    .policy-accordion .accordion-button {
+      font-family: 'Prompt', sans-serif; font-size: .92rem; font-weight: 600;
+      color: var(--text); background: var(--white);
+    }
+    .policy-accordion .accordion-button:not(.collapsed) {
+      color: var(--sky-dark); background: var(--sky-pale); box-shadow: none;
+    }
+    .policy-accordion .accordion-button::after {
+      filter: hue-rotate(190deg);
+    }
+    .policy-accordion .accordion-body {
+      font-size: .88rem; color: var(--text-mid); line-height: 1.8;
+    }
+    .policy-icon { width: 36px; height: 36px; border-radius: 10px; background: var(--sky-pale); color: var(--sky-mid); display: inline-flex; align-items: center; justify-content: center; margin-right: 12px; font-size: .95rem; }
+
+    /* ── CTA STRIP ── */
+    .cta-strip {
+      background: linear-gradient(135deg, var(--sky-dark) 0%, var(--sky-mid) 100%);
+      padding: 60px 0; text-align: center; position: relative; overflow: hidden;
+    }
+    .cta-strip::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .cta-strip-content { position: relative; z-index: 1; }
+    .cta-strip h2 { font-size: clamp(1.8rem,4vw,2.8rem); color: #fff; margin-bottom: 12px; }
+    .cta-strip p  { color: rgba(255,255,255,.75); font-size: 1rem; margin-bottom: 30px; }
+    .btn-cta-white {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #fff; color: var(--sky-dark);
+      padding: 15px 36px; border-radius: 4px;
+      font-size: .9rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; text-decoration: none;
+      transition: all .2s; box-shadow: 0 6px 24px rgba(0,0,0,.15);
+    }
+    .btn-cta-white:hover { background: var(--sky-pale); color: var(--sky-dark); transform: translateY(-2px); }
+    .btn-cta-outline-white {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: transparent; color: #fff;
+      padding: 14px 32px; border-radius: 4px; border: 2px solid rgba(255,255,255,.5);
+      font-size: .9rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; text-decoration: none;
+      transition: all .2s;
+    }
+    .btn-cta-outline-white:hover { border-color: #fff; background: rgba(255,255,255,.1); color: #fff; }
+
+    /* ── COMMON ── */
+    .btn-sky {
+      background: var(--sky-dark); color: var(--white);
+      padding: 12px 28px; border-radius: 4px; border: none;
+      font-size: .85rem; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; text-decoration: none; cursor: pointer;
+      transition: background .2s, transform .15s; display: inline-block;
+    }
+    .btn-sky:hover { background: var(--sky-mid); color: var(--white); transform: translateY(-2px); }
+    .btn-sky-outline {
+      background: transparent; color: var(--sky-dark);
+      padding: 11px 26px; border-radius: 4px;
+      border: 2px solid var(--sky-dark);
+      font-size: .85rem; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; text-decoration: none; cursor: pointer;
+      transition: all .2s; display: inline-block;
+    }
+    .btn-sky-outline:hover { background: var(--sky-dark); color: var(--white); }
+
+    /* ── FOOTER ── */
+    footer { background: var(--text); color: rgba(255,255,255,.7); padding: 60px 0 0; font-size: .83rem; }
+    .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 700; color: var(--white); margin-bottom: 14px; }
+    .footer-brand small { font-family: 'Prompt', sans-serif; font-size: .72rem; letter-spacing: .25em; color: var(--sky-light); display: block; text-transform: uppercase; margin-top: 2px; }
+    .footer-links { list-style: none; padding: 0; }
+    .footer-links li { margin-bottom: 10px; }
+    .footer-links a { color: rgba(255,255,255,.65); text-decoration: none; transition: color .2s; font-size: .82rem; }
+    .footer-links a:hover { color: var(--sky-light); }
+    footer h6 { color: var(--white); font-family: 'Prompt', sans-serif; font-size: .7rem; letter-spacing: .22em; text-transform: uppercase; margin-bottom: 18px; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.08); padding: 20px 0; margin-top: 50px; font-size: .75rem; color: rgba(255,255,255,.4); }
+    .social-btn { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.6); text-decoration: none; font-size: .85rem; transition: all .2s; margin-right: 8px; }
+    .social-btn:hover { background: var(--sky-mid); border-color: var(--sky-mid); color: var(--white); }
+
+    @media (max-width: 991px) {
+      body { padding-top: 90px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .main-nav { justify-content: flex-start; }
+      .step-item { gap: 16px; }
+    }
+    @media (max-width: 575px) {
+      body { padding-top: 82px; }
+      .booking-tab-btn { padding: 11px 18px; font-size: .82rem; }
+      .bank-acc-num { font-size: 1.5rem; }
+      .bank-card { padding: 22px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ TOP BAR ══ -->
+<div class="top-bar" id="topBar">
+  <div class="logo-row">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between">
+        <a href="index.html" class="brand">
+          <img src="./images/logo.png" alt="NICHA CONDO">
+          <span class="brand-name">NICHA CONDO</span>
+        </a>
+        <div class="d-flex align-items-center gap-2 logo-contact">
+          <a href="tel:0863429855" class="logo-contact-item">
+            <i class="fas fa-phone"></i> <span>086 342 9855</span>
+          </a>
+          <span class="logo-contact-sep">|</span>
+          <a href="/cdn-cgi/l/email-protection#fe949b89d08d9d9ccfc6be99939f9792d09d9193" class="logo-contact-item">
+            <i class="fas fa-envelope"></i>
+            <span class="d-none d-sm-inline"><span class="__cf_email__" data-cfemail="e78d8290c9948485d6dfa7808a868e8bc984888a">[email&#160;protected]</span></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-row">
+    <div class="container">
+      <nav class="main-nav">
+        <ul class="nav-links">
+          <li class="has-drop">
+            <a href="#">ห้องพัก <i class="fas fa-chevron-down ms-1" style="font-size:.6rem"></i></a>
+            <div class="drop-menu">
+              <a href="./pektian-seaview.html">ปึกเตียนซีวิว คอนโดเทล</a>
+              <a href="./copacabana-jomtien.html">โคปาคาบาน่า จอมเทียน</a>
+            </div>
+          </li>
+          <li><a href="./Page4.html">ความสะดวกสบาย</a></li>
+          <li class="has-drop">
+            <a href="#">แผนที่ <i class="fas fa-chevron-down ms-1" style="font-size:.6rem"></i></a>
+            <div class="drop-menu">
+              <a href="./Page2.html">ปึกเตียนซีวิว คอนโดเทล</a>
+              <a href="./Page2-copacabana.html">Copacabana Beach Jomtien</a>
+            </div>
+          </li>
+          <li><a href="./Page3.html">ประกาศ</a></li>
+          <li><a href="./Page7.html">รีวิว</a></li>
+          <li><a href="./Page6.html" class="active">วิธีการจอง</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-3">
+          <button class="hamburger" id="hamburger" aria-label="Menu">
+            <div class="hamburger-bars"><span></span><span></span><span></span></div>
+            <span class="hamburger-label">MENU</span>
+          </button>
+          <a href="./Page8.html" class="btn-book-nav d-none d-lg-inline-flex">
+            <i class="fas fa-calendar-check me-2"></i>จองเลยตอนนี้
+          </a>
+        </div>
+      </nav>
+      <div class="mobile-nav" id="mobileNav">
+        <a href="./pektian-seaview.html">ห้องพัก — ปึกเตียนซีวิว คอนโดเทล</a>
+        <a href="./copacabana-jomtien.html">ห้องพัก — โคปาคาบาน่า จอมเทียน</a>
+        <a href="./Page4.html">ความสะดวกสบาย</a>
+        <a href="./Page2.html">แผนที่ — ปึกเตียนซีวิว คอนโดเทล</a>
+        <a href="./Page2-copacabana.html">แผนที่ — Copacabana Beach Jomtien</a>
+        <a href="./Page3.html">ประกาศ</a>
+        <a href="./Page7.html">รีวิว</a>
+        <a href="./Page6.html" style="color:var(--sky-dark);font-weight:700;">วิธีการจอง</a>
+        <a href="./Page8.html" style="background:var(--sky-dark);color:#fff;margin:10px 24px 0;border-radius:4px;text-align:center;">จองเลยตอนนี้</a>
+        <div style="padding:14px 24px 6px;border-top:1px solid var(--sky-pale);margin-top:6px;display:flex;flex-direction:column;gap:8px;">
+          <a href="tel:0863429855" style="color:var(--sky-dark);font-size:.82rem;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:8px;"><i class="fas fa-phone" style="color:var(--sky-mid);width:16px"></i> 086 342 9855</a>
+          <a href="/cdn-cgi/l/email-protection#046e61732a776766353c446369656d682a676b69" style="color:var(--sky-dark);font-size:.82rem;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:8px;"><i class="fas fa-envelope" style="color:var(--sky-mid);width:16px"></i> <span class="__cf_email__" data-cfemail="98f2fdefb6ebfbfaa9a0d8fff5f9f1f4b6fbf7f5">[email&#160;protected]</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END TOP BAR -->
+
+
+<!-- ══ PAGE HERO ══ -->
+<div class="page-hero">
+  <div class="container page-hero-content">
+    <span class="page-hero-eyebrow">NICHA CONDO · PUEKTIAN SEAVIEW</span>
+    <h1 class="page-hero-title">วิธีการจองห้องพัก</h1>
+    <p class="page-hero-sub">จองง่าย รวดเร็ว ผ่านหลายช่องทาง — เลือกแบบที่สะดวกสำหรับคุณ</p>
+    <div class="page-hero-badges">
+      <span class="hero-badge"><i class="fab fa-line"></i> Line Official</span>
+      <span class="hero-badge"><i class="fas fa-hotel"></i> Agoda</span>
+      <span class="hero-badge"><i class="fas fa-globe"></i> Booking.com</span>
+      <span class="hero-badge"><i class="fas fa-shield-alt"></i> จองปลอดภัย 100%</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ BOOKING METHOD CHOOSER ══ -->
+<section class="section">
+  <div class="container">
+
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-label">ขั้นตอนการจอง</span>
+      <h2 class="section-title">เลือก<span>วิธีการจอง</span>ที่คุณต้องการ</h2>
+      <div class="divider-sky mx-auto"></div>
+      <p class="section-lead mx-auto">มี 3 ช่องทางหลักในการจองห้องพัก ทั้งผ่าน Line Official โดยตรง แอปจองโรงแรมออนไลน์ และเว็บโรงแรม</p>
+    </div>
+
+    <!-- Tab Buttons -->
+    <div class="booking-tabs justify-content-center" data-aos="fade-up" data-aos-delay="100">
+      <button class="booking-tab-btn active-line" onclick="switchTab('line', this)">
+        <i class="fab fa-line"></i> จองผ่าน Line Official
+      </button>
+      <button class="booking-tab-btn" id="tab-app-btn" onclick="switchTab('app', this)">
+        <i class="fas fa-mobile-alt"></i> จองผ่านแอปจองโรงแรม
+      </button>
+      <button class="booking-tab-btn" id="tab-web-btn" onclick="switchTab('web', this)">
+        <i class="fas fa-globe"></i> จองผ่านเว็บโรงแรม
+      </button>
+    </div>
+
+    <!-- ─ PANEL: LINE ─ -->
+    <div class="booking-panel active" id="panel-line" data-aos="fade-up" data-aos-delay="150">
+      <div class="row g-5 align-items-start">
+
+        <!-- Steps -->
+        <div class="col-lg-7">
+          <div class="highlight-box green-box mb-4">
+            <div class="highlight-box-icon"><i class="fab fa-line"></i></div>
+            <div class="highlight-box-body">
+              <h4>จองผ่าน Line OA @puektianseaview</h4>
+              <p>วิธีที่ง่ายที่สุด ติดต่อเราโดยตรง ได้รับการยืนยันเร็ว และมีความยืดหยุ่นมากกว่า</p>
+            </div>
+          </div>
+
+          <div class="steps-wrap">
+            <div class="step-item">
+              <div class="step-num-col">
+                <div class="step-num green-num">1</div>
+                <div class="step-connector"></div>
+              </div>
+              <div class="step-body">
+                <span class="step-tag note">เริ่มต้น</span>
+                <h5>ติดต่อผ่าน Line OA</h5>
+                <p>ค้นหา <strong>@puektianseaview</strong> บน Line แล้วส่งข้อความมาหาเรา หรือสแกน QR Code ด้านขวา</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num-col">
+                <div class="step-num green-num">2</div>
+                <div class="step-connector"></div>
+              </div>
+              <div class="step-body">
+                <h5>แจ้งประเภทห้องพักที่ต้องการ</h5>
+                <p>บอกเราว่าต้องการห้องประเภทใด สามารถดูรายละเอียดและราคาได้ที่เมนู <strong>ห้องพัก</strong> บนเว็บไซต์นี้</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num-col">
+                <div class="step-num green-num">3</div>
+                <div class="step-connector"></div>
+              </div>
+              <div class="step-body">
+                <span class="step-tag important">⚠ สำคัญ</span>
+                <h5>แจ้งหากมีสัตว์เลี้ยง</h5>
+                <p>กรุณาแจ้งก่อนจอง หากมีสัตว์เลี้ยงมาพักด้วย เพื่อให้เราเตรียมห้องให้เหมาะสม</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num-col">
+                <div class="step-num green-num">4</div>
+                <div class="step-connector"></div>
+              </div>
+              <div class="step-body">
+                <h5>วางมัดจำขั้นต่ำ 500 บาท</h5>
+                <p>ชำระเงินมัดจำขั้นต่ำ <strong>500 บาท</strong> เข้าบัญชีที่แจ้งไว้ (จำนวนขึ้นอยู่กับจำนวนคืนเข้าพัก)</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num-col">
+                <div class="step-num green-num">5</div>
+                <div class="step-connector"></div>
+              </div>
+              <div class="step-body">
+                <span class="step-tag note">นโยบาย</span>
+                <h5>เงื่อนไขการเลื่อนวันเข้าพัก</h5>
+                <p>สงวนสิทธิ์คืนเงินกรณีไม่มาเข้าพักในวันที่จองไว้ สามารถเลื่อนวันได้ไม่เกิน <strong>45 วัน</strong> นับจากวันเข้าพักครั้งแรก ยกเว้นวันหยุดยาวพิเศษ</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num-col">
+                <div class="step-num green-num">6</div>
+              </div>
+              <div class="step-body">
+                <h5>แจ้งข้อมูลก่อนรับกุญแจ</h5>
+                <p>กรุณาแจ้ง <strong>ชื่อ-นามสกุล</strong> และ <strong>หมายเลขโทรศัพท์</strong> หรือข้อมูลติดต่อก่อนรับกุญแจห้องพัก</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Side: QR + Bank -->
+        <div class="col-lg-5">
+          <!-- Line QR Card -->
+          <div style="background:var(--sky-pale);border-radius:var(--radius);padding:28px;text-align:center;margin-bottom:24px;border:2px solid rgba(0,185,0,.2);" data-aos="fade-left">
+            <div style="background:#00b900;width:60px;height:60px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:1.8rem;color:#fff;">
+              <i class="fab fa-line"></i>
+            </div>
+            <h5 style="font-family:'Prompt',sans-serif;font-size:1rem;font-weight:700;color:var(--text);margin-bottom:4px;">Line Official</h5>
+            <p style="font-size:.82rem;color:var(--text-lt);margin-bottom:16px;">@puektianseaview</p>
+            <a href="https://lin.ee/x64XBGD" target="_blank" class="platform-btn line-btn" style="display:inline-flex;align-items:center;gap:8px;">
+              <i class="fab fa-line"></i> เพิ่มเพื่อน Line OA
+            </a>
+          </div>
+
+          <!-- Bank Transfer Card -->
+          <div class="bank-card" data-aos="fade-left" data-aos-delay="100">
+            <div class="bank-card-content">
+              <div class="bank-label">ชำระมัดจำผ่าน</div>
+              <div class="bank-logo-area">
+                <div class="bank-logo-circle">SCB</div>
+                <div class="bank-logo-text">ธนาคารไทยพาณิชย์<br><span style="font-size:.72rem;opacity:.7;">Siam Commercial Bank</span></div>
+              </div>
+              <div class="bank-acc-label">เลขที่บัญชี</div>
+              <div class="bank-acc-num">030-266-2655</div>
+              <div class="bank-holder">ชื่อบัญชี: <span>รัฐธนันท์ นันทพงศ์โภคิน</span></div>
+              <div class="bank-holder" style="margin-top:2px;font-size:.78rem;"><span style="color:rgba(255,255,255,.5)">Ratthanan Nantapongpokin</span></div>
+              <div class="bank-deposit-note">
+                <i class="fas fa-info-circle me-2"></i>
+                วางมัดจำขั้นต่ำ 500 บาท หลังโอนกรุณาส่งสลิปยืนยันผ่าน Line
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─ PANEL: APP ─ -->
+    <div class="booking-panel" id="panel-app">
+      <div class="row g-5 align-items-start">
+
+        <!-- Steps -->
+        <div class="col-lg-7">
+          <div class="highlight-box orange-box mb-4">
+            <div class="highlight-box-icon"><i class="fas fa-mobile-alt"></i></div>
+            <div class="highlight-box-body">
+              <h4>จองผ่านแอปจองโรงแรมออนไลน์</h4>
+              <p>สะดวกสำหรับผู้ที่ใช้แอปอยู่แล้ว มีส่วนลดพิเศษและรีวิวจากผู้เข้าพักจริง</p>
+            </div>
+          </div>
+
+          <div class="steps-wrap">
+            <div class="step-item">
+              <div class="step-num-col">
+                <div class="step-num app-num">1</div>
+                <div class="step-connector app-conn"></div>
+              </div>
+              <div class="step-body">
+                <span class="step-tag note">เริ่มต้น</span>
+                <h5>เปิดแอปหรือเว็บไซต์จองที่พัก</h5>
+                <p>เข้าสู่แอปหรือเว็บไซต์สำหรับการจองที่พักที่คุณต้องการ เช่น Agoda หรือ Booking.com</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num-col">
+                <div class="step-num app-num">2</div>
+                <div class="step-connector app-conn"></div>
+              </div>
+              <div class="step-body">
+                <h5>ค้นหา "puektian seaview"</h5>
+                <p>พิมพ์ <strong>"puektian seaview"</strong> ในช่องค้นหา ระบุวันเช็คอิน-เช็คเอาท์ และจำนวนผู้เข้าพัก จากนั้นกด <strong>"ค้นหา"</strong></p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num-col">
+                <div class="step-num app-num">3</div>
+                <div class="step-connector app-conn"></div>
+              </div>
+              <div class="step-body">
+                <h5>เลือกประเภทห้องพัก</h5>
+                <p>ผลลัพธ์จะแสดงขึ้น ลูกค้าสามารถเลือกประเภทห้องพักที่ต้องการ สังเกตข้อความในวงเล็บต่อท้ายชื่อที่พัก</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num-col">
+                <div class="step-num app-num">4</div>
+                <div class="step-connector app-conn"></div>
+              </div>
+              <div class="step-body">
+                <span class="step-tag note">แนะนำ</span>
+                <h5>ตรวจสอบรายละเอียดห้องพัก</h5>
+                <p>ดูรายละเอียดห้องพักเพิ่มเติมได้ที่เมนู <strong>ห้องพัก</strong> บนเว็บไซต์นี้ก่อนการจอง</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num-col">
+                <div class="step-num app-num">5</div>
+                <div class="step-connector app-conn"></div>
+              </div>
+              <div class="step-body">
+                <span class="step-tag important">⚠ ตรวจสอบ</span>
+                <h5>ศึกษาเงื่อนไขและโปรโมชั่น</h5>
+                <p>โปรดศึกษาเงื่อนไขต่าง ๆ ในแอป เช่น ส่วนลดและเงื่อนไขการยกเลิก ก่อนยืนยันการจอง</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num-col">
+                <div class="step-num app-num">6</div>
+                <div class="step-connector app-conn"></div>
+              </div>
+              <div class="step-body">
+                <h5>นโยบายคืนเงิน</h5>
+                <p>สงวนสิทธิ์การคืนเงินทุกกรณี โดยเป็นไปตามเงื่อนไขของแอปจองที่พักที่ลูกค้าได้ชำระเงินยืนยันการจองแล้ว</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num-col">
+                <div class="step-num app-num">7</div>
+              </div>
+              <div class="step-body">
+                <span class="step-tag important">⚠ สำคัญ</span>
+                <h5>แจ้งล่วงหน้าหากมีสัตว์เลี้ยง</h5>
+                <p>โปรดแจ้งผ่าน <strong>Line</strong> ก่อนเข้าพัก หากมีสัตว์เลี้ยงเข้าพักด้วย</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Side: Platform Cards -->
+        <div class="col-lg-5">
+          <h5 style="font-family:'Prompt',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-lt);margin-bottom:20px;">เลือกแพลตฟอร์มจอง</h5>
+          <div class="row g-3">
+            <div class="col-12">
+              <a href="https://www.agoda.com/th-th/puektian-seaview-family-suite-pool-11034/hotel/phetchaburi-th.html" target="_blank" class="platform-card" style="flex-direction:row;text-align:left;gap:18px;">
+                <div class="platform-card-icon agoda" style="flex-shrink:0;width:56px;height:56px;font-size:1.3rem;font-family:'Prompt',sans-serif;font-weight:900;letter-spacing:-.03em;font-size:.9rem;">agoda</div>
+                <div>
+                  <h5 style="margin-bottom:4px;">Agoda</h5>
+                  <p>ราคาพิเศษ · โปรโมชั่นหลากหลาย</p>
+                </div>
+                <span class="platform-btn agoda-btn ms-auto" style="white-space:nowrap;align-self:center;">จองเลย</span>
+              </a>
+            </div>
+            <div class="col-12">
+              <a href="https://www.booking.com/hotel/th/pueketiiynchiiwiwkh-nodethl.th.html" target="_blank" class="platform-card" style="flex-direction:row;text-align:left;gap:18px;">
+                <div class="platform-card-icon bdc" style="flex-shrink:0;width:56px;height:56px;font-size:.65rem;font-weight:900;font-family:'Prompt',sans-serif;letter-spacing:-.02em;">booking</div>
+                <div>
+                  <h5 style="margin-bottom:4px;">Booking.com</h5>
+                  <p>ยืดหยุ่น · รีวิวจากผู้เข้าพักจริง</p>
+                </div>
+                <span class="platform-btn bdc-btn ms-auto" style="white-space:nowrap;align-self:center;">จองเลย</span>
+              </a>
+            </div>
+          </div>
+
+          <div style="background:rgba(245,166,35,.08);border:1.5px solid rgba(245,166,35,.25);border-radius:var(--radius);padding:20px 22px;margin-top:20px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+              <i class="fas fa-lightbulb" style="color:var(--orange-dk);font-size:1rem;"></i>
+              <strong style="font-size:.9rem;color:var(--text);">เคล็ดลับการจอง</strong>
+            </div>
+            <p style="font-size:.84rem;color:var(--text-mid);line-height:1.75;margin:0;">
+              เปรียบเทียบราคาระหว่างแพลตฟอร์มต่าง ๆ บางครั้งอาจมีโปรโมชั่นพิเศษ หรือติดต่อ Line โดยตรงเพื่อราคาพิเศษ
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─ PANEL: HOTEL WEBSITE ─ -->
+    <div class="booking-panel" id="panel-web">
+      <div class="row g-5 align-items-start">
+
+        <!-- Steps -->
+        <div class="col-lg-8">
+          <div class="highlight-box purple-box mb-4">
+            <div class="highlight-box-icon"><i class="fas fa-globe"></i></div>
+            <div class="highlight-box-body">
+              <h4>จองผ่านเว็บไซต์ของโรงแรมโดยตรง</h4>
+              <p>ระบบจองออนไลน์ของเราเอง ดูวันว่าง เลือกห้อง และยืนยันการจองได้ทันที ง่ายและรวดเร็ว</p>
+            </div>
+          </div>
+
+          <div class="steps-wrap">
+            <div class="step-item">
+              <div class="step-num-col">
+                <div class="step-num web-num">1</div>
+                <div class="step-connector web-conn"></div>
+              </div>
+              <div class="step-body">
+                <span class="step-tag note">เริ่มต้น</span>
+                <h5>กดเข้าเมนู "จองเลย"</h5>
+                <p>คลิกปุ่ม <strong>"จองเลยตอนนี้"</strong> ที่แถบเมนูด้านบน หรือปุ่มจองในหน้าห้องพักที่คุณสนใจ เพื่อเข้าสู่ระบบจองออนไลน์</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num-col">
+                <div class="step-num web-num">2</div>
+                <div class="step-connector web-conn"></div>
+              </div>
+              <div class="step-body">
+                <h5>ดูวันเวลาที่ว่าง</h5>
+                <p>ระบบจะแสดงปฏิทินความพร้อมของห้องพัก ตรวจสอบวันที่ต้องการว่ายังมีห้องว่างอยู่หรือไม่</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num-col">
+                <div class="step-num web-num">3</div>
+                <div class="step-connector web-conn"></div>
+              </div>
+              <div class="step-body">
+                <h5>เลือกห้องที่ต้องการ</h5>
+                <p>เลือกประเภทห้องพักที่ต้องการ ดูรายละเอียด รูปภาพ และสิ่งอำนวยความสะดวกของแต่ละห้องก่อนตัดสินใจ</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num-col">
+                <div class="step-num web-num">4</div>
+                <div class="step-connector web-conn"></div>
+              </div>
+              <div class="step-body">
+                <h5>ระบุวันที่เช็คอิน</h5>
+                <p>เลือกวันที่ต้องการเช็คอินจากปฏิทิน (เวลาเช็คอินมาตรฐาน <strong>14:00 น.</strong>)</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num-col">
+                <div class="step-num web-num">5</div>
+                <div class="step-connector web-conn"></div>
+              </div>
+              <div class="step-body">
+                <h5>ระบุวันที่เช็คเอาต์</h5>
+                <p>เลือกวันที่ต้องการเช็คเอาต์ ระบบจะคำนวณจำนวนคืนและแสดงราคารวมให้อัตโนมัติ (เวลาเช็คเอาต์ <strong>12:00 น.</strong>)</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num-col">
+                <div class="step-num web-num">6</div>
+                <div class="step-connector web-conn"></div>
+              </div>
+              <div class="step-body">
+                <h5>ระบุจำนวนแขก</h5>
+                <p>กรอกจำนวนผู้เข้าพักทั้งหมด เพื่อให้ระบบเตรียมห้องและสิ่งอำนวยความสะดวกได้อย่างเหมาะสม</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num-col">
+                <div class="step-num web-num">7</div>
+                <div class="step-connector web-conn"></div>
+              </div>
+              <div class="step-body">
+                <span class="step-tag note">กรอกข้อมูล</span>
+                <h5>กรอกรายละเอียดผู้เข้าพัก</h5>
+                <p>กรอกข้อมูลให้ครบถ้วน ได้แก่ <strong>ชื่อ-นามสกุล</strong>, <strong>หมายเลขโทรศัพท์</strong>, <strong>อีเมล</strong> และข้อมูลติดต่ออื่น ๆ ที่จำเป็น</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num-col">
+                <div class="step-num web-num">8</div>
+                <div class="step-connector web-conn"></div>
+              </div>
+              <div class="step-body">
+                <span class="step-tag important">⚠ ตรวจสอบ</span>
+                <h5>ระบบสรุปรวมราคา</h5>
+                <p>หลังยืนยันการจอง ระบบจะสรุปรายละเอียดทั้งหมด พร้อม<strong>ราคารวมสุทธิ</strong> ตรวจสอบให้ถูกต้องก่อนดำเนินการต่อ</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num-col">
+                <div class="step-num web-num">9</div>
+                <div class="step-connector web-conn"></div>
+              </div>
+              <div class="step-body">
+                <h5>ชำระค่ามัดจำ</h5>
+                <p>ทำการชำระค่ามัดจำตามที่ระบบแจ้ง โอนเงินเข้าบัญชีธนาคาร <strong>SCB</strong> ที่แสดงด้านขวา เลขที่ <strong>030-266-2655</strong></p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num-col">
+                <div class="step-num web-num">10</div>
+                <div class="step-connector web-conn"></div>
+              </div>
+              <div class="step-body">
+                <span class="step-tag note">สำคัญ</span>
+                <h5>แอด Line และส่งสลิปพร้อมใบจอง</h5>
+                <p>แอดไลน์ <strong>@puektianseaview</strong> จากนั้นส่ง <strong>สลิปการโอนเงิน</strong> พร้อม <strong>ใบยืนยันการจอง</strong> มาในไลน์เพื่อยืนยันการจอง</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num-col">
+                <div class="step-num web-num">11</div>
+              </div>
+              <div class="step-body">
+                <h5>รอทีมงานตอบกลับ</h5>
+                <p>ทีมงานจะตรวจสอบและยืนยันการจองกลับหาคุณผ่าน Line โดยเร็วที่สุด เตรียมพร้อมเดินทางได้เลย!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Side -->
+        <div class="col-lg-4">
+          <!-- Book Now CTA -->
+          <div style="background:linear-gradient(135deg,var(--purple),var(--purple-dk));border-radius:var(--radius);padding:28px;text-align:center;margin-bottom:24px;color:#fff;" data-aos="fade-left">
+            <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:1.8rem;">
+              <i class="fas fa-calendar-check"></i>
+            </div>
+            <h5 style="font-family:'Prompt',sans-serif;font-size:1rem;font-weight:700;color:#fff;margin-bottom:6px;">จองผ่านเว็บโรงแรม</h5>
+            <p style="font-size:.82rem;color:rgba(255,255,255,.8);margin-bottom:20px;">ระบบจองออนไลน์ของเราเอง<br>รวดเร็ว ปลอดภัย ยืนยันทันที</p>
+            <a href="./Page8.html" style="display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--purple-dk);padding:12px 24px;border-radius:999px;font-size:.85rem;font-weight:700;text-decoration:none;">
+              <i class="fas fa-calendar-check"></i> จองเลยตอนนี้
+            </a>
+          </div>
+
+          <!-- Bank Card -->
+          <div class="bank-card" data-aos="fade-left" data-aos-delay="100">
+            <div class="bank-card-content">
+              <div class="bank-label">ชำระมัดจำผ่าน (ขั้นตอนที่ 9)</div>
+              <div class="bank-logo-area">
+                <div class="bank-logo-circle">SCB</div>
+                <div class="bank-logo-text">ธนาคารไทยพาณิชย์<br><span style="font-size:.72rem;opacity:.7;">Siam Commercial Bank</span></div>
+              </div>
+              <div class="bank-acc-label">เลขที่บัญชี</div>
+              <div class="bank-acc-num">030-266-2655</div>
+              <div class="bank-holder">ชื่อบัญชี: <span>รัฐธนันท์ นันทพงศ์โภคิน</span></div>
+              <div class="bank-holder" style="margin-top:2px;font-size:.78rem;"><span style="color:rgba(255,255,255,.5)">Ratthanan Nantapongpokin</span></div>
+              <div class="bank-deposit-note">
+                <i class="fas fa-info-circle me-2"></i>
+                หลังโอนแล้ว ส่งสลิป + ใบจองผ่าน Line @puektianseaview
+              </div>
+            </div>
+          </div>
+
+          <!-- Line reminder -->
+          <div style="background:var(--sky-pale);border-radius:var(--radius);padding:20px 22px;margin-top:20px;border:1.5px solid var(--sky-light);" data-aos="fade-left" data-aos-delay="160">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+              <div style="width:36px;height:36px;border-radius:10px;background:#00b900;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;flex-shrink:0;"><i class="fab fa-line"></i></div>
+              <strong style="font-size:.9rem;color:var(--text);">ส่งสลิปผ่าน Line</strong>
+            </div>
+            <p style="font-size:.83rem;color:var(--text-mid);line-height:1.7;margin:0 0 14px;">หลังชำระมัดจำ อย่าลืมส่งสลิปพร้อมใบจองมาที่ Line OA ของเรา</p>
+            <a href="https://lin.ee/x64XBGD" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#00b900;color:#fff;padding:9px 18px;border-radius:999px;font-size:.8rem;font-weight:700;text-decoration:none;">
+              <i class="fab fa-line"></i> @puektianseaview
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- end panel-web -->
+
+  </div>
+</section>
+
+
+<!-- ══ POLICIES ══ -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="row g-5 align-items-start">
+      <div class="col-lg-5" data-aos="fade-right">
+        <span class="section-label">ข้อกำหนด</span>
+        <h2 class="section-title">นโยบาย &amp;<span> เงื่อนไข</span></h2>
+        <div class="divider-sky"></div>
+        <p class="section-lead">เพื่อให้การเข้าพักของคุณเป็นไปอย่างราบรื่น กรุณาอ่านนโยบายและเงื่อนไขต่าง ๆ ก่อนทำการจอง</p>
+        <div style="margin-top:28px;display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--white);border-radius:10px;border:1px solid var(--sky-light);">
+            <div style="width:42px;height:42px;border-radius:10px;background:var(--sky-pale);display:flex;align-items:center;justify-content:center;color:var(--sky-mid);font-size:1.1rem;flex-shrink:0;"><i class="fas fa-clock"></i></div>
+            <div>
+              <div style="font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:2px;">เช็คอิน / เช็คเอาท์</div>
+              <div style="font-size:.9rem;font-weight:600;color:var(--text);">Check-in: 14:00 · Check-out: 12:00</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--white);border-radius:10px;border:1px solid var(--sky-light);">
+            <div style="width:42px;height:42px;border-radius:10px;background:rgba(26,184,122,.1);display:flex;align-items:center;justify-content:center;color:var(--green-dk);font-size:1.1rem;flex-shrink:0;"><i class="fas fa-paw"></i></div>
+            <div>
+              <div style="font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:2px;">สัตว์เลี้ยง</div>
+              <div style="font-size:.9rem;font-weight:600;color:var(--text);">รับสัตว์เลี้ยง (แจ้งล่วงหน้า)</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--white);border-radius:10px;border:1px solid var(--sky-light);">
+            <div style="width:42px;height:42px;border-radius:10px;background:rgba(245,166,35,.1);display:flex;align-items:center;justify-content:center;color:var(--orange-dk);font-size:1.1rem;flex-shrink:0;"><i class="fas fa-calendar-alt"></i></div>
+            <div>
+              <div style="font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:2px;">เลื่อนวันเข้าพัก</div>
+              <div style="font-size:.9rem;font-weight:600;color:var(--text);">ได้ภายใน 45 วัน</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7" data-aos="fade-left" data-aos-delay="100">
+        <div class="accordion policy-accordion" id="policyAccordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#pol1">
+                <span class="policy-icon"><i class="fas fa-ban"></i></span> นโยบายการยกเลิก / คืนเงิน
+              </button>
+            </h2>
+            <div id="pol1" class="accordion-collapse collapse show" data-bs-parent="#policyAccordion">
+              <div class="accordion-body">
+                สงวนสิทธิ์คืนเงินจองกรณีไม่มาเข้าพักในวันที่จองไว้ อย่างไรก็ตาม สามารถ<strong>เลื่อนวันเข้าพักได้ไม่เกิน 45 วัน</strong>นับตั้งแต่วันเข้าพักครั้งแรก ยกเว้นช่วงวันหยุดยาวพิเศษ ซึ่งจะมีเงื่อนไขแยกต่างหาก
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pol2">
+                <span class="policy-icon"><i class="fas fa-piggy-bank"></i></span> เงินมัดจำ
+              </button>
+            </h2>
+            <div id="pol2" class="accordion-collapse collapse" data-bs-parent="#policyAccordion">
+              <div class="accordion-body">
+                วางมัดจำขั้นต่ำ <strong>500 บาท</strong> หลังจากตกลงการจอง ยอดมัดจำที่แท้จริงขึ้นอยู่กับจำนวนคืนที่เข้าพัก ชำระผ่านบัญชีธนาคารไทยพาณิชย์ที่แจ้งไว้ และส่งสลิปยืนยันผ่าน Line
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pol3">
+                <span class="policy-icon"><i class="fas fa-paw"></i></span> นโยบายสัตว์เลี้ยง
+              </button>
+            </h2>
+            <div id="pol3" class="accordion-collapse collapse" data-bs-parent="#policyAccordion">
+              <div class="accordion-body">
+                ที่พักอนุญาตให้นำสัตว์เลี้ยงเข้าพักได้ แต่ต้องแจ้งล่วงหน้าทุกครั้ง ทั้งกรณีจองผ่าน Line และแอปจองโรงแรม เพื่อให้ทางเราเตรียมห้องที่เหมาะสมสำหรับสัตว์เลี้ยงของคุณ
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pol4">
+                <span class="policy-icon"><i class="fas fa-id-card"></i></span> ข้อมูลที่ต้องเตรียม
+              </button>
+            </h2>
+            <div id="pol4" class="accordion-collapse collapse" data-bs-parent="#policyAccordion">
+              <div class="accordion-body">
+                กรุณาเตรียม <strong>ชื่อ-นามสกุล</strong>, <strong>หมายเลขโทรศัพท์</strong> และข้อมูลติดต่ออื่น ๆ ก่อนเข้ารับกุญแจห้องพัก เพื่อการลงทะเบียนที่รวดเร็วและสะดวก
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pol5">
+                <span class="policy-icon"><i class="fas fa-mobile-alt"></i></span> การจองผ่านแอปออนไลน์
+              </button>
+            </h2>
+            <div id="pol5" class="accordion-collapse collapse" data-bs-parent="#policyAccordion">
+              <div class="accordion-body">
+                กรณีจองผ่านแอปจองโรงแรม การคืนเงินเป็นไปตามเงื่อนไขของแอปนั้น ๆ ที่ลูกค้าได้ชำระเงินและยืนยันการจองเสร็จสมบูรณ์แล้ว ทางที่พักไม่สามารถแทรกแซงนโยบายของแพลตฟอร์มได้
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ CONTACT / CTA ══ -->
+<div class="cta-strip">
+  <div class="container cta-strip-content" data-aos="fade-up">
+    <h2>พร้อมจองแล้วหรือยัง?</h2>
+    <p>ติดต่อเราได้ตลอดเวลา หรือจองผ่านช่องทางออนไลน์ได้เลยตอนนี้</p>
+    <div class="d-flex flex-wrap justify-content-center gap-3">
+      <a href="https://lin.ee/x64XBGD" target="_blank" class="btn-cta-white">
+        <i class="fab fa-line" style="color:#00b900;font-size:1.2rem;"></i> ติดต่อผ่าน Line
+      </a>
+      <a href="tel:0863429855" class="btn-cta-outline-white">
+        <i class="fas fa-phone"></i> 086 342 9855
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-12 col-md-4">
+        <div class="footer-brand">NICHA CONDO<small>Hotel and Condotel · Phetchaburi &amp; Chonburi</small></div>
+        <p style="font-size:.82rem;line-height:1.8;color:rgba(255,255,255,.55);margin-bottom:20px;">149 หมู่ 3 ตำบลปึกเตียน อำเภอท่ายาง<br>จังหวัดเพชรบุรี 76130</p>
+        <p style="font-size:.82rem;line-height:1.8;color:rgba(255,255,255,.55);margin-bottom:20px;">551 5 ตำบล หนองปรือ อำเภอบางละมุง<br>จังหวัดชลบุรี 20150</p>
+        <div>
+          <a href="https://www.facebook.com/nichacondo" target="_blank" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://lin.ee/x5KhNS1" target="_blank" class="social-btn"><i class="fab fa-line"></i></a>
+          <a href="https://www.instagram.com/nichacondo" target="_blank" class="social-btn"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-md-2">
+        <h6>เมนูหลัก</h6>
+        <ul class="footer-links">
+          <li><a href="./pektian-seaview.html">ห้องพัก</a></li>
+          <li><a href="./Page4.html">สิ่งอำนวยความสะดวก</a></li>
+          <li><a href="./Page2.html">แผนที่</a></li>
+          <li><a href="./Page7.html">รีวิว</a></li>
+          <li><a href="./Page3.html">ประกาศ</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md-2">
+        <h6>ข้อมูล</h6>
+        <ul class="footer-links">
+          <li><a href="./Page6.html" style="color:var(--sky-light);">วิธีการจอง</a></li>
+          <li><a href="./Page8.html">ติดต่อเรา</a></li>
+          <li><a href="#">นโยบายความเป็นส่วนตัว</a></li>
+        </ul>
+      </div>
+      <div class="col-12 col-md-4">
+        <h6>ติดต่อเรา</h6>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <a href="tel:0863429855" style="color:rgba(255,255,255,.65);text-decoration:none;font-size:.82rem;"><i class="fas fa-phone me-2" style="color:var(--sky)"></i> 086 342 9855</a>
+          <a href="/cdn-cgi/l/email-protection#0b616e7c257868693a334b6c666a626725686466" style="color:rgba(255,255,255,.65);text-decoration:none;font-size:.82rem;"><i class="fas fa-envelope me-2" style="color:var(--sky)"></i> <span class="__cf_email__" data-cfemail="ee848b99c09d8d8cdfd6ae89838f8782c08d8183">[email&#160;protected]</span></a>
+          <span style="color:rgba(255,255,255,.65);font-size:.82rem;"><i class="fas fa-map-marker-alt me-2" style="color:var(--sky)"></i> 149 หมู่ 3 ปึกเตียน ท่ายาง เพชรบุรี</span>
+          <span style="color:rgba(255,255,255,.65);font-size:.82rem;"><i class="fas fa-map-marker-alt me-2" style="color:var(--sky)"></i> 551 5 หนองปรือ บางละมุง ชลบุรี</span>
+        </div>
+        <div class="mt-4">
+          <a href="./Page8.html" style="display:inline-block;background:var(--sky-mid);color:#fff;padding:10px 24px;border-radius:4px;font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;">จองเลยตอนนี้</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container d-flex flex-wrap justify-content-between gap-2">
+      <span>&copy; 2020 K&amp;J CondotelRent · All Rights Reserved</span>
+      <span style="color:rgba(255,255,255,.25)">Designed with ♥ for Nicha Condo</span>
+    </div>
+  </div>
+</footer>
+
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ once: true, duration: 700, offset: 60 });
+
+  window.addEventListener('scroll', () => {
+    document.getElementById('topBar').classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('mobileNav').classList.toggle('open');
+    document.getElementById('hamburger').classList.toggle('open');
+  });
+
+  function switchTab(type, btn) {
+    //
+    document.querySelectorAll('.booking-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.booking-tab-btn').forEach(b => {
+      b.classList.remove('active-line', 'active-app', 'active-web');
+    });
+    document.getElementById('panel-' + type).classList.add('active');
+    if (type === 'line') btn.classList.add('active-line');
+    if (type === 'app')  btn.classList.add('active-app');
+    if (type === 'web')  btn.classList.add('active-web');
+  }
+</script>
+</body>
+</html>

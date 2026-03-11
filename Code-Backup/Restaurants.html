@@ -1,0 +1,945 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ร้านอาหารแนะนำ — ปึกเตียนซีวิว · NICHA CONDO</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="./images/logo.png">
+  <style>
+    :root {
+      --sky:#5bb8f5; --sky-mid:#2196d9; --sky-deep:#0d6eaf;
+      --sky-dark:#084e82; --sky-pale:#e8f6fd; --sky-light:#c8e9f8;
+      --white:#ffffff; --off-white:#f5fbff;
+      --text:#0d2d45; --text-mid:#2a5674; --text-lt:#6a9bb8;
+      --radius:14px;
+      --sh-sm:0 4px 18px rgba(13,110,175,.10);
+      --sh-md:0 10px 40px rgba(13,110,175,.16);
+      --gold:#f59e0b; --gold-lt:#fef3c7;
+      --green:#16a34a; --green-lt:#dcfce7;
+      --cafe:#92400e; --cafe-lt:#fef9c3;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Prompt',sans-serif;background:var(--white);color:var(--text);overflow-x:hidden;padding-top:108px}
+    h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;letter-spacing:.02em}
+
+    /* NAV */
+    .top-bar{position:fixed;top:0;width:100%;z-index:1050;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(91,184,245,.25);transition:box-shadow .3s}
+    .top-bar.scrolled{box-shadow:0 4px 24px rgba(13,110,175,.12)}
+    .logo-row{background:var(--sky-dark);padding:10px 0}
+    .logo-row .brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none}
+    .logo-row .brand img{height:clamp(28px,5vw,40px)}
+    .logo-row .brand-name{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,4vw,1.6rem);font-weight:700;color:#fff;letter-spacing:.06em;white-space:nowrap}
+    .logo-contact-item{display:inline-flex;align-items:center;gap:5px;color:rgba(255,255,255,.85);text-decoration:none;font-size:clamp(.62rem,2vw,.78rem);font-weight:500;transition:color .2s;white-space:nowrap}
+    .logo-contact-item i{color:var(--sky-light)}
+    .logo-contact-item:hover{color:#fff}
+    .logo-contact-sep{color:rgba(255,255,255,.3);font-size:.75rem}
+    .nav-row{background:var(--white)}
+    .main-nav{display:flex;align-items:center;justify-content:space-between}
+    .nav-links{display:flex;align-items:center;list-style:none;gap:0;margin:0;padding:0}
+    .nav-links li a{display:block;padding:16px;font-size:.82rem;font-weight:500;color:var(--text);text-decoration:none;letter-spacing:.04em;border-bottom:3px solid transparent;transition:color .2s,border-color .2s;white-space:nowrap}
+    .nav-links li a:hover,.nav-links li a.active{color:var(--sky-mid);border-bottom-color:var(--sky-mid)}
+    .nav-links li.has-drop{position:relative}
+    .drop-menu{display:none;position:absolute;top:100%;left:0;background:var(--white);border-radius:0 0 10px 10px;box-shadow:var(--sh-md);min-width:220px;border-top:3px solid var(--sky-mid);z-index:999}
+    .nav-links li.has-drop:hover .drop-menu{display:block}
+    .drop-menu a{display:block;padding:12px 20px;font-size:.82rem;font-weight:500;color:var(--text);text-decoration:none;border-bottom:1px solid var(--sky-pale);transition:background .2s,color .2s}
+    .drop-menu a:hover{background:var(--sky-pale);color:var(--sky-dark)}
+    .btn-book-nav{background:var(--sky-mid);color:#fff;padding:10px 22px;border-radius:4px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap;letter-spacing:.06em;transition:background .2s,transform .15s;border:none;cursor:pointer;display:inline-flex;align-items:center}
+    .btn-book-nav:hover{background:var(--sky-dark);color:#fff;transform:translateY(-1px)}
+    .hamburger{display:none;background:none;border:none;cursor:pointer;padding:10px 4px;flex-direction:row;align-items:center;gap:10px}
+    .hamburger-bars{display:flex;flex-direction:column;gap:5px}
+    .hamburger-bars span{display:block;width:26px;height:2px;background:var(--text);transition:all .3s;border-radius:2px}
+    .hamburger-label{font-family:'Prompt',sans-serif;font-size:.88rem;font-weight:700;color:var(--text);letter-spacing:.12em;text-transform:uppercase;line-height:1}
+    .hamburger.open .hamburger-bars span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+    .hamburger.open .hamburger-bars span:nth-child(2){opacity:0}
+    .hamburger.open .hamburger-bars span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+    .mobile-nav{display:none;background:var(--white);border-top:1px solid var(--sky-pale);padding:10px 0 20px}
+    .mobile-nav.open{display:block}
+    .mobile-nav a{display:block;padding:11px 24px;font-size:.9rem;color:var(--text);text-decoration:none;font-weight:500;border-bottom:1px solid var(--sky-pale)}
+    .mobile-nav a:hover{background:var(--sky-pale);color:var(--sky-dark)}
+
+    /* HERO */
+    .page-hero{background:linear-gradient(135deg,var(--sky-dark) 0%,var(--sky-mid) 100%);padding:clamp(40px,7vw,80px) 0;position:relative;overflow:hidden}
+    .page-hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+    .page-hero-content{position:relative;z-index:1}
+    .page-hero-eyebrow{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--sky-light);font-weight:600;display:block;margin-bottom:10px}
+    .page-hero-title{font-size:clamp(2rem,5vw,3.5rem);font-weight:700;color:#fff;line-height:1.1;margin-bottom:12px}
+    .page-hero-sub{font-size:clamp(.9rem,1.8vw,1.1rem);font-weight:300;color:rgba(255,255,255,.8)}
+    .hero-stats{display:flex;flex-wrap:wrap;gap:28px;margin-top:28px}
+    .hero-stat{text-align:left}
+    .hero-stat-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:#fff;line-height:1}
+    .hero-stat-lbl{font-size:.68rem;color:rgba(255,255,255,.65);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+
+    /* BREADCRUMB */
+    .breadcrumb-bar{background:var(--sky-pale);border-bottom:1px solid var(--sky-light);padding:10px 0}
+    .breadcrumb{margin:0;font-size:.8rem}
+    .breadcrumb-item a{color:var(--sky-mid);text-decoration:none}
+    .breadcrumb-item a:hover{color:var(--sky-dark)}
+    .breadcrumb-item.active{color:var(--text-lt)}
+    .breadcrumb-item+.breadcrumb-item::before{color:var(--text-lt)}
+
+    /* FILTER BAR */
+    .filter-bar{background:var(--white);border-bottom:1px solid var(--sky-light);padding:14px 0;position:sticky;top:108px;z-index:100;box-shadow:var(--sh-sm)}
+    .filter-btn{padding:7px 18px;border-radius:999px;border:1.5px solid var(--sky-light);background:var(--white);color:var(--text-mid);font-size:.78rem;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap;font-family:'Prompt',sans-serif;display:inline-flex;align-items:center;gap:6px}
+    .filter-btn:hover{border-color:var(--sky-mid);color:var(--sky-mid)}
+    .filter-btn.active{background:var(--sky-dark);border-color:var(--sky-dark);color:#fff}
+    .filter-btn.active-cafe{background:var(--cafe);border-color:var(--cafe);color:#fff}
+    .sort-select{padding:7px 14px;border:1.5px solid var(--sky-light);border-radius:8px;font-family:'Prompt',sans-serif;font-size:.78rem;color:var(--text);background:var(--white);cursor:pointer;outline:none;transition:border-color .2s}
+    .sort-select:focus{border-color:var(--sky-mid)}
+
+    /* SECTION */
+    .section{padding:clamp(40px,5vw,60px) 0}
+
+    /* RESTAURANT CARD */
+    .rest-card{background:var(--white);border-radius:var(--radius);border:1px solid var(--sky-light);box-shadow:var(--sh-sm);overflow:hidden;transition:transform .3s,box-shadow .3s;height:100%;display:flex;flex-direction:column}
+    .rest-card:hover{transform:translateY(-6px);box-shadow:var(--sh-md)}
+    .rest-card-img{height:180px;overflow:hidden;position:relative;flex-shrink:0}
+    .rest-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+    .rest-card:hover .rest-card-img img{transform:scale(1.08)}
+
+    /* Category badge on image */
+    .cat-badge{position:absolute;top:12px;left:12px;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:999px;backdrop-filter:blur(8px)}
+    .cat-badge.seafood{background:rgba(8,78,130,.85);color:#fff}
+    .cat-badge.thai{background:rgba(22,163,74,.85);color:#fff}
+    .cat-badge.cafe{background:rgba(146,64,14,.85);color:#fff}
+    .cat-badge.intl{background:rgba(124,58,237,.85);color:#fff}
+
+    /* Distance badge */
+    .dist-badge{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.92);border-radius:999px;padding:4px 10px;font-size:.65rem;font-weight:700;color:var(--sky-dark);display:flex;align-items:center;gap:4px;backdrop-filter:blur(8px)}
+
+    .rest-card-body{padding:16px 18px 18px;flex:1;display:flex;flex-direction:column}
+    .rest-card-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:var(--text);margin-bottom:4px;line-height:1.2}
+    .rest-card-addr{font-size:.72rem;color:var(--text-lt);margin-bottom:8px;display:flex;align-items:flex-start;gap:5px}
+    .rest-card-addr i{margin-top:2px;flex-shrink:0;color:var(--sky-mid)}
+
+    /* Stars */
+    .stars-row{display:flex;align-items:center;gap:6px;margin-bottom:10px}
+    .stars{display:flex;gap:2px}
+    .star{font-size:.72rem;color:#d1d5db}
+    .star.filled{color:var(--gold)}
+    .star.half{position:relative;color:#d1d5db}
+    .star.half::before{content:'\f089';font-family:"Font Awesome 6 Free";font-weight:900;position:absolute;left:0;color:var(--gold);width:50%;overflow:hidden;white-space:nowrap}
+    .rating-num{font-size:.82rem;font-weight:700;color:var(--text)}
+    .rating-count{font-size:.72rem;color:var(--text-lt)}
+
+    /* Hours */
+    .hours-row{font-size:.72rem;color:var(--text-lt);display:flex;align-items:center;gap:5px;margin-bottom:10px}
+    .open-dot{width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block}
+    .closed-dot{width:7px;height:7px;border-radius:50%;background:#dc2626;display:inline-block}
+
+    /* Reviews */
+    .reviews-wrap{margin-top:auto;border-top:1px solid var(--sky-pale);padding-top:12px;display:flex;flex-direction:column;gap:7px}
+    .review-item{background:var(--sky-pale);border-radius:8px;padding:8px 10px;position:relative}
+    .review-item::before{content:'\201C';font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--sky-mid);position:absolute;top:2px;left:8px;line-height:1}
+    .review-text{font-size:.72rem;color:var(--text-mid);line-height:1.6;padding-left:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+    /* Map button */
+    .btn-map{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--sky-pale);border:1.5px solid var(--sky-light);border-radius:8px;color:var(--sky-dark);font-size:.75rem;font-weight:700;text-decoration:none;transition:all .2s;margin-top:12px}
+    .btn-map:hover{background:var(--sky-dark);color:#fff;border-color:var(--sky-dark)}
+
+    /* Ranking number */
+    .rank-num{position:absolute;top:12px;left:12px;width:32px;height:32px;border-radius:50%;background:var(--sky-dark);color:#fff;font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+    .rank-num.top3{background:linear-gradient(135deg,#f59e0b,#d97706)}
+
+    /* INTRO BANNER */
+    .intro-banner{background:linear-gradient(135deg,var(--sky-pale) 0%,#fff 100%);border:1px solid var(--sky-light);border-radius:var(--radius);padding:24px 28px;margin-bottom:36px}
+    .intro-banner-icon{width:56px;height:56px;background:var(--sky-dark);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff;flex-shrink:0}
+    .distance-note{font-size:.76rem;color:var(--text-lt);margin-top:4px}
+    .distance-note i{color:var(--sky-mid)}
+
+    /* Category color accents */
+    .rest-card.cat-cafe{border-top:3px solid var(--cafe)}
+    .rest-card.cat-seafood{border-top:3px solid var(--sky-mid)}
+    .rest-card.cat-thai{border-top:3px solid var(--green)}
+
+    /* Empty state */
+    .empty-state{text-align:center;padding:60px 20px;color:var(--text-lt)}
+    .empty-state i{font-size:3rem;margin-bottom:16px;display:block}
+
+    /* FOOTER */
+    footer{background:var(--text);color:rgba(255,255,255,.7);padding:60px 0 0;font-size:.83rem}
+    .footer-brand{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:#fff;margin-bottom:14px}
+    .footer-brand small{font-family:'Prompt',sans-serif;font-size:.72rem;letter-spacing:.25em;color:var(--sky-light);display:block;text-transform:uppercase;margin-top:2px}
+    .footer-links{list-style:none;padding:0}
+    .footer-links li{margin-bottom:10px}
+    .footer-links a{color:rgba(255,255,255,.65);text-decoration:none;transition:color .2s;font-size:.82rem}
+    .footer-links a:hover{color:var(--sky-light)}
+    footer h6{color:#fff;font-family:'Prompt',sans-serif;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;margin-bottom:18px}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding:20px 0;margin-top:50px;font-size:.75rem;color:rgba(255,255,255,.4)}
+    .social-btn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.6);text-decoration:none;font-size:.85rem;transition:all .2s;margin-right:8px}
+    .social-btn:hover{background:var(--sky-mid);border-color:var(--sky-mid);color:#fff}
+
+    @media(max-width:991px){
+      body{padding-top:90px}
+      .filter-bar{top:90px}
+      .nav-links{display:none}
+      .hamburger{display:flex}
+      .main-nav{justify-content:flex-start}
+    }
+    @media(max-width:575px){
+      body{padding-top:82px}
+      .filter-bar{top:82px}
+      .rest-card-img{height:150px}
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar" id="topBar">
+  <div class="logo-row">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between">
+        <a href="index.html" class="brand">
+          <img src="./images/logo.png" alt="NICHA CONDO">
+          <span class="brand-name">NICHA CONDO</span>
+        </a>
+        <div class="d-flex align-items-center gap-2">
+          <a href="tel:0863429855" class="logo-contact-item"><i class="fas fa-phone"></i> <span>086 342 9855</span></a>
+          <span class="logo-contact-sep">|</span>
+          <a href="mailto:jew.scb18@gmail.com" class="logo-contact-item">
+            <i class="fas fa-envelope"></i>
+            <span class="d-none d-sm-inline">jew.scb18@gmail.com</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-row">
+    <div class="container">
+      <nav class="main-nav">
+        <ul class="nav-links">
+          <li class="has-drop">
+            <a href="#">ห้องพัก <i class="fas fa-chevron-down ms-1" style="font-size:.6rem"></i></a>
+            <div class="drop-menu">
+              <a href="./pektian-seaview.html">ปึกเตียนซีวิว คอนโดเทล</a>
+              <a href="./copacabana-jomtien.html">โคปาคาบาน่า จอมเทียน</a>
+            </div>
+          </li>
+          <li><a href="./Page4.html">ความสะดวกสบาย</a></li>
+          <li class="has-drop">
+            <a href="#">แผนที่ <i class="fas fa-chevron-down ms-1" style="font-size:.6rem"></i></a>
+            <div class="drop-menu">
+              <a href="./Page2.html">ปึกเตียนซีวิว คอนโดเทล</a>
+              <a href="./Page2-copacabana.html">Copacabana Beach Jomtien</a>
+            </div>
+          </li>
+          <li><a href="./Page3.html">ประกาศ</a></li>
+          <li><a href="./Page7.html">รีวิว</a></li>
+          <li><a href="./Page6.html">วิธีการจอง</a></li>
+          <li><a href="./Page-Restaurants.html" class="active">ร้านอาหาร</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-3">
+          <button class="hamburger" id="hamburger" aria-label="Menu">
+            <div class="hamburger-bars"><span></span><span></span><span></span></div>
+            <span class="hamburger-label">MENU</span>
+          </button>
+          <a href="./Page8.html" class="btn-book-nav d-none d-lg-inline-flex">
+            <i class="fas fa-calendar-check me-2"></i>จองเลยตอนนี้
+          </a>
+        </div>
+      </nav>
+      <div class="mobile-nav" id="mobileNav">
+        <a href="./pektian-seaview.html">ห้องพัก — ปึกเตียนซีวิว คอนโดเทล</a>
+        <a href="./copacabana-jomtien.html">ห้องพัก — โคปาคาบาน่า จอมเทียน</a>
+        <a href="./Page4.html">ความสะดวกสบาย</a>
+        <a href="./Page2.html">แผนที่ — ปึกเตียนซีวิว คอนโดเทล</a>
+        <a href="./Page2-copacabana.html">แผนที่ — Copacabana Beach Jomtien</a>
+        <a href="./Page3.html">ประกาศ</a>
+        <a href="./Page7.html">รีวิว</a>
+        <a href="./Page6.html">วิธีการจอง</a>
+        <a href="./Page-Restaurants.html">ร้านอาหารแนะนำ</a>
+        <a href="./Page8.html" style="background:var(--sky-dark);color:#fff;margin:10px 24px 0;border-radius:4px;text-align:center;">จองเลยตอนนี้</a>
+        <div style="padding:14px 24px 6px;border-top:1px solid var(--sky-pale);margin-top:6px;display:flex;flex-direction:column;gap:8px;">
+          <a href="tel:0863429855" style="color:var(--sky-dark);font-size:.82rem;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:8px;"><i class="fas fa-phone" style="color:var(--sky-mid);width:16px"></i> 086 342 9855</a>
+          <a href="mailto:jew.scb18@gmail.com" style="color:var(--sky-dark);font-size:.82rem;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:8px;"><i class="fas fa-envelope" style="color:var(--sky-mid);width:16px"></i> jew.scb18@gmail.com</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="container page-hero-content">
+    <span class="page-hero-eyebrow">NICHA CONDO · ปึกเตียนซีวิว</span>
+    <h1 class="page-hero-title">ร้านอาหาร &amp; คาเฟ่แนะนำ</h1>
+    <p class="page-hero-sub">รวม 20 ร้านอาหาร-คาเฟ่ที่ดีที่สุดในแถบปึกเตียน, ชะอำ เพชรบุรี<br>คัดเลือกจากรีวิวจริงของนักท่องเที่ยว — คุณมาพักที่เรา เราดูแลทุกมื้อ</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-num">20</div><div class="hero-stat-lbl">ร้านแนะนำ</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">≤ 30</div><div class="hero-stat-lbl">กม. จากคอนโด</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">4.0+</div><div class="hero-stat-lbl">ดาวเฉลี่ย</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb-bar">
+  <div class="container">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="index.html">หน้าหลัก</a></li>
+      <li class="breadcrumb-item"><a href="./pektian-seaview.html">ปึกเตียนซีวิว</a></li>
+      <li class="breadcrumb-item active">ร้านอาหาร &amp; คาเฟ่แนะนำ</li>
+    </ol>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="container">
+    <div class="d-flex align-items-center gap-2 flex-wrap">
+      <button class="filter-btn active" data-filter="all" onclick="filterCards(this,'all')">
+        <i class="fas fa-utensils"></i> ทั้งหมด
+      </button>
+      <button class="filter-btn" data-filter="seafood" onclick="filterCards(this,'seafood')">
+        <i class="fas fa-fish"></i> อาหารทะเล
+      </button>
+      <button class="filter-btn" data-filter="thai" onclick="filterCards(this,'thai')">
+        <i class="fas fa-bowl-rice"></i> อาหารไทย
+      </button>
+      <button class="filter-btn" data-filter="cafe" onclick="filterCards(this,'cafe')">
+        <i class="fas fa-mug-hot"></i> คาเฟ่
+      </button>
+      <div class="ms-auto d-flex align-items-center gap-2">
+        <span style="font-size:.72rem;color:var(--text-lt);white-space:nowrap">เรียงตาม:</span>
+        <select class="sort-select" onchange="sortCards(this.value)">
+          <option value="dist">ระยะทาง ใกล้→ไกล</option>
+          <option value="rating">ดาว มาก→น้อย</option>
+          <option value="reviews">รีวิว มาก→น้อย</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<section class="section">
+  <div class="container">
+
+    <!-- Intro Note -->
+    <div class="intro-banner d-flex align-items-start gap-3" data-aos="fade-up">
+      <div class="intro-banner-icon"><i class="fas fa-map-marker-alt"></i></div>
+      <div>
+        <div style="font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--sky-mid);font-weight:700;margin-bottom:4px">จุดอ้างอิง</div>
+        <div style="font-size:.96rem;font-weight:600;color:var(--text)">Puektian Seaview Condotel · 149 หมู่ 3 ปึกเตียน ท่ายาง เพชรบุรี</div>
+        <div class="distance-note"><i class="fas fa-info-circle me-1"></i>ระยะทางวัดแบบเส้นตรงจากที่พัก — เวลาขับจริงอาจแตกต่างกัน ขึ้นอยู่กับเส้นทาง</div>
+      </div>
+    </div>
+
+    <div class="row g-4" id="restaurantGrid">
+      <!-- Cards inserted by JS -->
+    </div>
+
+    <div class="empty-state d-none" id="emptyState">
+      <i class="fas fa-search"></i>
+      <div style="font-size:1rem;font-weight:600;color:var(--text-mid)">ไม่พบร้านในหมวดนี้</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="background:linear-gradient(135deg,var(--sky-dark),var(--sky-mid));padding:clamp(40px,6vw,70px) 0;text-align:center;">
+  <div class="container" data-aos="fade-up">
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;color:#fff;margin-bottom:12px;">พักที่ปึกเตียนซีวิว ฟินทุกมื้ออาหาร</h2>
+    <p style="color:rgba(255,255,255,.8);font-size:.95rem;margin-bottom:28px;">ร้านอาหารทะเลสดใหม่ คาเฟ่วิวทะเล พร้อมให้คุณสำรวจทุกวัน</p>
+    <a href="./Page8.html" style="display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--sky-dark);padding:13px 32px;border-radius:4px;font-size:.88rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:all .2s;">
+      <i class="fas fa-calendar-check"></i> จองห้องพักเลย
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-12 col-md-4">
+        <div class="footer-brand">NICHA CONDO<small>Hotel and Condotel · Phetchaburi &amp; Chonburi</small></div>
+        <p style="font-size:.82rem;line-height:1.8;color:rgba(255,255,255,.55);margin-bottom:20px;">149 หมู่ 3 ตำบลปึกเตียน อำเภอท่ายาง<br>จังหวัดเพชรบุรี 76130</p>
+        <div>
+          <a href="https://www.facebook.com/nichacondo" target="_blank" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://lin.ee/x5KhNS1" target="_blank" class="social-btn"><i class="fab fa-line"></i></a>
+          <a href="https://www.instagram.com/nichacondo" target="_blank" class="social-btn"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-md-2">
+        <h6>เมนูหลัก</h6>
+        <ul class="footer-links">
+          <li><a href="./pektian-seaview.html">ห้องพัก</a></li>
+          <li><a href="./Page4.html">สิ่งอำนวยความสะดวก</a></li>
+          <li><a href="./Page2.html">แผนที่</a></li>
+          <li><a href="./Page7.html">รีวิว</a></li>
+          <li><a href="./Page3.html">ประกาศ</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md-2">
+        <h6>ข้อมูล</h6>
+        <ul class="footer-links">
+          <li><a href="./Page6.html">วิธีการจอง</a></li>
+          <li><a href="./Page-Restaurants.html" style="color:var(--sky-light)">ร้านอาหารแนะนำ</a></li>
+          <li><a href="./Page8.html">จองเลยตอนนี้</a></li>
+        </ul>
+      </div>
+      <div class="col-12 col-md-4">
+        <h6>ติดต่อเรา</h6>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <a href="tel:0863429855" style="color:rgba(255,255,255,.65);text-decoration:none;font-size:.82rem;"><i class="fas fa-phone me-2" style="color:var(--sky)"></i> 086 342 9855</a>
+          <a href="mailto:jew.scb18@gmail.com" style="color:rgba(255,255,255,.65);text-decoration:none;font-size:.82rem;"><i class="fas fa-envelope me-2" style="color:var(--sky)"></i> jew.scb18@gmail.com</a>
+          <span style="color:rgba(255,255,255,.65);font-size:.82rem;"><i class="fas fa-map-marker-alt me-2" style="color:var(--sky)"></i> 149 หมู่ 3 ปึกเตียน ท่ายาง เพชรบุรี</span>
+        </div>
+        <div class="mt-4">
+          <a href="./Page8.html" style="display:inline-block;background:var(--sky-mid);color:#fff;padding:10px 24px;border-radius:4px;font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;">จองเลยตอนนี้</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container d-flex flex-wrap justify-content-between gap-2">
+      <span>&copy; 2025 K&amp;J CondotelRent · All Rights Reserved</span>
+      <span style="color:rgba(255,255,255,.25)">Designed with ♥ for Nicha Condo</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+AOS.init({ once:true, duration:700, offset:60 });
+window.addEventListener('scroll', () => {
+  document.getElementById('topBar').classList.toggle('scrolled', window.scrollY > 20);
+});
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('mobileNav').classList.toggle('open');
+  document.getElementById('hamburger').classList.toggle('open');
+});
+
+// ═══════════════════════════════════════
+//  RESTAURANT DATA
+//  ระยะทางคำนวณแบบ Haversine จาก Puektian Seaview (12.9450, 100.0280)
+// ═══════════════════════════════════════
+const ORIGIN = { lat: 12.9450, lng: 100.0280 };
+
+function haversine(lat1, lng1, lat2, lng2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLng = (lng2 - lng1) * Math.PI / 180;
+  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)**2;
+  return +(R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))).toFixed(1);
+}
+
+const RESTAURANTS = [
+  {
+    name: 'ครัวบ้านชาวเล',
+    nameEn: 'Baan Chao Le Kitchen',
+    cat: 'seafood',
+    catLabel: 'อาหารทะเล',
+    lat: 12.9473, lng: 100.0288,
+    rating: 4.5, ratingCount: 56,
+    hours: 'เปิด 09:00–19:00 น.',
+    address: 'ปึกเตียน, ท่ายาง, เพชรบุรี',
+    mapQ: 'ครัวบ้านชาวเล+ปึกเตียน+เพชรบุรี',
+    placeId: 'ChIJKVtx6fAY_TARB15RxFN7XRs',
+    emoji: '🦀',
+    img: 'https://maps.googleapis.com/maps/api/streetview?size=400x300&location=12.9473,100.0288&fov=80&key=AIzaSyDNsJMIArQXL4tQIOqJ4ifmPqUbE6PXOIQ',
+    reviews: [
+      'ร้านอาหารทะเลครอบครัวใกล้ชายหาดปึกเตียน รสชาติดั้งเดิม เจ้าของใจดีมากๆ',
+      'อาหารสดมากๆ ราคาถูก อร่อย แนะนำอย่างยิ่ง!',
+      'แกงคั่วปูใบชะคราม กุ้งซอสมะขาม กะพงทอดน้ำปลา — ดีทุกจาน',
+    ],
+  },
+  {
+    name: 'ครัว 57',
+    nameEn: 'Krua 57',
+    cat: 'thai',
+    catLabel: 'อาหารไทย',
+    lat: 12.9456, lng: 100.0277,
+    rating: 4.5, ratingCount: 283,
+    hours: 'เปิด 09:00–21:00 น. (หยุดพฤหัส)',
+    address: 'ปึกเตียน, ท่ายาง, เพชรบุรี',
+    mapQ: 'ครัว+57+ปึกเตียน+เพชรบุรี',
+    placeId: 'ChIJxy4yf_oY_TARtl84P_zAixw',
+    emoji: '🍛',
+    img: 'https://maps.googleapis.com/maps/api/streetview?size=400x300&location=12.9456,100.0277&fov=80&key=AIzaSyDNsJMIArQXL4tQIOqJ4ifmPqUbE6PXOIQ',
+    reviews: [
+      'คาเฟ่สไตล์ไทยดั้งเดิม ราคาย่อมเยา อาหารอร่อยคุ้มค่ามาก',
+      'บรรยากาศดี อาหารไทยแท้ รสจัดจ้าน พนักงานบริการดีเยี่ยม',
+      'อาหารอร่อยมาก ราคาโอเค คุ้มค่าทุกบาท แนะนำให้แวะ!',
+    ],
+  },
+  {
+    name: 'One Seafood Restaurant',
+    nameEn: 'One Seafood',
+    cat: 'seafood',
+    catLabel: 'อาหารทะเล',
+    lat: 12.9455, lng: 100.0277,
+    rating: 4.6, ratingCount: 7,
+    hours: 'เปิด 09:00–21:00 น.',
+    address: 'ปึกเตียน, ท่ายาง, เพชรบุรี',
+    mapQ: 'One+Seafood+Restaurant+Puek+Tian',
+    placeId: 'ChIJA4Dxf_oY_TARIRnkz2b6598',
+    emoji: '🐟',
+    img: 'https://maps.googleapis.com/maps/api/streetview?size=400x300&location=12.9455,100.0277&fov=90&key=AIzaSyDNsJMIArQXL4tQIOqJ4ifmPqUbE6PXOIQ',
+    reviews: [
+      'อาหารอร่อย ราคาเป็นมิตร บรรยากาศดีมาก ชอบมากเลย!',
+      'รสชาติอร่อยมากๆ',
+      'สะดวก สะอาด อร่อย',
+    ],
+  },
+  {
+    name: 'ร้านอาหารลุงโกย',
+    nameEn: 'Lung Koy Restaurant',
+    cat: 'seafood',
+    catLabel: 'อาหารทะเล',
+    lat: 12.9416, lng: 100.0269,
+    rating: 4.3, ratingCount: 110,
+    hours: 'เปิด 05:00–21:00 น. ทุกวัน',
+    address: '104 ปึกเตียน, ท่ายาง, เพชรบุรี',
+    mapQ: 'ร้านอาหารลุงโกย+ปึกเตียน',
+    placeId: 'ChIJN5AREvsY_TARZy9ANiKK9Ec',
+    emoji: '🦑',
+    img: 'https://maps.googleapis.com/maps/api/streetview?size=400x300&location=12.9416,100.0269&fov=80&key=AIzaSyDNsJMIArQXL4tQIOqJ4ifmPqUbE6PXOIQ',
+    reviews: [
+      'ร้านน่ารัก อาหารอร่อยมาก ราคาเหมาะสม',
+      'หอยแครงตัวใหญ่ ปลาหมึกซอสหมึก ข้าวผัดอาหารทะเลหอมมาก แนะนำ!',
+      'สถานที่น่ารัก บรรยากาศดี นั่งผ่อนคลายได้',
+    ],
+  },
+  {
+    name: 'ครัวน้องมิ้น',
+    nameEn: 'Krua Nong Min',
+    cat: 'seafood',
+    catLabel: 'อาหารทะเล',
+    lat: 12.9465, lng: 100.0339,
+    rating: 5.0, ratingCount: 1,
+    hours: 'เปิด 09:00–20:00 น.',
+    address: 'ปึกเตียน, ท่ายาง, เพชรบุรี',
+    mapQ: 'ครัวน้องมิ้น+ปึกเตียน+เพชรบุรี',
+    placeId: 'ChIJe17dYncZ_TAR8Tkit0ayllw',
+    emoji: '🍤',
+    img: 'https://maps.googleapis.com/maps/api/streetview?size=400x300&location=12.9465,100.0339&fov=80&key=AIzaSyDNsJMIArQXL4tQIOqJ4ifmPqUbE6PXOIQ',
+    reviews: [
+      'บรรยากาศดี ราคาไม่แพง ยำหอยนางรม หอยใหญ่มาก แนะนำมาก!',
+      'ต้มยำซีฟู้ดรสชาติกลางๆ ปลาหมึกผัดไข่เค็มอร่อยมาก',
+      'ปลากะพงนึ่งมะนาวอร่อย ทานหมดทุกจาน ประทับใจมาก',
+    ],
+  },
+  {
+    name: 'The Seahorse Café',
+    nameEn: 'The Seahorse Cafe',
+    cat: 'cafe',
+    catLabel: 'คาเฟ่',
+    lat: 12.9394, lng: 100.0312,
+    rating: 4.4, ratingCount: 104,
+    hours: 'เปิด 08:00–17:00 น. (หยุดอังคาร)',
+    address: '333 ม.บ้านปึกเตียนวิลล่า, ปึกเตียน',
+    mapQ: 'The+Seahorse+Cafe+Puek+Tian',
+    placeId: 'ChIJ0_6JQwAZ_TARzaHzAHkoGIg',
+    emoji: '☕',
+    img: 'https://maps.googleapis.com/maps/api/streetview?size=400x300&location=12.9394,100.0312&fov=80&key=AIzaSyDNsJMIArQXL4tQIOqJ4ifmPqUbE6PXOIQ',
+    reviews: [
+      'คาเฟ่วิวทะเลสวยงาม บรรยากาศผ่อนคลาย ดื่มด่ำกับธรรมชาติ',
+      'สถานที่สวยมาก ถ่ายรูปสวยทุกมุม บรรยากาศโรแมนติก',
+      'คาเฟ่ริมทะเลน่ารักมาก ต้องแวะถ้ามาแถวนี้!',
+    ],
+  },
+  {
+    name: 'ร้านชายทะเล หาดเสาเอียง เพชรบุรี',
+    nameEn: 'Chaitalay Haad Sao Iang',
+    cat: 'seafood',
+    catLabel: 'อาหารทะเล',
+    lat: 12.9654, lng: 100.0406,
+    rating: 4.8, ratingCount: 99,
+    hours: 'เปิด 09:00–21:00 น. (หยุดพุธ)',
+    address: '107/24 ม.12 เมือง, เพชรบุรี',
+    mapQ: 'ร้านชายทะเลหาดเสาเอียงเพชรบุรี',
+    placeId: 'ChIJz2lrXwAZ_TARTzNREu-u6JQ',
+    emoji: '🌅',
+    img: 'https://maps.googleapis.com/maps/api/streetview?size=400x300&location=12.9654,100.0406&fov=80&key=AIzaSyDNsJMIArQXL4tQIOqJ4ifmPqUbE6PXOIQ',
+    reviews: [
+      'ร้านใหม่น่าประทับใจมาก อาหารทะเลสด ปรุงอร่อยทุกจาน พนักงานดูแลดี',
+      'บรรยากาศวิวทะเลสวยงาม นั่งทานข้าวชิลล์มาก แนะนำอย่างยิ่ง',
+      'อาหารสด สะอาด ราคาเหมาะสม เจ้าของใจดีมาก จะกลับมาอีกแน่นอน',
+    ],
+  },
+  {
+    name: 'Khlomchoi Waterfront Resort',
+    nameEn: 'Khlomchoi Restaurant',
+    cat: 'thai',
+    catLabel: 'อาหารไทย',
+    lat: 12.9493, lng: 100.0088,
+    rating: 4.4, ratingCount: 47,
+    hours: 'เปิด 10:00–22:00 น. (หยุดจันทร์)',
+    address: '99/9 ม.1 ปึกเตียน, ท่ายาง',
+    mapQ: 'Khlomchoi+Waterfront+Resort+Phetchaburi',
+    placeId: 'ChIJV1XYnMMY_TARYvflH6UvXYc',
+    emoji: '🌿',
+    img: 'https://maps.googleapis.com/maps/api/streetview?size=400x300&location=12.9493,100.0088&fov=80&key=AIzaSyDNsJMIArQXL4tQIOqJ4ifmPqUbE6PXOIQ',
+    reviews: [
+      'แกงเขียวหวานมะเขือยาวอร่อยมาก เจ้าของน่ารัก อาหาร portion ใหญ่มาก',
+      'เจ้าของใจดีมาก ทำอาหารมังสวิรัติให้ได้ บรรยากาศเงียบสงบ',
+      'ราคาดีมาก อาหารอร่อย เหมาะสำหรับครอบครัว',
+    ],
+  },
+  {
+    name: 'Khun Aeo Seafood',
+    nameEn: 'Khun Aeo Seafood',
+    cat: 'seafood',
+    catLabel: 'อาหารทะเล',
+    lat: 12.9808, lng: 100.0470,
+    rating: 4.1, ratingCount: 288,
+    hours: 'เปิด 09:00–21:00 น. ทุกวัน',
+    address: 'หนองขนาน, เมือง, เพชรบุรี',
+    mapQ: 'Khun+Aeo+Seafood+Phetchaburi',
+    placeId: 'ChIJ0SryzIIi_TARHd9Idhb9pkc',
+    emoji: '🦐',
+    img: 'https://maps.googleapis.com/maps/api/streetview?size=400x300&location=12.9808,100.047&fov=80&key=AIzaSyDNsJMIArQXL4tQIOqJ4ifmPqUbE6PXOIQ',
+    reviews: [
+      'อาหารทะเลสดราคาเหมาะสม รสชาติดี ถูกปากมาก',
+      'สถานที่น่าไป อาหารอร่อยมาก ไม่ผิดหวัง!',
+      'อาหารย่างและนึ่งอร่อย แนะนำ ของทอดยังไม่ค่อยโดน',
+    ],
+  },
+  {
+    name: 'ครัวหาดเจ้าซีฟู้ด',
+    nameEn: 'Khrua Hat Chao Seafood',
+    cat: 'seafood',
+    catLabel: 'อาหารทะเล',
+    lat: 13.0078, lng: 100.0670,
+    rating: 4.0, ratingCount: 458,
+    hours: 'เปิด 09:00–21:00 น.',
+    address: 'หาดเจ้าสำราญ, เมือง, เพชรบุรี',
+    mapQ: 'Khrua+Hat+Chao+Seafood+Phetchaburi',
+    placeId: 'ChIJzb-dosYi_TARvHhdxGApqTs',
+    emoji: '🌊',
+    img: 'https://maps.googleapis.com/maps/api/streetview?size=400x300&location=13.0078,100.067&fov=80&key=AIzaSyDNsJMIArQXL4tQIOqJ4ifmPqUbE6PXOIQ',
+    reviews: [
+      'อาหารทะเลสดริมทะเล วิวสวย บรรยากาศดีมาก ราคาเหมาะสม',
+      'อาหารอร่อยมาก พนักงานน่ารัก พูดอังกฤษได้ แนะนำสำหรับนักท่องเที่ยว',
+      'ร้านริมทะเลเงียบสงบ อาหารอร่อย ราคาดี เหมาะทานมื้อกลางวัน',
+    ],
+  },
+  {
+    name: 'ครูปาชาเลียว',
+    nameEn: 'Khrua Pa Chaliao',
+    cat: 'seafood',
+    catLabel: 'อาหารทะเล',
+    lat: 12.8643, lng: 100.0103,
+    rating: 4.5, ratingCount: 2363,
+    hours: 'เปิด 09:30–20:30 น. (หยุดอังคาร)',
+    address: '148 บางขาว, ชะอำ, เพชรบุรี',
+    mapQ: 'Khrua+Pa+Chaliao+Cha+am+Phetchaburi',
+    placeId: 'ChIJIXSV-pQb_TARrVdlf0Vby8k',
+    emoji: '🍜',
+    img: 'https://maps.googleapis.com/maps/api/streetview?size=400x300&location=12.8643,100.0103&fov=80&key=AIzaSyDNsJMIArQXL4tQIOqJ4ifmPqUbE6PXOIQ',
+    reviews: [
+      'ต้มยำกุ้งอร่อยที่สุดที่เคยกินมา กุ้งตัวใหญ่มาก แนะนำปูด้วย!',
+      'ร้านแบบดั้งเดิม บ่อปลาในร้าน ที่จอดรถกว้าง อาหารอร่อยมากๆ',
+      'หอยเชลล์เนยอร่อยมาก ปลาหมึกก็ดี ต้มยำข้าวหอมอร่อยมาก',
+    ],
+  },
+  {
+    name: 'บ้านครัวทะเล ชะอำ',
+    nameEn: 'Baan Krua Talay Cha-am',
+    cat: 'seafood',
+    catLabel: 'อาหารทะเล',
+    lat: 12.8242, lng: 99.9921,
+    rating: 4.4, ratingCount: 697,
+    hours: 'เปิด 11:00–21:00 น. (หยุดพุธ)',
+    address: '47/1 ถ.ชลประทานซีเมนต์, ชะอำ',
+    mapQ: 'Baan+Krua+Talay+Cha+am',
+    placeId: 'ChIJgWiWPDUD_TARWNjIo0IARFs',
+    emoji: '🦞',
+    img: 'https://maps.googleapis.com/maps/api/streetview?size=400x300&location=12.8242,99.9921&fov=80&key=AIzaSyDNsJMIArQXL4tQIOqJ4ifmPqUbE6PXOIQ',
+    reviews: [
+      'อาหารอร่อยมาก ปูไข่นิ่มยอดเยี่ยม ข้าวผัดปลาเค็มสุดอร่อย แนะนำมาก!',
+      'ร้านนี้แนะนำ อาหารทะเลสด คุณภาพดี ราคาเหมาะสม',
+      'กาแฟมะพร้าวอร่อยมาก ซีฟู้ดสดมาก ทีมงานดูแลดี',
+    ],
+  },
+  {
+    name: 'View Talay Restaurant',
+    nameEn: 'View Talay Seafood',
+    cat: 'seafood',
+    catLabel: 'อาหารทะเล',
+    lat: 12.8228, lng: 99.9926,
+    rating: 4.5, ratingCount: 1541,
+    hours: 'เปิด 11:00–20:00 น. (หยุดอังคาร)',
+    address: '47/3 ถ.ชลประทานซีเมนต์, ชะอำ',
+    mapQ: 'View+Talay+Restaurant+Cha+am',
+    placeId: 'ChIJF1IeE2Ab_TARY8wvjcx5A9A',
+    emoji: '⭐',
+    img: 'https://maps.googleapis.com/maps/api/streetview?size=400x300&location=12.8228,99.9926&fov=80&key=AIzaSyDNsJMIArQXL4tQIOqJ4ifmPqUbE6PXOIQ',
+    reviews: [
+      'อาหารทะเลสดมาก รสชาติดีเยี่ยม บรรยากาศชวนฝัน ดีกว่าร้านริมทะเลหลายร้านมาก',
+      'แนะนำอย่างยิ่ง! หอยเชลล์ปรุงสมบูรณ์แบบ พนักงานอบอุ่นเป็นกันเอง',
+      'ร้านนี้เป็น favorite ของครอบครัวมานานหลายปี อาหารอร่อยสม่ำเสมอ',
+    ],
+  },
+  {
+    name: 'Dao Talay Seafood',
+    nameEn: 'Dao Talay',
+    cat: 'seafood',
+    catLabel: 'อาหารทะเล',
+    lat: 12.8117, lng: 99.9904,
+    rating: 4.3, ratingCount: 279,
+    hours: 'เปิด 09:00–22:00 น.',
+    address: 'ชะอำ, เพชรบุรี',
+    mapQ: 'Dao+Talay+Seafood+Cha+am',
+    placeId: 'ChIJR3rD7acc_TARSExU3nCGfRo',
+    emoji: '🦪',
+    img: 'https://maps.googleapis.com/maps/api/streetview?size=400x300&location=12.8117,99.9904&fov=80&key=AIzaSyDNsJMIArQXL4tQIOqJ4ifmPqUbE6PXOIQ',
+    reviews: [
+      'ต้มยำกุ้งแม่น้ำอร่อยที่สุดที่เคยกิน! ปริมาณเยอะมาก ราคาเหมาะสม',
+      'หอยนางรมดิบสดมาก ซีฟู้ดทุกอย่างสดและอร่อย จะกลับมาอีกแน่นอน',
+      'อาหารทะเลสด รสชาติดีมาก ราคาเป็นกันเอง',
+    ],
+  },
+  {
+    name: 'Shylae Seafood And Resort',
+    nameEn: 'Shylae Seafood',
+    cat: 'seafood',
+    catLabel: 'อาหารทะเล',
+    lat: 12.8153, lng: 99.9957,
+    rating: 4.0, ratingCount: 721,
+    hours: 'เปิด 09:30–21:00 น.',
+    address: '199/23 ชะอำ, เพชรบุรี',
+    mapQ: 'Shylae+Seafood+Cha+am+Phetchaburi',
+    placeId: 'ChIJMb0oNlkb_TAREKzkr3ERPgY',
+    emoji: '🐙',
+    img: 'https://maps.googleapis.com/maps/api/streetview?size=400x300&location=12.8153,99.9957&fov=80&key=AIzaSyDNsJMIArQXL4tQIOqJ4ifmPqUbE6PXOIQ',
+    reviews: [
+      'อาหารทะเลสด รสชาติดั้งเดิม เหมาะมากสำหรับครอบครัว',
+      'บรรยากาศริมทะเล พนักงานยิ้มแย้ม อาหารอร่อย',
+      'ซีฟู้ดตัวใหญ่ แกงกะหรี่ปูเหลืองสมบูรณ์แบบ',
+    ],
+  },
+  {
+    name: 'Soulful Coffee Roasters',
+    nameEn: 'Soulful Coffee Roasters',
+    cat: 'cafe',
+    catLabel: 'คาเฟ่',
+    lat: 12.7942, lng: 99.9836,
+    rating: 4.7, ratingCount: 940,
+    hours: 'เปิด 07:00–17:00 น. ทุกวัน',
+    address: '244 ถ.ร่วมจิตต์, ชะอำ, เพชรบุรี',
+    mapQ: 'Soulful+Coffee+Roasters+Cha+am',
+    placeId: 'ChIJV_UsdrYD_TARnoEBu28IGa4',
+    emoji: '☕',
+    img: 'https://maps.googleapis.com/maps/api/streetview?size=400x300&location=12.7942,99.9836&fov=80&key=AIzaSyDNsJMIArQXL4tQIOqJ4ifmPqUbE6PXOIQ',
+    reviews: [
+      'Eggs Benedict อร่อยมาก กาแฟโอ้ตมิลค์ลาเต้หอมมาก บริการยอดเยี่ยม',
+      'คาเฟ่น่ารัก บรรยากาศอบอุ่น อาหารเช้าอร่อย ติดใจมาก',
+      'กาแฟอร่อยมาก วิวทะเลสวย ราคาสูงหน่อยแต่คุ้มค่าทุกบาท',
+    ],
+  },
+  {
+    name: 'The Fragrance Café',
+    nameEn: 'The Fragrance',
+    cat: 'cafe',
+    catLabel: 'คาเฟ่',
+    lat: 12.7982, lng: 99.9675,
+    rating: 4.9, ratingCount: 333,
+    hours: 'เปิด 08:30–16:00 น. (เสาร์ถึง 17:00)',
+    address: '15/1 ซ.นิติธน, ชะอำ, เพชรบุรี',
+    mapQ: 'The+Fragrance+Cafe+Cha+am',
+    placeId: 'ChIJRae_uiMD_TARIRbuqW6X-sw',
+    emoji: '🌸',
+    img: 'https://maps.googleapis.com/maps/api/streetview?size=400x300&location=12.7982,99.9675&fov=80&key=AIzaSyDNsJMIArQXL4tQIOqJ4ifmPqUbE6PXOIQ',
+    reviews: [
+      'Dirty Coffee อร่อยที่สุดเท่าที่เคยดื่ม! เค้กน่ารัก บรรยากาศดีมาก',
+      'คาเฟ่เก๋มาก กาแฟกับขนมอร่อยทุกอย่าง ตกแต่งสวยเหมือนอยู่กรุงเทพ',
+      'แมทฉะ กาแฟ เค้ก ทุกอย่างอร่อยหมด พนักงานน่ารัก แนะนำมาก',
+    ],
+  },
+  {
+    name: 'karma coffee @ cha-am beach',
+    nameEn: 'Karma Coffee',
+    cat: 'cafe',
+    catLabel: 'คาเฟ่',
+    lat: 12.7947, lng: 99.9837,
+    rating: 4.8, ratingCount: 123,
+    hours: 'เปิด 08:30–21:00 น.',
+    address: '244/9 ซ.ร่วมจิตต์, ชะอำ, เพชรบุรี',
+    mapQ: 'karma+coffee+cha+am+beach',
+    placeId: 'ChIJNbot6ioD_TARHI55K-mTnV4',
+    emoji: '🌊',
+    img: 'https://maps.googleapis.com/maps/api/streetview?size=400x300&location=12.7947,99.9837&fov=80&key=AIzaSyDNsJMIArQXL4tQIOqJ4ifmPqUbE6PXOIQ',
+    reviews: [
+      'คาเฟ่บรรยากาศดี เจ้าของน่ารัก กาแฟอร่อยมาก มาทุกทริปที่มาชะอำ',
+      'คาเฟ่อบอุ่น บรรยากาศเชิญชวน เจ้าของใจดีและยังช่วยเหลือลูกค้าด้วย',
+      'กาแฟอร่อย สมูทตี้กล้วยน่ารักมาก บรรยากาศดีมาก',
+    ],
+  },
+  {
+    name: 'ครัวหัวไสย',
+    nameEn: 'Khrua Huai Sai',
+    cat: 'seafood',
+    catLabel: 'อาหารทะเล',
+    lat: 12.6721, lng: 99.9474,
+    rating: 4.5, ratingCount: 5687,
+    hours: 'เปิด 10:30–22:00 น. (หยุดพุธ)',
+    address: '1364/3 ชมพล, ชะอำ, เพชรบุรี',
+    mapQ: 'Khrua+Huai+Sai+Cha+am+Phetchaburi',
+    placeId: 'ChIJAaPRbgcB_TAR1yx-0vjPmLI',
+    emoji: '🦀',
+    img: 'https://maps.googleapis.com/maps/api/streetview?size=400x300&location=12.6721,99.9474&fov=80&key=AIzaSyDNsJMIArQXL4tQIOqJ4ifmPqUbE6PXOIQ',
+    reviews: [
+      'แนะนำอย่างยิ่ง! ไข่เจียวปู ไข่เจียวหอยนางรม สุดปัง ราคาเหมาะสม',
+      'ต้มยำเผ็ดมากแต่รสชาติดี กุ้งและไข่ดาวทอดอร่อยมาก',
+      'อาหารสด รสชาติดีเยี่ยม มาพร้อมครอบครัวแล้วประทับใจทุกคน',
+    ],
+  },
+  {
+    name: 'Heros Café Cha-am',
+    nameEn: 'Heros Cafe',
+    cat: 'cafe',
+    catLabel: 'คาเฟ่',
+    lat: 12.7932, lng: 99.9693,
+    rating: 4.7, ratingCount: 51,
+    hours: 'เปิด ศุกร์-จันทร์ 10:00–17:00 น.',
+    address: '493/21 ซ.ราษฎร์พระ 1, ชะอำ',
+    mapQ: 'Heros+Cafe+Cha+am+Phetchaburi',
+    placeId: 'ChIJ7yy07jwD_TAR1sa5pvA-Ofc',
+    emoji: '🌿',
+    img: 'https://maps.googleapis.com/maps/api/streetview?size=400x300&location=12.7932,99.9693&fov=80&key=AIzaSyDNsJMIArQXL4tQIOqJ4ifmPqUbE6PXOIQ',
+    reviews: [
+      'คาเฟ่สวนน่ารัก กาแฟอร่อย เค้กและวาฟเฟิลโฮมเมดอร่อยมาก',
+      'มีฟาร์มมะเดื่อในร้าน มะเดื่อสดตัวใหญ่หวานมาก เจ้าของน่ารักพูดอังกฤษได้ดี',
+      'Scotch Eggs โฮมเมดอร่อยมาก บรรยากาศดี น่ารัก',
+    ],
+  },
+];
+
+// Add distance
+RESTAURANTS.forEach(r => {
+  r.dist = haversine(ORIGIN.lat, ORIGIN.lng, r.lat, r.lng);
+});
+
+// Sort by distance default
+RESTAURANTS.sort((a,b) => a.dist - b.dist);
+
+let currentFilter = 'all';
+let currentSort   = 'dist';
+
+// ─── Star renderer ───
+function renderStars(rating) {
+  let html = '';
+  for (let i = 1; i <= 5; i++) {
+    if (rating >= i) html += '<i class="fas fa-star star filled"></i>';
+    else if (rating >= i - 0.5) html += '<span class="star half"><i class="fas fa-star-half-alt"></i><i class="fas fa-star" style="visibility:hidden"></i></span>';
+    else html += '<i class="far fa-star star"></i>';
+  }
+  return html;
+}
+
+// ─── Emoji/icon background colours ───
+const CAT_IMG_ICONS = {
+  seafood: '#0d6eaf',
+  thai:    '#16a34a',
+  cafe:    '#92400e',
+  intl:    '#7c3aed',
+};
+const CAT_EMOJI_BG = {
+  seafood: 'linear-gradient(135deg,#1e3a5f,#2196d9)',
+  thai:    'linear-gradient(135deg,#14532d,#16a34a)',
+  cafe:    'linear-gradient(135deg,#78350f,#d97706)',
+  intl:    'linear-gradient(135deg,#4c1d95,#7c3aed)',
+};
+
+function buildCard(r, rank) {
+  const topFlag = rank <= 3 ? ' top3' : '';
+  const isOpen  = true; // simplification; real app would check day/time
+
+  const gmapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.name + ' ' + r.address)}&query_place_id=${r.placeId}`;
+
+  const imgHtml = `
+    <div style="width:100%;height:100%;background:${CAT_EMOJI_BG[r.cat]};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;">
+      <div style="font-size:3rem;line-height:1">${r.emoji}</div>
+      <div style="font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.7)">${r.catLabel}</div>
+    </div>`;
+
+  const reviews = r.reviews.map(rv => `
+    <div class="review-item">
+      <div class="review-text">${rv}</div>
+    </div>`).join('');
+
+  return `
+    <div class="col-12 col-sm-6 col-xl-4 rest-col" data-cat="${r.cat}" data-dist="${r.dist}" data-rating="${r.rating}" data-reviews="${r.ratingCount}" data-aos="fade-up">
+      <div class="rest-card cat-${r.cat}">
+        <div class="rest-card-img">
+          ${imgHtml}
+          <div class="rank-num${topFlag}">${rank}</div>
+          <span class="cat-badge ${r.cat}">${r.catLabel}</span>
+          <div class="dist-badge"><i class="fas fa-route"></i>${r.dist} กม.</div>
+        </div>
+        <div class="rest-card-body">
+          <div class="rest-card-name">${r.name}</div>
+          <div class="rest-card-addr"><i class="fas fa-map-marker-alt"></i>${r.address}</div>
+          <div class="stars-row">
+            <div class="stars">${renderStars(r.rating)}</div>
+            <span class="rating-num">${r.rating.toFixed(1)}</span>
+            <span class="rating-count">(${r.ratingCount.toLocaleString()} รีวิว)</span>
+          </div>
+          <div class="hours-row">
+            <span class="${isOpen ? 'open-dot' : 'closed-dot'}"></span>
+            ${r.hours}
+          </div>
+          <div class="reviews-wrap">${reviews}</div>
+          <a href="${gmapsUrl}" target="_blank" rel="noopener" class="btn-map">
+            <i class="fas fa-map-marked-alt"></i> ดูใน Google Maps
+          </a>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderAll() {
+  const grid = document.getElementById('restaurantGrid');
+  const empty = document.getElementById('emptyState');
+
+  // Filter
+  let list = currentFilter === 'all'
+    ? [...RESTAURANTS]
+    : RESTAURANTS.filter(r => r.cat === currentFilter);
+
+  // Sort
+  if (currentSort === 'dist')    list.sort((a,b) => a.dist   - b.dist);
+  if (currentSort === 'rating')  list.sort((a,b) => b.rating - a.rating);
+  if (currentSort === 'reviews') list.sort((a,b) => b.ratingCount - a.ratingCount);
+
+  if (list.length === 0) {
+    grid.innerHTML = '';
+    empty.classList.remove('d-none');
+    return;
+  }
+  empty.classList.add('d-none');
+
+  grid.innerHTML = list.map((r, i) => buildCard(r, i + 1)).join('');
+
+  // Re-trigger AOS
+  if (window.AOS) { AOS.refreshHard(); }
+}
+
+function filterCards(btn, cat) {
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.classList.remove('active', 'active-cafe');
+  });
+  btn.classList.add(cat === 'cafe' ? 'active-cafe' : 'active');
+  currentFilter = cat;
+  renderAll();
+}
+
+function sortCards(val) {
+  currentSort = val;
+  renderAll();
+}
+
+// Initial render
+renderAll();
+</script>
+</body>
+</html>

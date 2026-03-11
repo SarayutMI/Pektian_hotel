@@ -1,0 +1,927 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ประกาศ & อัพเดต — NICHA CONDO</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="./images/logo.png">
+  <link rel="apple-touch-icon" href="./images/logo.png">
+  <style>
+    :root {
+      --sky:       #5bb8f5;
+      --sky-mid:   #2196d9;
+      --sky-deep:  #0d6eaf;
+      --sky-dark:  #084e82;
+      --sky-pale:  #e8f6fd;
+      --sky-light: #c8e9f8;
+      --white:     #ffffff;
+      --off-white: #f5fbff;
+      --text:      #0d2d45;
+      --text-mid:  #2a5674;
+      --text-lt:   #6a9bb8;
+      --radius:    14px;
+      --sh-sm:     0 4px 18px rgba(13,110,175,.10);
+      --sh-md:     0 10px 40px rgba(13,110,175,.16);
+      --sh-lg:     0 20px 60px rgba(13,110,175,.22);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Prompt', sans-serif;
+      background: var(--white);
+      color: var(--text);
+      overflow-x: hidden;
+      padding-top: 108px;
+    }
+    h1,h2,h3,h4 { font-family: 'Cormorant Garamond', serif; letter-spacing: .02em; }
+    .top-bar {
+      position: fixed; top: 0; width: 100%; z-index: 1050;
+      background: rgba(255,255,255,.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(91,184,245,.25);
+      transition: box-shadow .3s;
+    }
+    .top-bar.scrolled { box-shadow: 0 4px 24px rgba(13,110,175,.12); }
+    .logo-row { background: var(--sky-dark); padding: 10px 0; }
+    .logo-row .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; min-width: 0; }
+    .logo-row .brand img { height: clamp(28px,5vw,40px); flex-shrink: 0; }
+    .logo-row .brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem,4vw,1.6rem); font-weight: 700;
+      color: var(--white); letter-spacing: .06em; white-space: nowrap;
+    }
+    .logo-contact { flex-shrink: 0; }
+    .logo-contact-item {
+      display: inline-flex; align-items: center; gap: 5px;
+      color: rgba(255,255,255,.85); text-decoration: none;
+      font-size: clamp(.62rem,2vw,.78rem); font-weight: 500;
+      transition: color .2s; white-space: nowrap;
+    }
+    .logo-contact-item i { color: var(--sky-light); font-size: .8rem; }
+    .logo-contact-item:hover { color: var(--white); }
+    .logo-contact-sep { color: rgba(255,255,255,.3); font-size: .75rem; }
+    .nav-row { background: var(--white); }
+    .main-nav { display: flex; align-items: center; justify-content: space-between; }
+    .nav-links { display: flex; align-items: center; list-style: none; gap: 0; margin: 0; padding: 0; }
+    .nav-links li a {
+      display: block; padding: 16px 16px;
+      font-size: .82rem; font-weight: 500; color: var(--text);
+      text-decoration: none; letter-spacing: .04em;
+      border-bottom: 3px solid transparent;
+      transition: color .2s, border-color .2s; white-space: nowrap;
+    }
+    .nav-links li a:hover,
+    .nav-links li a.active { color: var(--sky-mid); border-bottom-color: var(--sky-mid); }
+    .nav-links li.has-drop { position: relative; }
+    .drop-menu {
+      display: none; position: absolute; top: 100%; left: 0;
+      background: var(--white); border-radius: 0 0 10px 10px;
+      box-shadow: var(--sh-md); min-width: 220px;
+      border-top: 3px solid var(--sky-mid); z-index: 999;
+    }
+    .nav-links li.has-drop:hover .drop-menu { display: block; }
+    .drop-menu a {
+      display: block; padding: 12px 20px; font-size: .82rem;
+      font-weight: 500; color: var(--text); text-decoration: none;
+      border-bottom: 1px solid var(--sky-pale);
+      transition: background .2s, color .2s;
+    }
+    .drop-menu a:hover { background: var(--sky-pale); color: var(--sky-dark); }
+    .btn-book-nav {
+      background: var(--sky-mid); color: var(--white);
+      padding: 10px 22px; border-radius: 4px;
+      font-size: .82rem; font-weight: 600;
+      text-decoration: none; white-space: nowrap; letter-spacing: .06em;
+      transition: background .2s, transform .15s; border: none;
+    }
+    .btn-book-nav:hover { background: var(--sky-dark); color: var(--white); transform: translateY(-1px); }
+    .hamburger {
+      display: none; background: none; border: none; cursor: pointer;
+      padding: 10px 4px; flex-direction: row; align-items: center; gap: 10px;
+    }
+    .hamburger-bars { display: flex; flex-direction: column; gap: 5px; }
+    .hamburger-bars span { display: block; width: 26px; height: 2px; background: var(--text); transition: all .3s; border-radius: 2px; }
+    .hamburger-label { font-family: 'Prompt', sans-serif; font-size: .88rem; font-weight: 700; color: var(--text); letter-spacing: .12em; text-transform: uppercase; line-height: 1; }
+    .hamburger.open .hamburger-bars span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open .hamburger-bars span:nth-child(2) { opacity: 0; }
+    .hamburger.open .hamburger-bars span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-nav { display: none; background: var(--white); border-top: 1px solid var(--sky-pale); padding: 10px 0 20px; }
+    .mobile-nav.open { display: block; }
+    .mobile-nav a { display: block; padding: 11px 24px; font-size: .9rem; color: var(--text); text-decoration: none; font-weight: 500; border-bottom: 1px solid var(--sky-pale); }
+    .mobile-nav a:hover { background: var(--sky-pale); color: var(--sky-dark); }
+    .page-hero {
+      background: linear-gradient(135deg, var(--sky-dark) 0%, var(--sky-mid) 100%);
+      padding: clamp(40px,7vw,80px) 0;
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .page-hero-content { position: relative; z-index: 1; }
+    .page-hero-eyebrow {
+      font-size: .72rem; letter-spacing: .3em; text-transform: uppercase;
+      color: var(--sky-light); font-weight: 600; display: block; margin-bottom: 10px;
+    }
+    .page-hero-title {
+      font-size: clamp(2rem,5vw,3.5rem); font-weight: 700;
+      color: var(--white); line-height: 1.1; margin-bottom: 12px;
+    }
+    .page-hero-sub {
+      font-size: clamp(.9rem,1.8vw,1.1rem); font-weight: 300;
+      color: rgba(255,255,255,.8); margin-bottom: 0;
+    }
+    .breadcrumb-bar {
+      background: var(--sky-pale); border-bottom: 1px solid var(--sky-light);
+      padding: 10px 0;
+    }
+    .breadcrumb { margin: 0; font-size: .8rem; }
+    .breadcrumb-item a { color: var(--sky-mid); text-decoration: none; }
+    .breadcrumb-item a:hover { color: var(--sky-dark); }
+    .breadcrumb-item.active { color: var(--text-lt); }
+    .breadcrumb-item + .breadcrumb-item::before { color: var(--text-lt); }
+    .section { padding: clamp(50px,8vw,90px) 0; }
+    .section-alt { background: var(--off-white); }
+    .section-label {
+      font-size: .72rem; letter-spacing: .3em; text-transform: uppercase;
+      color: var(--sky-mid); font-weight: 600; margin-bottom: 12px; display: block;
+    }
+    .section-title {
+      font-size: clamp(1.8rem,4vw,3rem); font-weight: 600;
+      color: var(--text); line-height: 1.15; margin-bottom: 16px;
+    }
+    .section-title span { color: var(--sky-mid); }
+    .section-lead {
+      font-size: 1rem; color: var(--text-mid);
+      font-weight: 300; line-height: 1.8; max-width: 600px;
+    }
+    .divider-sky {
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, var(--sky), var(--sky-mid));
+      border-radius: 99px; margin: 18px 0 28px;
+    }
+    .content-card {
+      background: var(--white); border-radius: var(--radius);
+      border: 1px solid var(--sky-pale);
+      box-shadow: var(--sh-sm); overflow: hidden;
+      transition: transform .3s, box-shadow .3s; height: 100%;
+    }
+    .content-card:hover { transform: translateY(-6px); box-shadow: var(--sh-md); }
+    .content-card-img { height: clamp(160px,22vw,240px); overflow: hidden; }
+    .content-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+    .content-card:hover .content-card-img img { transform: scale(1.06); }
+    .content-card-body { padding: 22px 24px; }
+    .content-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem; font-weight: 600; color: var(--text); margin-bottom: 8px;
+    }
+    .content-card-text { font-size: .85rem; color: var(--text-mid); line-height: 1.7; }
+    .btn-sky {
+      background: var(--sky-dark); color: var(--white);
+      padding: 12px 28px; border-radius: 4px; border: none;
+      font-size: .85rem; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; text-decoration: none; cursor: pointer;
+      transition: background .2s, transform .15s; display: inline-block;
+    }
+    .btn-sky:hover { background: var(--sky-mid); color: var(--white); transform: translateY(-2px); }
+    .btn-sky-outline {
+      background: transparent; color: var(--sky-dark);
+      padding: 11px 26px; border-radius: 4px;
+      border: 2px solid var(--sky-dark);
+      font-size: .85rem; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; text-decoration: none; cursor: pointer;
+      transition: all .2s; display: inline-block;
+    }
+    .btn-sky-outline:hover { background: var(--sky-dark); color: var(--white); }
+    .info-box {
+      background: var(--sky-pale); border-left: 4px solid var(--sky-mid);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 20px 24px;
+    }
+    .info-box h6 { color: var(--sky-dark); font-weight: 700; margin-bottom: 6px; }
+    .info-box p  { font-size: .88rem; color: var(--text-mid); margin: 0; }
+    footer { background: var(--text); color: rgba(255,255,255,.7); padding: 60px 0 0; font-size: .83rem; }
+    .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 700; color: var(--white); margin-bottom: 14px; }
+    .footer-brand small { font-family: 'Prompt', sans-serif; font-size: .72rem; letter-spacing: .25em; color: var(--sky-light); display: block; text-transform: uppercase; margin-top: 2px; }
+    .footer-links { list-style: none; padding: 0; }
+    .footer-links li { margin-bottom: 10px; }
+    .footer-links a { color: rgba(255,255,255,.65); text-decoration: none; transition: color .2s; font-size: .82rem; }
+    .footer-links a:hover { color: var(--sky-light); }
+    footer h6 { color: var(--white); font-family: 'Prompt', sans-serif; font-size: .7rem; letter-spacing: .22em; text-transform: uppercase; margin-bottom: 18px; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.08); padding: 20px 0; margin-top: 50px; font-size: .75rem; color: rgba(255,255,255,.4); }
+    .social-btn { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.6); text-decoration: none; font-size: .85rem; transition: all .2s; margin-right: 8px; }
+    .social-btn:hover { background: var(--sky-mid); border-color: var(--sky-mid); color: var(--white); }
+    @media (max-width: 991px) {
+      body { padding-top: 90px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .main-nav { justify-content: flex-start; }
+    }
+    @media (max-width: 575px) {
+      body { padding-top: 82px; }
+    }
+
+    /* ══════════════════════════════════════════
+       PAGE-SPECIFIC STYLES — NOTICE PAGE
+    ══════════════════════════════════════════ */
+
+    /* Notice Cards */
+    .notice-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      border: 1px solid var(--sky-pale);
+      box-shadow: var(--sh-sm);
+      padding: 28px 30px;
+      transition: transform .3s, box-shadow .3s;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+    .notice-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    }
+    .notice-card.notice-deposit::before  { background: linear-gradient(90deg, #f59e0b, #f97316); }
+    .notice-card.notice-gift::before     { background: linear-gradient(90deg, #ec4899, #a855f7); }
+    .notice-card.notice-amenity::before  { background: linear-gradient(90deg, var(--sky), var(--sky-mid)); }
+    .notice-card.notice-checkin::before  { background: linear-gradient(90deg, #10b981, #0d9488); }
+    .notice-card:hover { transform: translateY(-5px); box-shadow: var(--sh-md); }
+
+    .notice-icon {
+      width: 52px; height: 52px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin-bottom: 16px;
+    }
+    .notice-icon.orange  { background: #fff7ed; color: #f97316; }
+    .notice-icon.pink    { background: #fdf4ff; color: #a855f7; }
+    .notice-icon.blue    { background: var(--sky-pale); color: var(--sky-mid); }
+    .notice-icon.green   { background: #f0fdf4; color: #10b981; }
+
+    .notice-card h4 {
+      font-family: 'Prompt', sans-serif;
+      font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 10px;
+    }
+    .notice-card p {
+      font-size: .88rem; color: var(--text-mid); line-height: 1.8; margin: 0;
+    }
+    .notice-card a { color: var(--sky-mid); font-weight: 600; text-decoration: none; }
+    .notice-card a:hover { color: var(--sky-dark); text-decoration: underline; }
+
+    /* Room Price Cards */
+    .room-price-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      border: 2px solid var(--sky-pale);
+      box-shadow: var(--sh-sm);
+      overflow: hidden;
+      transition: transform .3s, box-shadow .3s, border-color .3s;
+      height: 100%;
+    }
+    .room-price-card:hover { transform: translateY(-6px); box-shadow: var(--sh-md); border-color: var(--sky-light); }
+    .room-price-card.featured { border-color: var(--sky-mid); }
+
+    .room-price-header {
+      background: linear-gradient(135deg, var(--sky-dark), var(--sky-mid));
+      padding: 20px 22px 16px;
+      position: relative;
+    }
+    .room-price-card.pool .room-price-header {
+      background: linear-gradient(135deg, #0d6eaf, #38bdf8);
+    }
+    .room-price-badge {
+      display: inline-block;
+      background: rgba(255,255,255,.2);
+      color: var(--white);
+      font-size: .65rem; font-weight: 700;
+      letter-spacing: .15em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 99px;
+      margin-bottom: 8px;
+    }
+    .room-price-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem; font-weight: 700; color: var(--white); margin: 0;
+    }
+    .room-price-size {
+      font-size: .78rem; color: rgba(255,255,255,.75); margin-top: 4px;
+    }
+
+    .room-price-body { padding: 20px 22px; }
+    .price-amount {
+      display: flex; align-items: baseline; gap: 4px;
+      margin-bottom: 6px;
+    }
+    .price-amount .baht {
+      font-size: 1.1rem; color: var(--sky-dark); font-weight: 700;
+    }
+    .price-amount .number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem; font-weight: 700; color: var(--text); line-height: 1;
+    }
+    .price-amount .per {
+      font-size: .78rem; color: var(--text-lt); font-weight: 400;
+    }
+    .price-guests {
+      font-size: .8rem; color: var(--text-mid);
+      display: flex; align-items: center; gap: 6px; margin-bottom: 16px;
+    }
+    .price-guests i { color: var(--sky-mid); }
+    .price-feature-list { list-style: none; padding: 0; margin: 0; }
+    .price-feature-list li {
+      font-size: .83rem; color: var(--text-mid);
+      padding: 7px 0;
+      border-bottom: 1px solid var(--sky-pale);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .price-feature-list li:last-child { border-bottom: none; }
+    .price-feature-list li i { color: var(--sky-mid); font-size: .85rem; width: 16px; text-align: center; }
+
+    /* Facebook Feed Section */
+    .fb-section {
+      background: linear-gradient(135deg, #f0f7ff, #e8f4fd);
+      border-radius: var(--radius);
+      border: 1px solid var(--sky-light);
+      padding: 32px;
+      position: relative; overflow: hidden;
+    }
+    .fb-section::before {
+      content: '\f09a';
+      font-family: 'Font Awesome 6 Brands';
+      position: absolute; right: 20px; top: 16px;
+      font-size: 5rem; color: #1877f2; opacity: .08;
+    }
+    .fb-feed-container {
+      background: var(--white);
+      border-radius: 10px;
+      box-shadow: var(--sh-sm);
+      overflow: hidden;
+      width: 100%;
+      position: relative;
+    }
+    .fb-feed-scaler {
+      width: 500px;        /* Facebook plugin's fixed internal width */
+      transform-origin: top left;
+      /* scale is set dynamically via JS */
+    }
+    .fb-feed-frame {
+      width: 500px;
+      height: 700px;
+      border: none;
+      display: block;
+    }
+    .fb-feed-loading {
+      text-align: center; padding: 40px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      min-height: 500px;
+    }
+    .fb-feed-loading i { font-size: 2.5rem; color: #1877f2; margin-bottom: 12px; display: block; }
+    .fb-feed-loading p { font-size: .88rem; color: var(--text-lt); }
+
+    /* CTA Banner */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--sky-dark) 0%, var(--sky-mid) 100%);
+      border-radius: var(--radius);
+      padding: 40px 44px;
+      position: relative; overflow: hidden;
+    }
+    .cta-banner::after {
+      content: '';
+      position: absolute; right: -30px; top: -30px;
+      width: 200px; height: 200px;
+      background: rgba(255,255,255,.05);
+      border-radius: 50%;
+    }
+    .cta-banner h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem,3vw,2.2rem);
+      color: var(--white); margin-bottom: 10px;
+    }
+    .cta-banner p { color: rgba(255,255,255,.8); font-size: .9rem; margin-bottom: 0; }
+    .btn-white {
+      background: var(--white); color: var(--sky-dark);
+      padding: 13px 30px; border-radius: 4px; border: none;
+      font-size: .85rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; text-decoration: none;
+      transition: all .2s; display: inline-block;
+      box-shadow: 0 4px 16px rgba(0,0,0,.15);
+    }
+    .btn-white:hover { background: var(--sky-pale); color: var(--sky-dark); transform: translateY(-2px); }
+
+    /* Checkin times */
+    .time-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--sky-pale); border: 1px solid var(--sky-light);
+      border-radius: 99px; padding: 6px 14px;
+      font-size: .8rem; font-weight: 600; color: var(--sky-dark);
+    }
+    .time-pill i { color: var(--sky-mid); }
+
+    .highlight-tag {
+      display: inline-block;
+      background: linear-gradient(90deg, #f97316, #f59e0b);
+      color: white; font-size: .7rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 99px; margin-left: 8px;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar" id="topBar">
+  <div class="logo-row">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between">
+        <a href="index.html" class="brand">
+          <img src="./images/logo.png" alt="NICHA CONDO">
+          <span class="brand-name">NICHA CONDO</span>
+        </a>
+        <div class="d-flex align-items-center gap-2 logo-contact">
+          <a href="tel:0863429855" class="logo-contact-item">
+            <i class="fas fa-phone"></i> <span>086 342 9855</span>
+          </a>
+          <span class="logo-contact-sep">|</span>
+          <a href="mailto:jew.scb18@gmail.com" class="logo-contact-item">
+            <i class="fas fa-envelope"></i>
+            <span class="d-none d-sm-inline">jew.scb18@gmail.com</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-row">
+    <div class="container">
+      <nav class="main-nav">
+        <ul class="nav-links">
+          <li class="has-drop">
+            <a href="#">ห้องพัก <i class="fas fa-chevron-down ms-1" style="font-size:.6rem"></i></a>
+            <div class="drop-menu">
+              <a href="./pektian-seaview.html">ปึกเตียนซีวิว คอนโดเทล</a>
+              <a href="./copacabana-jomtien.html">โคปาคาบาน่า จอมเทียน</a>
+            </div>
+          </li>
+          <li><a href="./Page4.html">ความสะดวกสบาย</a></li>
+          <li class="has-drop">
+            <a href="#">แผนที่ <i class="fas fa-chevron-down ms-1" style="font-size:.6rem"></i></a>
+            <div class="drop-menu">
+              <a href="./Page2.html">ปึกเตียนซีวิว คอนโดเทล</a>
+              <a href="./Page2-copacabana.html">Copacabana Beach Jomtien</a>
+            </div>
+          </li>
+          <li><a href="./Page3.html" class="active">ประกาศ</a></li>
+          <li><a href="./Page7.html">รีวิว</a></li>
+          <li><a href="./Page6.html">วิธีการจอง</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-3">
+          <button class="hamburger" id="hamburger" aria-label="Menu">
+            <div class="hamburger-bars">
+              <span></span><span></span><span></span>
+            </div>
+            <span class="hamburger-label">MENU</span>
+          </button>
+          <a href="./Page8.html" class="btn-book-nav d-none d-lg-inline-flex">
+            <i class="fas fa-calendar-check me-2"></i>จองเลยตอนนี้
+          </a>
+        </div>
+      </nav>
+      <div class="mobile-nav" id="mobileNav">
+        <a href="./pektian-seaview.html">ห้องพัก — ปึกเตียนซีวิว คอนโดเทล</a>
+        <a href="./copacabana-jomtien.html">ห้องพัก — โคปาคาบาน่า จอมเทียน</a>
+        <a href="./Page4.html">ความสะดวกสบาย</a>
+        <a href="./Page2.html">แผนที่ — ปึกเตียนซีวิว คอนโดเทล</a>
+        <a href="./Page2-copacabana.html">แผนที่ — Copacabana Beach Jomtien</a>
+        <a href="./Page3.html">ประกาศ</a>
+        <a href="./Page7.html">รีวิว</a>
+        <a href="./Page6.html">วิธีการจอง</a>
+        <a href="./Page8.html" style="background:var(--sky-dark);color:#fff;margin:10px 24px 0;border-radius:4px;text-align:center;">จองเลยตอนนี้</a>
+        <div style="padding:14px 24px 6px;border-top:1px solid var(--sky-pale);margin-top:6px;display:flex;flex-direction:column;gap:8px;">
+          <a href="tel:0863429855" style="color:var(--sky-dark);font-size:.82rem;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:8px;">
+            <i class="fas fa-phone" style="color:var(--sky-mid);width:16px"></i> 086 342 9855
+          </a>
+          <a href="mailto:jew.scb18@gmail.com" style="color:var(--sky-dark);font-size:.82rem;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:8px;">
+            <i class="fas fa-envelope" style="color:var(--sky-mid);width:16px"></i> jew.scb18@gmail.com
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END TOP BAR -->
+
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="container page-hero-content">
+    <span class="page-hero-eyebrow">NICHA CONDO · PEKTIAN SEAVIEW</span>
+    <h1 class="page-hero-title">ประกาศ & อัพเดต</h1>
+    <p class="page-hero-sub">ข้อมูลสำคัญ ราคาห้องพัก และข่าวสารล่าสุดจากทางเรา</p>
+  </div>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb-bar">
+  <div class="container">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="index.html">หน้าหลัก</a></li>
+      <li class="breadcrumb-item active">ประกาศ & อัพเดต</li>
+    </ol>
+  </div>
+</div>
+
+
+<!-- SECTION 1: IMPORTANT NOTICES -->
+<section class="section">
+  <div class="container">
+
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-label">IMPORTANT NOTICES</span>
+      <h2 class="section-title">ข้อมูล<span>สำคัญ</span></h2>
+      <div class="divider-sky mx-auto"></div>
+      <p class="section-lead mx-auto">สิ่งที่ควรทราบก่อนเข้าพัก เพื่อความสะดวกสบายสูงสุดของคุณ</p>
+    </div>
+
+    <div class="row g-4">
+
+      <!-- Deposit -->
+      <div class="col-12 col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="60">
+        <div class="notice-card notice-deposit">
+          <div class="notice-icon orange"><i class="fas fa-hand-holding-usd"></i></div>
+          <h4>มัดจำ & ชำระส่วนที่เหลือ</h4>
+          <p>มัดจำ <strong>200 บาท</strong> เท่านั้น — ส่วนที่เหลือชำระที่พักได้เลยคะ สะดวกสบาย ไม่ต้องกังวล ✨</p>
+        </div>
+      </div>
+
+      <!-- Gift -->
+      <div class="col-12 col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="120">
+        <div class="notice-card notice-gift">
+          <div class="notice-icon pink"><i class="fas fa-gift"></i></div>
+          <h4>ของที่ระลึกสุดพิเศษ 🐻</h4>
+          <p>รับ <strong>ผ้าขนหนูน้องหมีฟรี!</strong> เพียงกดไลฟ์ เล่าเรื่องความประทับใจที่พัก + กดแชร์ + เพิ่มเพื่อน <a href="https://www.facebook.com/puektianseaview" target="_blank">@puektianseaview</a> คะ</p>
+        </div>
+      </div>
+
+      <!-- Amenities -->
+      <div class="col-12 col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="180">
+        <div class="notice-card notice-amenity">
+          <div class="notice-icon blue"><i class="fas fa-mug-hot"></i></div>
+          <h4>บริการเครื่องดื่ม & มาม่า</h4>
+          <p>ทางเรามี <strong>มาม่า · น้ำดื่ม · น้ำชา · กาแฟ</strong> ไว้บริการทุกห้องคะ 🍜☕ รวมถึง <strong>มินิบาร์</strong> ในทุกห้อง 🥃</p>
+        </div>
+      </div>
+
+      <!-- Check-in/out -->
+      <div class="col-12 col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="240">
+        <div class="notice-card notice-checkin">
+          <div class="notice-icon green"><i class="fas fa-clock"></i></div>
+          <h4>เช็คอิน / เช็คเอ้าท์</h4>
+          <p>เวลาตามโรงแรมมาตรฐานคะ<br><strong>Late Check-out</strong> มีค่าใช้จ่ายเพิ่มเติม สอบถาม <a href="tel:0863429855">086-342-9855</a></p>
+          <div class="mt-3 d-flex flex-wrap gap-2">
+            <span class="time-pill"><i class="fas fa-sign-in-alt"></i> Check-in 14:00</span>
+            <span class="time-pill"><i class="fas fa-sign-out-alt"></i> Check-out 12:00</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- After-hours note -->
+    <div class="row mt-4" data-aos="fade-up">
+      <div class="col-12">
+        <div class="info-box">
+          <h6><i class="fas fa-moon me-2"></i>เช็คอินนอกเวลา (Late Check-in)</h6>
+          <p>หากต้องการเช็คอินนอกเวลามาตรฐาน กรุณาติดต่อล่วงหน้าที่ <strong><a href="tel:0863429855" style="color:var(--sky-dark)">086-342-9855</a></strong> เพื่อนัดแนะเวลาได้เลยคะ</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SECTION 3: FACEBOOK LATEST POSTS -->
+<section class="section">
+  <div class="container">
+
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-label">LATEST UPDATES</span>
+      <h2 class="section-title">โพสต์ล่าสุด<span>จาก Facebook</span></h2>
+      <div class="divider-sky mx-auto"></div>
+      <p class="section-lead mx-auto">ติดตามข่าวสาร โปรโมชั่น และภาพบรรยากาศล่าสุดจาก Puektian Seaview</p>
+    </div>
+
+    <div class="row g-4 align-items-start" data-aos="fade-up">
+      <div class="col-12 mx-auto">
+        <div class="fb-section">
+          <div class="d-flex align-items-center gap-3 mb-4">
+            <div style="width:48px;height:48px;background:#1877f2;border-radius:12px;display:flex;align-items:center;justify-content:center;">
+              <i class="fab fa-facebook-f" style="color:#fff;font-size:1.3rem"></i>
+            </div>
+            <div>
+              <div style="font-weight:700;font-size:1rem;color:var(--text)">Puektian Seaview Condotel</div>
+              <a href="https://www.facebook.com/puektianseaview" target="_blank" style="font-size:.82rem;color:var(--sky-mid);text-decoration:none;">@puektianseaview</a>
+            </div>
+            <a href="https://www.facebook.com/puektianseaview" target="_blank" class="btn-sky ms-auto" style="padding:8px 18px;font-size:.78rem;">
+              <i class="fab fa-facebook-f me-1"></i> ติดตาม
+            </a>
+          </div>
+
+          <!-- Facebook Embedded Feed via iframe -->
+          <div class="fb-feed-container" id="fbFeedContainer">
+            <div class="fb-feed-loading" id="fbLoading">
+              <i class="fab fa-facebook-f"></i>
+              <p>กำลังโหลดโพสต์ล่าสุด...</p>
+            </div>
+          </div>
+
+          <p class="mt-3 text-center" style="font-size:.78rem;color:var(--text-lt);">
+            <i class="fas fa-sync-alt me-1"></i>อัพเดตอัตโนมัติจาก Facebook Page
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SECTION 2: ROOM PRICES -->
+<section class="section section-alt">
+  <div class="container">
+
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-label">ROOM RATES</span>
+      <h2 class="section-title">ราคา<span>ห้องพัก</span></h2>
+      <div class="divider-sky mx-auto"></div>
+      <p class="section-lead mx-auto">เลือกห้องพักที่เหมาะกับคุณ — ทุกห้องพร้อมมินิบาร์ 🥃🍜</p>
+    </div>
+
+    <div class="row g-4">
+
+      <!-- Studio Garden -->
+      <div class="col-12 col-sm-6 col-xl-3" data-aos="fade-up" data-aos-delay="60">
+        <div class="room-price-card">
+          <div class="room-price-header">
+            <div class="room-price-badge">Garden View</div>
+            <div class="room-price-name">Studio</div>
+            <div class="room-price-size"><i class="fas fa-expand-arrows-alt me-1"></i> 39 ตร.ม.</div>
+          </div>
+          <div class="room-price-body">
+            <div class="price-amount">
+              <span class="baht">฿</span>
+              <span class="number">1,500</span>
+              <span class="per">/ คืน</span>
+            </div>
+            <div class="price-guests"><i class="fas fa-users"></i> พักได้ 2–3 ท่าน</div>
+            <ul class="price-feature-list">
+              <li><i class="fas fa-tree"></i> วิวสวน</li>
+              <li><i class="fas fa-bed"></i> ห้องนอนรวม Living Area</li>
+              <li><i class="fas fa-cocktail"></i> มินิบาร์ฟรี</li>
+              <li><i class="fas fa-mug-hot"></i> มาม่า · ชา · กาแฟ</li>
+            </ul>
+            <a href="./Page8.html" class="btn-sky w-100 text-center mt-3" style="display:block;">จองห้องนี้</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Family Suite Garden -->
+      <div class="col-12 col-sm-6 col-xl-3" data-aos="fade-up" data-aos-delay="120">
+        <div class="room-price-card featured">
+          <div class="room-price-header">
+            <div class="room-price-badge">Garden View · Popular</div>
+            <div class="room-price-name">Family Suite</div>
+            <div class="room-price-size"><i class="fas fa-expand-arrows-alt me-1"></i> 80 ตร.ม.</div>
+          </div>
+          <div class="room-price-body">
+            <div class="price-amount">
+              <span class="baht">฿</span>
+              <span class="number">2,500</span>
+              <span class="per">/ คืน</span>
+            </div>
+            <div class="price-guests"><i class="fas fa-users"></i> พักได้ 4–6 ท่าน</div>
+            <ul class="price-feature-list">
+              <li><i class="fas fa-tree"></i> วิวสวน</li>
+              <li><i class="fas fa-door-open"></i> ห้องนอนแยก 2 ห้อง</li>
+              <li><i class="fas fa-cocktail"></i> มินิบาร์ฟรี</li>
+              <li><i class="fas fa-mug-hot"></i> มาม่า · ชา · กาแฟ</li>
+            </ul>
+            <a href="./Page8.html" class="btn-sky w-100 text-center mt-3" style="display:block;">จองห้องนี้</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pool Studio -->
+      <div class="col-12 col-sm-6 col-xl-3" data-aos="fade-up" data-aos-delay="180">
+        <div class="room-price-card pool">
+          <div class="room-price-header" style="background: linear-gradient(135deg,#0d6eaf,#38bdf8)">
+            <div class="room-price-badge">Pool Access</div>
+            <div class="room-price-name">Pool Studio</div>
+            <div class="room-price-size"><i class="fas fa-expand-arrows-alt me-1"></i> 39 ตร.ม.</div>
+          </div>
+          <div class="room-price-body">
+            <div class="price-amount">
+              <span class="baht">฿</span>
+              <span class="number">1,800</span>
+              <span class="per">/ คืน</span>
+            </div>
+            <div class="price-guests"><i class="fas fa-users"></i> พักได้ 2–3 ท่าน</div>
+            <ul class="price-feature-list">
+              <li><i class="fas fa-swimming-pool"></i> ติดสระว่ายน้ำ</li>
+              <li><i class="fas fa-bed"></i> ห้องนอนรวม Living Area</li>
+              <li><i class="fas fa-cocktail"></i> มินิบาร์ฟรี</li>
+              <li><i class="fas fa-mug-hot"></i> มาม่า · ชา · กาแฟ</li>
+            </ul>
+            <a href="./Page8.html" class="btn-sky w-100 text-center mt-3" style="display:block;">จองห้องนี้</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pool Family Suite -->
+      <div class="col-12 col-sm-6 col-xl-3" data-aos="fade-up" data-aos-delay="240">
+        <div class="room-price-card pool">
+          <div class="room-price-header" style="background: linear-gradient(135deg,#0d6eaf,#38bdf8)">
+            <div class="room-price-badge">Pool Access · Best Value</div>
+            <div class="room-price-name">Pool Family Suite</div>
+            <div class="room-price-size"><i class="fas fa-expand-arrows-alt me-1"></i> 80 ตร.ม.</div>
+          </div>
+          <div class="room-price-body">
+            <div class="price-amount">
+              <span class="baht">฿</span>
+              <span class="number">2,800</span>
+              <span class="per">/ คืน</span>
+            </div>
+            <div class="price-guests"><i class="fas fa-users"></i> พักได้ 4–6 ท่าน</div>
+            <ul class="price-feature-list">
+              <li><i class="fas fa-swimming-pool"></i> ติดสระว่ายน้ำ</li>
+              <li><i class="fas fa-door-open"></i> ห้องนอนแยก 2 ห้อง</li>
+              <li><i class="fas fa-cocktail"></i> มินิบาร์ฟรี</li>
+              <li><i class="fas fa-mug-hot"></i> มาม่า · ชา · กาแฟ</li>
+            </ul>
+            <a href="./Page8.html" class="btn-sky w-100 text-center mt-3" style="display:block;">จองห้องนี้</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Room detail link -->
+    <div class="text-center mt-5" data-aos="fade-up">
+      <p class="mb-3" style="font-size:.9rem;color:var(--text-mid);">
+        <i class="fas fa-play-circle me-1" style="color:var(--sky-mid)"></i>
+        กดชมรายละเอียดห้องจากเมนูด้านบน
+        <i class="fas fa-arrow-down ms-1" style="color:#ef4444"></i>
+      </p>
+      <a href="./pektian-seaview.html" class="btn-sky me-2">ดูรายละเอียดห้องพัก</a>
+      <a href="./Page8.html" class="btn-sky-outline">จองเลยตอนนี้</a>
+    </div>
+
+  </div>
+</section>
+
+
+
+<!-- SECTION 4: CTA -->
+<section class="section section-alt">
+  <div class="container" data-aos="fade-up">
+    <div class="cta-banner">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+          <h3>ตัดสินใจได้แล้วหรือยังเอ่ย? 🌊</h3>
+          <p>มัดจำเพียง 200 บาท ง่ายๆ ผ่าน LINE หรือโทรหาเรา พนักงงานพร้อมช่วยเหลือทุกวันค่ะ</p>
+        </div>
+        <div class="col-lg-4 d-flex flex-wrap gap-3 justify-content-lg-end">
+          <a href="./Page8.html" class="btn-white">
+            <i class="fas fa-calendar-check me-2"></i>จองเลยตอนนี้
+          </a>
+          <a href="https://lin.ee/x5KhNS1" target="_blank" class="btn-white" style="background:rgba(255,255,255,.15);color:#fff;border:2px solid rgba(255,255,255,.4);">
+            <i class="fab fa-line me-2"></i>ติดต่อ LINE
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-12 col-md-4">
+        <div class="footer-brand">NICHA CONDO<small>Hotel and Condotel · Phetchaburi &</small></div>
+        <p style="font-size:.82rem;line-height:1.8;color:rgba(255,255,255,.55);margin-bottom:20px;">149 หมู่ 3 ตำบลปึกเตียน อำเภอท่ายาง<br>จังหวัดเพชรบุรี 76130</p>
+        <p style="font-size:.82rem;line-height:1.8;color:rgba(255,255,255,.55);margin-bottom:20px;">551 5 ตำบล หนองปรือ อำเภอบางละมุง<br>จังหวัดชลบุรี 20150</p>
+        <div>
+          <a href="https://www.facebook.com/nichacondo" target="_blank" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://lin.ee/x5KhNS1" target="_blank" class="social-btn"><i class="fab fa-line"></i></a>
+          <a href="https://www.instagram.com/nichacondo" target="_blank" class="social-btn"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-md-2">
+        <h6>เมนูหลัก</h6>
+        <ul class="footer-links">
+          <li><a href="./pektian-seaview.html">ห้องพัก</a></li>
+          <li><a href="./Page4.html">สิ่งอำนวยความสะดวก</a></li>
+          <li><a href="./Page2.html">แผนที่</a></li>
+          <li><a href="./Page7.html">รีวิว</a></li>
+          <li><a href="./Page3.html">ประกาศ</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md-2">
+        <h6>ข้อมูล</h6>
+        <ul class="footer-links">
+          <li><a href="./Page6.html">วิธีการจอง</a></li>
+          <li><a href="./Page8.html">ติดต่อเรา</a></li>
+          <li><a href="#">นโยบายความเป็นส่วนตัว</a></li>
+        </ul>
+      </div>
+      <div class="col-12 col-md-4">
+        <h6>ติดต่อเรา</h6>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <a href="tel:0863429855" style="color:rgba(255,255,255,.65);text-decoration:none;font-size:.82rem;">
+            <i class="fas fa-phone me-2" style="color:var(--sky)"></i> 086 342 9855
+          </a>
+          <a href="mailto:jew.scb18@gmail.com" style="color:rgba(255,255,255,.65);text-decoration:none;font-size:.82rem;">
+            <i class="fas fa-envelope me-2" style="color:var(--sky)"></i> jew.scb18@gmail.com
+          </a>
+          <span style="color:rgba(255,255,255,.65);font-size:.82rem;"><i class="fas fa-map-marker-alt me-2" style="color:var(--sky)"></i> 149 หมู่ 3 ปึกเตียน ท่ายาง เพชรบุรี</span>
+          <span style="color:rgba(255,255,255,.65);font-size:.82rem;"><i class="fas fa-map-marker-alt me-2" style="color:var(--sky)"></i> 551 5 หนองปรือ บางละมุง ชลบุรี</span>
+        </div>
+        <div class="mt-4">
+          <a href="./Page8.html" style="display:inline-block;background:var(--sky-mid);color:#fff;padding:10px 24px;border-radius:4px;font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;">
+            จองเลยตอนนี้
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container d-flex flex-wrap justify-content-between gap-2">
+      <span>&copy; 2020 K&amp;J CondotelRent · All Rights Reserved</span>
+      <span style="color:rgba(255,255,255,.25)">Designed with ♥ for Nicha Condo</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+<script>
+  AOS.init({ once: true, duration: 700, offset: 60 });
+
+  window.addEventListener('scroll', () => {
+    document.getElementById('topBar').classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('mobileNav').classList.toggle('open');
+    document.getElementById('hamburger').classList.toggle('open');
+  });
+
+  // Render Facebook feed — fixed at 500px then CSS-scaled to fill container
+  const FB_PLUGIN_WIDTH = 500;
+  const FB_PLUGIN_HEIGHT = 700;
+
+  function renderFacebookFeed() {
+    const container = document.getElementById('fbFeedContainer');
+    if (!container) return;
+
+    const containerWidth = container.clientWidth;
+    const scale = containerWidth / FB_PLUGIN_WIDTH;
+    const scaledHeight = Math.ceil(FB_PLUGIN_HEIGHT * scale);
+
+    const pageUrl = 'https://www.facebook.com/puektianseaview';
+    const src = `https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(pageUrl)}&tabs=timeline&width=${FB_PLUGIN_WIDTH}&height=${FB_PLUGIN_HEIGHT}&small_header=false&adapt_container_width=false&hide_cover=false&show_facepile=true`;
+
+    container.style.height = scaledHeight + 'px';
+    container.innerHTML = `
+      <div class="fb-feed-scaler" style="transform: scale(${scale}); transform-origin: top left; width:${FB_PLUGIN_WIDTH}px; height:${FB_PLUGIN_HEIGHT}px;">
+        <iframe
+          class="fb-feed-frame"
+          src="${src}"
+          style="border:none;overflow:hidden;width:${FB_PLUGIN_WIDTH}px;height:${FB_PLUGIN_HEIGHT}px;"
+          scrolling="no"
+          frameborder="0"
+          allowfullscreen="true"
+          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+        </iframe>
+      </div>
+    `;
+  }
+
+  // Load on page ready
+  window.addEventListener('load', renderFacebookFeed);
+
+  // Re-render on resize (debounced)
+  let fbResizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(fbResizeTimer);
+    fbResizeTimer = setTimeout(renderFacebookFeed, 250);
+  });
+</script>
+</body>
+</html>

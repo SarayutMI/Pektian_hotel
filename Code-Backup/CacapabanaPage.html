@@ -1,0 +1,778 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Copacabana Jomtien — NICHA CONDO</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="./images/logo.png">
+  <link rel="apple-touch-icon" href="./images/logo.png">
+  <style>
+    :root {
+      --sky:       #5bb8f5;
+      --sky-mid:   #2196d9;
+      --sky-deep:  #0d6eaf;
+      --sky-dark:  #084e82;
+      --sky-pale:  #e8f6fd;
+      --sky-light: #c8e9f8;
+      --white:     #ffffff;
+      --off-white: #f5fbff;
+      --text:      #0d2d45;
+      --text-mid:  #2a5674;
+      --text-lt:   #6a9bb8;
+      --radius:    14px;
+      --sh-sm:     0 4px 18px rgba(13,110,175,.10);
+      --sh-md:     0 10px 40px rgba(13,110,175,.16);
+      --sh-lg:     0 20px 60px rgba(13,110,175,.22);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Prompt', sans-serif;
+      background: var(--white);
+      color: var(--text);
+      overflow-x: hidden;
+      padding-top: 108px;
+    }
+    h1,h2,h3,h4 { font-family: 'Cormorant Garamond', serif; letter-spacing: .02em; }
+    .top-bar {
+      position: fixed; top: 0; width: 100%; z-index: 1050;
+      background: rgba(255,255,255,.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(91,184,245,.25);
+      transition: box-shadow .3s;
+    }
+    .top-bar.scrolled { box-shadow: 0 4px 24px rgba(13,110,175,.12); }
+    .logo-row { background: var(--sky-dark); padding: 10px 0; }
+    .logo-row .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; min-width: 0; }
+    .logo-row .brand img { height: clamp(28px,5vw,40px); flex-shrink: 0; }
+    .logo-row .brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem,4vw,1.6rem); font-weight: 700;
+      color: var(--white); letter-spacing: .06em; white-space: nowrap;
+    }
+    .logo-contact { flex-shrink: 0; }
+    .logo-contact-item {
+      display: inline-flex; align-items: center; gap: 5px;
+      color: rgba(255,255,255,.85); text-decoration: none;
+      font-size: clamp(.62rem,2vw,.78rem); font-weight: 500;
+      transition: color .2s; white-space: nowrap;
+    }
+    .logo-contact-item i { color: var(--sky-light); font-size: .8rem; }
+    .logo-contact-item:hover { color: var(--white); }
+    .logo-contact-sep { color: rgba(255,255,255,.3); font-size: .75rem; }
+    .nav-row { background: var(--white); }
+    .main-nav { display: flex; align-items: center; justify-content: space-between; }
+    .nav-links { display: flex; align-items: center; list-style: none; gap: 0; margin: 0; padding: 0; }
+    .nav-links li a {
+      display: block; padding: 16px 16px;
+      font-size: .82rem; font-weight: 500; color: var(--text);
+      text-decoration: none; letter-spacing: .04em;
+      border-bottom: 3px solid transparent;
+      transition: color .2s, border-color .2s; white-space: nowrap;
+    }
+    .nav-links li a:hover,
+    .nav-links li a.active { color: var(--sky-mid); border-bottom-color: var(--sky-mid); }
+    .nav-links li.has-drop { position: relative; }
+    .drop-menu {
+      display: none; position: absolute; top: 100%; left: 0;
+      background: var(--white); border-radius: 0 0 10px 10px;
+      box-shadow: var(--sh-md); min-width: 220px;
+      border-top: 3px solid var(--sky-mid); z-index: 999;
+    }
+    .nav-links li.has-drop:hover .drop-menu { display: block; }
+    .drop-menu a {
+      display: block; padding: 12px 20px; font-size: .82rem;
+      font-weight: 500; color: var(--text); text-decoration: none;
+      border-bottom: 1px solid var(--sky-pale);
+      transition: background .2s, color .2s;
+    }
+    .drop-menu a:hover { background: var(--sky-pale); color: var(--sky-dark); }
+    .btn-book-nav {
+      background: var(--sky-mid); color: var(--white);
+      padding: 10px 22px; border-radius: 4px;
+      font-size: .82rem; font-weight: 600;
+      text-decoration: none; white-space: nowrap; letter-spacing: .06em;
+      transition: background .2s, transform .15s; border: none;
+    }
+    .btn-book-nav:hover { background: var(--sky-dark); color: var(--white); transform: translateY(-1px); }
+    .hamburger {
+      display: none; background: none; border: none; cursor: pointer;
+      padding: 10px 4px; flex-direction: row; align-items: center; gap: 10px;
+    }
+    .hamburger-bars { display: flex; flex-direction: column; gap: 5px; }
+    .hamburger-bars span { display: block; width: 26px; height: 2px; background: var(--text); transition: all .3s; border-radius: 2px; }
+    .hamburger-label { font-family: 'Prompt', sans-serif; font-size: .88rem; font-weight: 700; color: var(--text); letter-spacing: .12em; text-transform: uppercase; line-height: 1; }
+    .hamburger.open .hamburger-bars span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open .hamburger-bars span:nth-child(2) { opacity: 0; }
+    .hamburger.open .hamburger-bars span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-nav { display: none; background: var(--white); border-top: 1px solid var(--sky-pale); padding: 10px 0 20px; }
+    .mobile-nav.open { display: block; }
+    .mobile-nav a { display: block; padding: 11px 24px; font-size: .9rem; color: var(--text); text-decoration: none; font-weight: 500; border-bottom: 1px solid var(--sky-pale); }
+    .mobile-nav a:hover { background: var(--sky-pale); color: var(--sky-dark); }
+    .section { padding: clamp(50px,8vw,90px) 0; }
+    .section-alt { background: var(--off-white); }
+    .section-label {
+      font-size: .72rem; letter-spacing: .3em; text-transform: uppercase;
+      color: var(--sky-mid); font-weight: 600; margin-bottom: 12px; display: block;
+    }
+    .section-title {
+      font-size: clamp(1.8rem,4vw,3rem); font-weight: 600;
+      color: var(--text); line-height: 1.15; margin-bottom: 16px;
+    }
+    .section-title span { color: var(--sky-mid); }
+    .section-lead {
+      font-size: 1rem; color: var(--text-mid);
+      font-weight: 300; line-height: 1.8; max-width: 600px;
+    }
+    .divider-sky {
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, var(--sky), var(--sky-mid));
+      border-radius: 99px; margin: 18px 0 28px;
+    }
+    .btn-sky {
+      background: var(--sky-dark); color: var(--white);
+      padding: 12px 28px; border-radius: 4px; border: none;
+      font-size: .85rem; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; text-decoration: none; cursor: pointer;
+      transition: background .2s, transform .15s; display: inline-block;
+    }
+    .btn-sky:hover { background: var(--sky-mid); color: var(--white); transform: translateY(-2px); }
+    .btn-sky-outline {
+      background: transparent; color: var(--sky-dark);
+      padding: 11px 26px; border-radius: 4px;
+      border: 2px solid var(--sky-dark);
+      font-size: .85rem; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; text-decoration: none; cursor: pointer;
+      transition: all .2s; display: inline-block;
+    }
+    .btn-sky-outline:hover { background: var(--sky-dark); color: var(--white); }
+    footer { background: var(--text); color: rgba(255,255,255,.7); padding: 60px 0 0; font-size: .83rem; }
+    .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 700; color: var(--white); margin-bottom: 14px; }
+    .footer-brand small { font-family: 'Prompt', sans-serif; font-size: .72rem; letter-spacing: .25em; color: var(--sky-light); display: block; text-transform: uppercase; margin-top: 2px; }
+    .footer-links { list-style: none; padding: 0; }
+    .footer-links li { margin-bottom: 10px; }
+    .footer-links a { color: rgba(255,255,255,.65); text-decoration: none; transition: color .2s; font-size: .82rem; }
+    .footer-links a:hover { color: var(--sky-light); }
+    footer h6 { color: var(--white); font-family: 'Prompt', sans-serif; font-size: .7rem; letter-spacing: .22em; text-transform: uppercase; margin-bottom: 18px; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.08); padding: 20px 0; margin-top: 50px; font-size: .75rem; color: rgba(255,255,255,.4); }
+    .social-btn { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.6); text-decoration: none; font-size: .85rem; transition: all .2s; margin-right: 8px; }
+    .social-btn:hover { background: var(--sky-mid); border-color: var(--sky-mid); color: var(--white); }
+    @media (max-width: 991px) {
+      body { padding-top: 90px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .main-nav { justify-content: flex-start; }
+    }
+    @media (max-width: 575px) {
+      body { padding-top: 82px; }
+    }
+
+    /* ══════════════════════════════════════
+       COMING SOON HERO — full-bleed slider
+    ══════════════════════════════════════ */
+    .cs-hero {
+      position: relative;
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Slideshow */
+    .cs-slides { position: absolute; inset: 0; }
+    .cs-slide {
+      position: absolute; inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    .cs-slide.active { opacity: 1; }
+    /* Gradient overlay */
+    .cs-slides::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        160deg,
+        rgba(8,78,130,.72) 0%,
+        rgba(13,110,175,.40) 50%,
+        rgba(8,78,130,.68) 100%
+      );
+      z-index: 1;
+    }
+
+    /* Slide images – using beautiful ocean/beach palette colors as fallback */
+    .cs-slide:nth-child(1) { background-image: url('./images/Copacabana/1.webp'), linear-gradient(135deg,#084e82,#2196d9); }
+    .cs-slide:nth-child(2) { background-image: url('./images/Copacabana/2.webp'), linear-gradient(135deg,#0d6eaf,#5bb8f5); }
+    .cs-slide:nth-child(3) { background-image: url('./images/Copacabana/3.webp'), linear-gradient(135deg,#2196d9,#084e82); }
+    .cs-slide:nth-child(4) { background-image: url('./images/Copacabana/4.webp'), linear-gradient(135deg,#5bb8f5,#0d6eaf); }
+    .cs-slide:nth-child(5) { background-image: url('./images/Copacabana/5.webp'), linear-gradient(135deg,#084e82,#5bb8f5); }
+
+    /* Content */
+    .cs-content {
+      position: relative; z-index: 2;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .cs-eyebrow {
+      display: inline-block;
+      font-size: .68rem; letter-spacing: .45em; text-transform: uppercase;
+      color: var(--sky-light); font-weight: 600;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.18);
+      padding: 7px 22px; border-radius: 40px;
+      margin-bottom: 32px;
+      animation: fadeSlideDown .9s ease both;
+    }
+
+    .cs-location {
+      font-size: .78rem; letter-spacing: .25em; text-transform: uppercase;
+      color: rgba(255,255,255,.7); font-weight: 400;
+      margin-bottom: 18px;
+      animation: fadeSlideDown .9s .15s ease both;
+    }
+
+    .cs-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 8vw, 6rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.0;
+      margin-bottom: 0;
+      animation: fadeSlideDown .9s .25s ease both;
+    }
+
+    .cs-coming {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 12vw, 9rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.0;
+      margin-bottom: 28px;
+      animation: fadeSlideDown .9s .35s ease both;
+      /* Shimmering gradient text */
+      background: linear-gradient(90deg, #c8e9f8, #ffffff, #5bb8f5, #ffffff, #c8e9f8);
+      background-size: 300% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeSlideDown .9s .35s ease both, shimmer 4s linear 1.2s infinite;
+    }
+
+    @keyframes shimmer {
+      0%   { background-position: 0% center; }
+      100% { background-position: 300% center; }
+    }
+
+    .cs-tagline {
+      font-size: clamp(.85rem,1.8vw,1.05rem);
+      color: rgba(255,255,255,.75);
+      font-weight: 300; letter-spacing: .06em;
+      max-width: 520px; margin: 0 auto 44px;
+      line-height: 1.8;
+      animation: fadeSlideDown .9s .5s ease both;
+    }
+
+    /* Decorative wave divider */
+    .cs-wave-divider {
+      width: 140px; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent);
+      margin: 0 auto 28px;
+      animation: fadeSlideDown .9s .45s ease both;
+    }
+
+    /* Dot indicators */
+    .cs-dots {
+      display: flex; justify-content: center; gap: 8px;
+      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+      z-index: 2;
+    }
+    .cs-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(255,255,255,.35);
+      border: none; cursor: pointer; padding: 0;
+      transition: background .3s, transform .3s;
+    }
+    .cs-dot.active { background: var(--white); transform: scale(1.3); }
+
+    /* Notify form */
+    .cs-notify {
+      display: flex; gap: 0;
+      max-width: 420px; margin: 0 auto;
+      border-radius: 6px; overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,.25);
+      animation: fadeSlideUp .9s .6s ease both;
+    }
+    .cs-notify input {
+      flex: 1; padding: 14px 18px;
+      border: none; outline: none;
+      font-family: 'Prompt', sans-serif;
+      font-size: .85rem; color: var(--text);
+      background: rgba(255,255,255,.95);
+    }
+    .cs-notify button {
+      padding: 14px 22px;
+      background: var(--sky-mid); color: var(--white);
+      border: none; cursor: pointer;
+      font-family: 'Prompt', sans-serif;
+      font-size: .8rem; font-weight: 600;
+      letter-spacing: .08em; text-transform: uppercase;
+      transition: background .2s; white-space: nowrap;
+    }
+    .cs-notify button:hover { background: var(--sky-dark); }
+
+    /* Success state */
+    .cs-notify-success {
+      display: none;
+      color: var(--sky-light);
+      font-size: .88rem;
+      animation: fadeSlideUp .5s ease both;
+    }
+    .cs-notify-success.show { display: block; }
+
+    @keyframes fadeSlideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Scroll chevron */
+    .cs-scroll-hint {
+      position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%);
+      z-index: 2; color: rgba(255,255,255,.5);
+      font-size: .68rem; letter-spacing: .2em; text-transform: uppercase;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      animation: bounce 2s ease 2s infinite;
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50%      { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* Info Strip */
+    .cs-info-strip {
+      background: var(--sky-dark); color: var(--white);
+      padding: 28px 0;
+    }
+    .cs-info-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 8px 0;
+    }
+    .cs-info-icon {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(255,255,255,.1);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: 1rem; color: var(--sky-light);
+    }
+    .cs-info-label { font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--sky-light); }
+    .cs-info-value { font-size: .95rem; font-weight: 500; }
+
+    /* Features teaser */
+    .feat-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--sky-pale);
+      border: 1px solid var(--sky-light);
+      color: var(--sky-dark);
+      padding: 8px 18px; border-radius: 40px;
+      font-size: .8rem; font-weight: 500;
+      margin: 5px;
+    }
+    .feat-pill i { color: var(--sky-mid); font-size: .85rem; }
+
+    /* Responsive notify */
+    @media (max-width: 480px) {
+      .cs-notify { flex-direction: column; border-radius: 6px; }
+      .cs-notify input { border-radius: 6px 6px 0 0; }
+      .cs-notify button { border-radius: 0 0 6px 6px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar" id="topBar">
+  <div class="logo-row">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between">
+        <a href="index.html" class="brand">
+          <img src="./images/logo.png" alt="NICHA CONDO">
+          <span class="brand-name">NICHA CONDO</span>
+        </a>
+        <div class="d-flex align-items-center gap-2 logo-contact">
+          <a href="tel:0863429855" class="logo-contact-item">
+            <i class="fas fa-phone"></i> <span>086 342 9855</span>
+          </a>
+          <span class="logo-contact-sep">|</span>
+          <a href="mailto:jew.scb18@gmail.com" class="logo-contact-item">
+            <i class="fas fa-envelope"></i>
+            <span class="d-none d-sm-inline">jew.scb18@gmail.com</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-row">
+    <div class="container">
+      <nav class="main-nav">
+        <ul class="nav-links">
+          <li class="has-drop">
+            <a href="#" class="active">ห้องพัก <i class="fas fa-chevron-down ms-1" style="font-size:.6rem"></i></a>
+            <div class="drop-menu">
+              <a href="./pektian-seaview.html">ปึกเตียนซีวิว คอนโดเทล</a>
+              <a href="./copacabana-jomtien.html" class="active">โคปาคาบาน่า จอมเทียน</a>
+            </div>
+          </li>
+          <li><a href="./Page4.html">ความสะดวกสบาย</a></li>
+          <li class="has-drop">
+            <a href="#">แผนที่ <i class="fas fa-chevron-down ms-1" style="font-size:.6rem"></i></a>
+            <div class="drop-menu">
+              <a href="./Page2.html">ปึกเตียนซีวิว คอนโดเทล</a>
+              <a href="./Page2-copacabana.html">Copacabana Beach Jomtien</a>
+            </div>
+          </li>
+          <li><a href="./Page3.html">ประกาศ</a></li>
+          <li><a href="./Page7.html">รีวิว</a></li>
+          <li><a href="./Page6.html">วิธีการจอง</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-3">
+          <button class="hamburger" id="hamburger" aria-label="Menu">
+            <div class="hamburger-bars">
+              <span></span><span></span><span></span>
+            </div>
+            <span class="hamburger-label">MENU</span>
+          </button>
+          <a href="./Page8.html" class="btn-book-nav d-none d-lg-inline-flex">
+            <i class="fas fa-calendar-check me-2"></i>จองเลยตอนนี้
+          </a>
+        </div>
+      </nav>
+      <div class="mobile-nav" id="mobileNav">
+        <a href="./pektian-seaview.html">ห้องพัก — ปึกเตียนซีวิว คอนโดเทล</a>
+        <a href="./copacabana-jomtien.html">ห้องพัก — โคปาคาบาน่า จอมเทียน</a>
+        <a href="./Page4.html">ความสะดวกสบาย</a>
+        <a href="./Page2.html">แผนที่ — ปึกเตียนซีวิว คอนโดเทล</a>
+        <a href="./Page2-copacabana.html">แผนที่ — Copacabana Beach Jomtien</a>
+        <a href="./Page3.html">ประกาศ</a>
+        <a href="./Page7.html">รีวิว</a>
+        <a href="./Page6.html">วิธีการจอง</a>
+        <a href="./Page8.html" style="background:var(--sky-dark);color:#fff;margin:10px 24px 0;border-radius:4px;text-align:center;">จองเลยตอนนี้</a>
+        <div style="padding:14px 24px 6px;border-top:1px solid var(--sky-pale);margin-top:6px;display:flex;flex-direction:column;gap:8px;">
+          <a href="tel:0863429855" style="color:var(--sky-dark);font-size:.82rem;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:8px;">
+            <i class="fas fa-phone" style="color:var(--sky-mid);width:16px"></i> 086 342 9855
+          </a>
+          <a href="mailto:jew.scb18@gmail.com" style="color:var(--sky-dark);font-size:.82rem;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:8px;">
+            <i class="fas fa-envelope" style="color:var(--sky-mid);width:16px"></i> jew.scb18@gmail.com
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END TOP BAR -->
+
+
+<!-- ══════════════════════════════════════
+     COMING SOON HERO with Image Slideshow
+══════════════════════════════════════ -->
+<div class="cs-hero">
+
+  <!-- Slideshow -->
+  <div class="cs-slides" id="csSlides">
+    <div class="cs-slide" style="background-image: url('./images/LocationCopacabana/BuildLocationCopacabana/Copacabana_1.jpg')"></div>
+    <div class="cs-slide" style="background-image: url('./images/LocationCopacabana/BuildLocationCopacabana/Copacabana_2.jpg')"></div>
+    <div class="cs-slide" style="background-image: url('./images/LocationCopacabana/BuildLocationCopacabana/Copacabana_3.jpg')"></div>
+    <div class="cs-slide" style="background-image: url('./images/LocationCopacabana/BuildLocationCopacabana/Copacabana_4.jpg')"></div>
+    <div class="cs-slide" style="background-image: url('./images/LocationCopacabana/BuildLocationCopacabana/Copacabana_5.jpg')"></div>
+    <div class="cs-slide" style="background-image: url('./images/LocationCopacabana/BuildLocationCopacabana/Copacabana_6.jpg')"></div>
+    <div class="cs-slide" style="background-image: url('./images/LocationCopacabana/BuildLocationCopacabana/Copacabana_7.jpg')"></div>
+    <div class="cs-slide" style="background-image: url('./images/LocationCopacabana/BuildLocationCopacabana/Copacabana_8.jpg')"></div>
+
+  </div>
+
+  <!-- Main Content -->
+  <div class="cs-content">
+    <div class="cs-eyebrow">NICHA CONDO · NEW PROPERTY</div>
+    <p class="cs-location"><i class="fas fa-map-marker-alt me-2" style="color:var(--sky)"></i>จอมเทียน · พัทยา · ชลบุรี</p>
+    <h1 class="cs-name">Copacabana<br>Jomtien</h1>
+    <p class="cs-coming">Is Coming</p>
+    <div class="cs-wave-divider"></div>
+    <p class="cs-tagline">
+      ประสบการณ์พักผ่อนสุดหรูริมทะเลที่กำลังจะมาถึง<br>
+      จะเปิดให้เช่ารายเดือน เร็วๆนี้
+    </p>
+    
+    <!--
+    <div id="notifyWrap">
+      <div class="cs-notify">
+        <input type="email" id="notifyEmail" placeholder="กรอกอีเมลของคุณ..." />
+        <button onclick="handleNotify()">
+          <i class="fas fa-bell me-1"></i> แจ้งเตือนฉัน
+        </button>
+      </div>
+    </div>
+    <p class="cs-notify-success" id="notifySuccess">
+      <i class="fas fa-check-circle me-2" style="color:var(--sky)"></i>
+      ขอบคุณ! เราจะแจ้งให้คุณทราบเมื่อพร้อมเปิดจอง
+    </p>
+  -->
+  </div>
+  
+
+  <!-- Dot Indicators -->
+  <div class="cs-dots" id="csDots"></div>
+
+  <!-- Scroll hint -->
+  <div class="cs-scroll-hint">
+    <span>เลื่อนลง</span>
+    <i class="fas fa-chevron-down"></i>
+  </div>
+
+</div>
+
+
+<!-- Info Strip -->
+<div class="cs-info-strip">
+  <div class="container">
+    <div class="row g-3 justify-content-center">
+      <div class="col-6 col-md-3">
+        <div class="cs-info-item">
+          <div class="cs-info-icon"><i class="fas fa-umbrella-beach"></i></div>
+          <div>
+            <div class="cs-info-label">ทำเล</div>
+            <div class="cs-info-value">หาดจอมเทียน</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="cs-info-item">
+          <div class="cs-info-icon"><i class="fas fa-city"></i></div>
+          <div>
+            <div class="cs-info-label">ประเภท</div>
+            <div class="cs-info-value">คอนโดเทลให้เช่า</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="cs-info-item">
+          <div class="cs-info-icon"><i class="fas fa-water"></i></div>
+          <div>
+            <div class="cs-info-label">วิว</div>
+            <div class="cs-info-value">วิวทะเล & สระว่ายน้ำ</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="cs-info-item">
+          <div class="cs-info-icon"><i class="fas fa-clock"></i></div>
+          <div>
+            <div class="cs-info-label">สถานะ</div>
+            <div class="cs-info-value">เปิดเร็วๆ นี้</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Features Teaser -->
+<section class="section">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-label">สิ่งที่คุณจะได้รับ</span>
+      <h2 class="section-title">สิ่งอำนวยความสะดวก<span> ระดับพรีเมียม</span></h2>
+      <div class="divider-sky mx-auto"></div>
+      <p class="section-lead mx-auto">โคปาคาบาน่า จอมเทียน พร้อมมอบประสบการณ์พักผ่อนที่ครบครันและหรูหรา ใกล้ชายหาดและสิ่งอำนวยความสะดวกชั้นยอด</p>
+    </div>
+
+    <div class="text-center" data-aos="fade-up" data-aos-delay="100">
+      <span class="feat-pill"><i class="fas fa-swimming-pool"></i> สระว่ายน้ำ</span>
+      <span class="feat-pill"><i class="fas fa-wifi"></i> WiFi ความเร็วสูง</span>
+      <span class="feat-pill"><i class="fas fa-dumbbell"></i> ฟิตเนส</span>
+      <span class="feat-pill"><i class="fas fa-concierge-bell"></i> รูม เซอร์วิส</span>
+      <span class="feat-pill"><i class="fas fa-parking"></i> ที่จอดรถ</span>
+      <span class="feat-pill"><i class="fas fa-umbrella-beach"></i> ใกล้หาด</span>
+      <span class="feat-pill"><i class="fas fa-tv"></i> Smart TV</span>
+      <span class="feat-pill"><i class="fas fa-snowflake"></i> เครื่องปรับอากาศ</span>
+      <span class="feat-pill"><i class="fas fa-shield-alt"></i> รปภ. 24 ชม.</span>
+      <span class="feat-pill"><i class="fas fa-utensils"></i> ร้านอาหาร</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- Contact Section -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="row align-items-center g-5 justify-content-center">
+      <div class="col-lg-6 text-center text-lg-start" data-aos="fade-up">
+        <span class="section-label">สนใจจอง?</span>
+        <h2 class="section-title">ติดต่อเรา<span> ล่วงหน้า</span></h2>
+        <div class="divider-sky"></div>
+        <p class="section-lead mb-4">หากสนใจสอบถามข้อมูลหรือจองห้องพักที่โคปาคาบาน่า จอมเทียน ล่วงหน้า ติดต่อทีมงานของเราได้เลย</p>
+        <div class="d-flex flex-column gap-3 mb-4">
+          <a href="tel:0863429855" style="display:flex;align-items:center;gap:12px;color:var(--sky-dark);text-decoration:none;font-weight:500;">
+            <span style="width:40px;height:40px;border-radius:50%;background:var(--sky-pale);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <i class="fas fa-phone" style="color:var(--sky-mid)"></i>
+            </span>
+            086 342 9855
+          </a>
+          <a href="mailto:jew.scb18@gmail.com" style="display:flex;align-items:center;gap:12px;color:var(--sky-dark);text-decoration:none;font-weight:500;">
+            <span style="width:40px;height:40px;border-radius:50%;background:var(--sky-pale);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <i class="fas fa-envelope" style="color:var(--sky-mid)"></i>
+            </span>
+            jew.scb18@gmail.com
+          </a>
+          <a href="https://lin.ee/x5KhNS1" target="_blank" style="display:flex;align-items:center;gap:12px;color:var(--sky-dark);text-decoration:none;font-weight:500;">
+            <span style="width:40px;height:40px;border-radius:50%;background:var(--sky-pale);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <i class="fab fa-line" style="color:var(--sky-mid)"></i>
+            </span>
+            LINE: @nichacondo
+          </a>
+        </div>
+        <a href="https://lin.ee/x5KhNS1" target="_blank" class="btn-sky me-2">ติดต่อจองตอนนี้</a>
+        <a href="index.html" class="btn-sky-outline">กลับหน้าหลัก</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-12 col-md-4">
+        <div class="footer-brand">NICHA CONDO<small>Hotel and Condotel · Phetchaburi &amp; Chonburi</small></div>
+        <p style="font-size:.82rem;line-height:1.8;color:rgba(255,255,255,.55);margin-bottom:20px;">149 หมู่ 3 ตำบลปึกเตียน อำเภอท่ายาง<br>จังหวัดเพชรบุรี 76130</p>
+        <p style="font-size:.82rem;line-height:1.8;color:rgba(255,255,255,.55);margin-bottom:20px;">551 5 ตำบล หนองปรือ อำเภอบางละมุง<br>จังหวัดชลบุรี 20150</p>
+        <div>
+          <a href="https://www.facebook.com/nichacondo" target="_blank" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://lin.ee/x5KhNS1" target="_blank" class="social-btn"><i class="fab fa-line"></i></a>
+          <a href="https://www.instagram.com/nichacondo" target="_blank" class="social-btn"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-md-2">
+        <h6>เมนูหลัก</h6>
+        <ul class="footer-links">
+          <li><a href="./pektian-seaview.html">ห้องพัก</a></li>
+          <li><a href="./Page4.html">สิ่งอำนวยความสะดวก</a></li>
+          <li><a href="./Page2.html">แผนที่</a></li>
+          <li><a href="./Page7.html">รีวิว</a></li>
+          <li><a href="./Page3.html">ประกาศ</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md-2">
+        <h6>ข้อมูล</h6>
+        <ul class="footer-links">
+          <li><a href="./Page6.html">วิธีการจอง</a></li>
+          <li><a href="./Page8.html">ติดต่อเรา</a></li>
+          <li><a href="#">นโยบายความเป็นส่วนตัว</a></li>
+        </ul>
+      </div>
+      <div class="col-12 col-md-4">
+        <h6>ติดต่อเรา</h6>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <a href="tel:0863429855" style="color:rgba(255,255,255,.65);text-decoration:none;font-size:.82rem;">
+            <i class="fas fa-phone me-2" style="color:var(--sky)"></i> 086 342 9855
+          </a>
+          <a href="mailto:jew.scb18@gmail.com" style="color:rgba(255,255,255,.65);text-decoration:none;font-size:.82rem;">
+            <i class="fas fa-envelope me-2" style="color:var(--sky)"></i> jew.scb18@gmail.com
+          </a>
+          <span style="color:rgba(255,255,255,.65);font-size:.82rem;"><i class="fas fa-map-marker-alt me-2" style="color:var(--sky)"></i> 149 หมู่ 3 ปึกเตียน ท่ายาง เพชรบุรี</span>
+          <span style="color:rgba(255,255,255,.65);font-size:.82rem;"><i class="fas fa-map-marker-alt me-2" style="color:var(--sky)"></i> 551 5 หนองปรือ บางละมุง ชลบุรี</span>
+        </div>
+        <div class="mt-4">
+          <a href="./Page8.html" style="display:inline-block;background:var(--sky-mid);color:#fff;padding:10px 24px;border-radius:4px;font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;">
+            จองเลยตอนนี้
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container d-flex flex-wrap justify-content-between gap-2">
+      <span>&copy; 2020 K&amp;J CondotelRent · All Rights Reserved</span>
+      <span style="color:rgba(255,255,255,.25)">Designed with ♥ for Nicha Condo</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ once: true, duration: 700, offset: 60 });
+
+  // Scroll shadow
+  window.addEventListener('scroll', () => {
+    document.getElementById('topBar').classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Hamburger
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('mobileNav').classList.toggle('open');
+    document.getElementById('hamburger').classList.toggle('open');
+  });
+
+  // ── Slideshow ──────────────────────────────────
+  const slides = document.querySelectorAll('.cs-slide');
+  const dotsContainer = document.getElementById('csDots');
+  let current = 0;
+  let timer;
+
+  // Build dots
+  slides.forEach((_, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'cs-dot' + (i === 0 ? ' active' : '');
+    btn.setAttribute('aria-label', 'Slide ' + (i + 1));
+    btn.addEventListener('click', () => goTo(i));
+    dotsContainer.appendChild(btn);
+  });
+
+  function goTo(idx) {
+    slides[current].classList.remove('active');
+    dotsContainer.children[current].classList.remove('active');
+    current = (idx + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dotsContainer.children[current].classList.add('active');
+    resetTimer();
+  }
+
+  function resetTimer() {
+    clearInterval(timer);
+    timer = setInterval(() => goTo(current + 1), 5000);
+  }
+
+  resetTimer();
+  /*
+  // ── Notify form ───────────────────────────────
+  function handleNotify() {
+    const email = document.getElementById('notifyEmail').value.trim();
+    if (!email || !email.includes('@')) {
+      document.getElementById('notifyEmail').style.outline = '2px solid #e74c3c';
+      return;
+    }
+    document.getElementById('notifyWrap').style.display = 'none';
+    document.getElementById('notifySuccess').classList.add('show');
+  }
+    */
+
+  // Allow Enter key
+  document.getElementById('notifyEmail').addEventListener('keydown', e => {
+    if (e.key === 'Enter') handleNotify();
+    else document.getElementById('notifyEmail').style.outline = '';
+  });
+</script>
+</body>
+</html>
